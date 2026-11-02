@@ -1,92 +1,88 @@
-# CHANGELOG — ZCode Development Pipeline
+# CHANGELOG — ZCode Pipeline
 
-Формат: версии бандла. Источник правды — `~/.zcode/agents/`, `~/.zcode/commands/`, `~/.zcode/AGENTS.md`.
+Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
-## v1.0 — 2026-11-02
+## Documentation — 2026-11-03
 
-Первый успешный бандл. Состав: 12 агентов + `/init-project` + опциональный персонализируемый AGENTS.md.
-
-### Создание системы (история до v1.0)
-
-- **2026-11-02, базовые 10 агентов.** Конвейер: Брифер → Архитектор → Техлид → Техписатель →
-  Исполнитель → Ревью (Security/Goal/Code) → QA → Менеджер. Системные промпты на русском,
-  оптимизированы под GLM (структурированные вердикты, Phase 0, эскалации `!!! ESCALATION !!!`
-  с лимитом 1/задачу, секции «Грубые нарушения»). Референсы — агенты opencode автора
-  (взято лучшее: эскалации, шаблон задач, ревью-циклы; не копия).
-- **Интерактивные вопросы.** У субагентов нет AskUserQuestion — механика: агенты возвращают
-  блоки «## Вопросы пользователю» (варианты + «(Рекомендую)»), координатор рендерит их
-  интерактивно с свободным вводом.
-- **Агент `summarizer` + база знаний.** После ACCEPTED: `.ai/docs/` — wiki/ по компонентам
-  (перезаписываются под текущий код, штамп «Проверено: эпик, коммит»), epics/ хроники,
-  INDEX.md, manual-checklist.md. Чтение вписано в промпты 5 агентов-читателей; указатель —
-  в глобальном AGENTS.md («Карпати-вики»).
-- **Агент `initializer` + `/init-project`.** Этап 0: пустой проект → интерактивный выбор стека
-  (популярные стеки, мультивыбор, свободный ввод через запятую с нормализацией); существующий
-  проект → стек по манифестам/линтер-конфигам + подтверждение. Создаёт `.ai/guides/{tech}.md`
-  (лучшие практики из официальных/курируемых источников, ≤200 строк, дата + источники) и
-  проектный AGENTS.md: базовые правила со штампом `source=file|embedded` (живой глобальный файл
-  побеждает; при его отсутствии — встроенный эталон) + стек + обязательное чтение guides.
-  Универсальные правила в каждом guide: без комментариев в коде (кроме аннотаций/docstrings);
-  без co-authors в коммитах; тотальная типизация для нетипизированных языков; без отсылок к .ai
-  в коде/README. Персонализация embedded-эталона (обращение/роль, язык) — интерактивно,
-  ре-инит не переспрашивает.
-- **Обкатка на реальных эпиках** (проект pwtools в воркспейсе draft-c4ac3bea…):
-  - `pwtools-cli` (6 задач, 98 тестов): полный цикл, эскалация Security [LOW] `--dict /dev/zero`
-    закрыта решением Техлида (S_ISREG-guard; MemoryError маскировался под exit 1 «WEAK»).
-  - `pwtools-gui` (3 задачи, +59 тестов): эскалация Техписателя (sys в allow-list — противоречие
-    декомпозиции), Security [MEDIUM] neg-CL (хуже заявленного), Code **BLOCKER** collectClasses
-    (DOM-id вместо имён классов — Generate в браузере всегда 400 при 100% зелёных автотестов).
-    Все закрыты ревью-циклами; Менеджер ACCEPTED; база знаний обновлена саммарйзером.
-
-### Известные особенности
-
-- Субагентам недоступен AskUserQuestion — интерактивность только через координатора.
-- Новые типы агентов регистрируются между ходами/на старте сессии (после создания файла).
-- Глобальный gitignore автора скрывает `.ai` и `AGENTS.md` — коммиты конвейера требуют `git add -f`.
-- Проверить на чистой машине: embedded-режим инициализатора (персонализация) — запланировано автором.
-
-## v1.1.0 — 2026-11-03
-
-Оформление системы в плагин ZCode. Репозиторий стал самодостаточным источником правды.
-
-### Добавлено
-
-- **Плагин**: манифест `.zcode-plugin/plugin.json` (name `zcode-pipeline`, version 1.1.0,
-  компоненты: agents, commands, skills). Установка из маркетплейса (GitHub/локальная папка).
-- **Скилл `pipeline`** (`skills/pipeline/SKILL.md`): правила ведения конвейера для главного
-  агента-координатора — порядок этапов, эскалации к Техлиду-консультанту, ревью-циклы
-  (все находки включая MINOR/NIT обязательны), интерактивный рендер вопросов, статусы задач,
-  коммиты только после ACCEPTED, base-knowledge. Триггеры во frontmatter (запуск конвейера,
-  упоминание агентов/этапов, работа в проекте с .ai-артефактами). Ранее эти правила жили
-  только в шапке бандла — теперь подгружаемый по требованию компонент.
-- **assets/AGENTS-template.md**: шаблон глобальных правил с плейсхолдерами
-  {ОБРАЩЕНИЕ}/{ЯЗЫК_ОБЩЕНИЯ} — бандл больше не зависит от живой установки при сборке.
-
-### Изменено
-
-- `scripts/build_bundle.py`: собирает бандл из файлов репозитория (agents/, commands/,
-  skills/, assets/), версия берётся из plugin.json; в бандл добавлена секция скилла
-  и путь `~/.zcode/skills/pipeline/SKILL.md` в инструкции установщика.
-- README: плагин — основной канал установки, бандл — запасный; новый цикл обновлений
-  (правки в репо → bump version → пересборка → push → обновить плагин в UI).
-- Структура: agents/ и commands/ — копии из user-scope на момент сборки (12 + 1).
-
-### Известные открытые пункты
-
-- Проверить на живой установке: регистрируются ли плагиновые агенты с префиксом имени
-  (если да — обновить скилл/описания соответствием имён).
-- После успешного теста плагина: удалить дубликаты из `~/.zcode/agents/` и
-  `~/.zcode/commands/` (user-scope перекрывает плагин).
-- Embedded-режим инициализатора на чистой машине — на проверке у автора.
+- Multilingual README: brief `README.md` (English) + full versions — [English](README.en.md), [Русский](README.ru.md), [中文](README.zh.md).
+- Removed all local/machine-specific paths from installation instructions: the only install channel is this GitHub repository (marketplace) plus the bundle fallback.
+- CHANGELOG switched to English; future commits in English.
 
 ## v1.1.1 — 2026-11-03
 
-Фикс установки как маркетплейса (ошибка «Marketplace manifest not found»).
+Fixed marketplace installation ("Marketplace manifest not found in directory").
 
-### Изменено
+### Changed
 
-- Каноническая структура: маркетплейс — корень репозитория с `marketplace.json`
-  (name `milinsky-agents-bundle`, плагин `zcode-pipeline`, source `./zcode-pipeline`);
-  плагин перенесён в каталог `zcode-pipeline/` (имя каталога == name манифеста — требование загрузчика).
-- `build_bundle.py` читает из `zcode-pipeline/`; версия бандла — из манифеста плагина.
-- README: инструкции Add Plugin Marketplace → Personal → Install.
+- Canonical structure: the marketplace is the repository root with `marketplace.json`
+  (name `milinsky-agents-bundle`, plugin `zcode-pipeline`, source `./zcode-pipeline`);
+  the plugin moved into the `zcode-pipeline/` directory (directory name must equal the manifest name).
+- `build_bundle.py` reads from `zcode-pipeline/`; bundle version comes from the plugin manifest.
+
+## v1.1.0 — 2026-11-03
+
+Packaged the system as a ZCode plugin; the repository became a self-contained source of truth.
+
+### Added
+
+- **Plugin**: `.zcode-plugin/plugin.json` manifest (components: agents, commands, skills).
+  Installable from a marketplace (GitHub repo or local directory).
+- **`pipeline` skill** (`skills/pipeline/SKILL.md`): conveyor rules for the coordinating
+  main agent — stage order, escalations to the Tech Lead consultant, review cycles
+  (all findings incl. MINOR/NIT are mandatory), interactive question rendering, task
+  statuses, commit-only-after-ACCEPTED. Triggers live in the frontmatter. Previously
+  these rules existed only in the bundle header.
+- **`assets/AGENTS-template.md`**: global-rules template with `{ОБРАЩЕНИЕ}`/`{ЯЗЫК_ОБЩЕНИЯ}`
+  personalization placeholders — the builder no longer depends on the live installation.
+
+### Changed
+
+- `scripts/build_bundle.py`: builds the bundle from the repository files; the bundle now
+  includes the skill section and the `~/.zcode/skills/pipeline/SKILL.md` install path.
+- README: plugin as the primary install channel, bundle as fallback.
+
+## v1.0 — 2026-11-02
+
+First successful bundle: 12 agents + `/init-project` + optional personalized global AGENTS.md.
+
+### System history (pre-v1.0)
+
+- **Base 10 agents.** Conveyor: Briefer → Architect → Tech Lead → Tech Writer → Developer →
+  Reviews (Security/Goal/Code) → QA → Manager. System prompts in Russian, tuned for GLM
+  models: structured verdicts, Phase 0 gates, `!!! ESCALATION !!!` protocol (one per task),
+  "gross violations" sections. Inspired by the author's OpenCode agent set — best ideas
+  adopted (escalations, task template, review cycles), not copied.
+- **Interactive questions.** Subagents have no interactive tool, so agents return
+  structured "## Вопросы пользователю" blocks (options + "(Recommended)"); the coordinator
+  renders them interactively with free-form input always available.
+- **`summarizer` agent + knowledge base.** After ACCEPTED: `.ai/docs/` — per-component wiki
+  pages (rewritten to current code state, "verified at commit" stamp), epic chronicles,
+  INDEX.md, manual-checklist.md. Reading is wired into five reader agents' prompts; the
+  global AGENTS.md points to it ("Karpathy-style wiki").
+- **`initializer` agent + `/init-project`.** Stage 0: empty project → interactive stack
+  selection (popular stacks, multi-select, free input with normalization); existing project →
+  stack from manifests/linter configs + confirmation. Produces `.ai/guides/{tech}.md`
+  (best practices from official/curated sources, ≤200 lines, dated, sourced) and the project
+  `AGENTS.md` (base rules with `source=file|embedded` — a live global file always wins;
+  otherwise an embedded template). Universal rules in every guide: no code comments (except
+  annotations/docstrings); no co-authors in commits; full typing for optionally-typed
+  languages; no references to `.ai/` in code/README. Embedded-template personalization
+  (name/role, language) is asked interactively; re-init never re-asks.
+- **Battle-tested on real epics** (a greenfield CLI project):
+  - Epic 1 (6 tasks, 98 tests): full cycle; a Security escalation (`--dict /dev/zero`)
+    resolved by the Tech Lead (S_ISREG guard; a MemoryError had been masquerading as
+    exit code 1 "WEAK").
+  - Epic 2 — a local web GUI (3 tasks, +59 tests): a Tech Writer escalation (import
+    allow-list contradiction), a Security MEDIUM finding worse than reported
+    (negative Content-Length), and a Code-review BLOCKER (JS sending DOM ids instead of
+    class names — the browser button always got 400 while all automated tests were green).
+    All closed through review cycles; Manager ACCEPTED; knowledge base updated.
+
+### Known notes
+
+- Subagents cannot ask questions directly — interactivity goes through the coordinator only.
+- Newly created agent types register between turns / at session start.
+- A user's global gitignore may hide `.ai` and `AGENTS.md` — conveyor commits need `git add -f`.
+- Plugin-provided agents register with a `zcode-pipeline:` prefix; the skill instructs the
+  coordinator to use the actual session registry names.
+- Embedded-mode initializer personalization on a clean machine — pending author's test.

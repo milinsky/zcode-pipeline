@@ -1,0 +1,103 @@
+# ZCode Pipeline
+
+[English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md) · [Back to brief README](README.md)
+
+A multi-agent development conveyor for [ZCode](https://z.ai): it turns a raw user request into an accepted, verified change through a chain of specialized subagents — with enforced briefs, architecture, decomposition, triple review, QA and a living knowledge base.
+
+## Problems it solves
+
+| LLM agents typically… | The conveyor enforces… |
+|---|---|
+| guess unclear requirements | **Briefer** asks interactive rounds of questions until the brief is complete; downstream agents refuse to start without it |
+| skip design and jump into code | **Architect** produces a design *plus mandatory recommendations* for every following agent |
+| produce vague mega-tasks | **Tech Lead** decomposes into bounded tasks with contracts; **Technical Writer** renders self-sufficient task files (inline rules, target shape, acceptance criteria) |
+| claim "tests pass" without running them | **Developer** must prove every claim with actual command output; reviewers re-verify independently |
+| rubber-stamp their own work | three independent read-only reviews — **Security**, **Goal**, **Code** — with cycles until *full* approval (even NIT-level findings must be fixed) |
+| accept half-done work | **QA** runs real tests (and writes its own); **Manager** traces initial data against final artifacts and returns `ACCEPTED`/`REJECTED` |
+| forget everything next session | **Summarizer** distills each accepted epic into a living wiki (`.ai/docs/`), which the next epic's agents read |
+| ignore project conventions | **Initializer** pulls current best practices per stack into `.ai/guides/` and wires them into the project `AGENTS.md` |
+
+## How it works
+
+```
+/init-project (once per project)
+      │
+      ▼
+Initializer → Briefer → Architect → Tech Lead → Tech Writer → Developer
+      │                                                        │
+      │                            review loop until full approval:
+      │                            Security → Goal → Code ──────┤
+      │                                                        ▼
+      │                     QA (QUALITY_PASSED) → Manager (ACCEPTED) → Summarizer → commit
+```
+
+- The **main agent coordinates**: it dispatches subagents, renders their question blocks interactively (multi-select + free input), fixes task statuses, and is the only party allowed to commit.
+- The **`pipeline` skill** holds the coordinator's rules and loads on demand ("run the pipeline", mentioning conveyor stages, or working in a project with `.ai/` artifacts).
+- **Escalations**: any blocked agent emits a structured `!!! ESCALATION !!!` marker; the coordinator routes it to the Tech Lead consultant and returns the binding resolution. Max one escalation per task per agent — guessing is a process violation.
+- **Stage gating** is built into every agent's prompt: no brief → no architecture; no decomposition → no tasks; no approved reviews → no QA; no `ACCEPTED` → no commit.
+
+## The 12 agents
+
+| Agent | Role | Output / verdict |
+|---|---|---|
+| `initializer` | Stage 0: detect/interview the stack, gather current best practices | `.ai/guides/{tech}.md`, project `AGENTS.md` |
+| `briefer` | Turn any raw request into a final brief via interactive questions | `.ai/briefs/{epic}-brief.md` |
+| `architect` | Design the solution; recommend constraints to all followers | `.ai/architecture/{epic}-architecture.md` |
+| `tech-lead` | Decompose into bounded tasks (never writes task files); resolve escalations | `.ai/decomposition/{epic}-decomposition.md` |
+| `tech-writer` | Render self-sufficient task files from the decomposition | `.ai/tasks/{epic}/{NN}-{name}-{date}.md` + `INDEX.md` |
+| `developer` | Implement one task exactly as specified; Phase 0 before any edit; honest verification | report + status `implemented` |
+| `security-review` | Real, exploitable risks only, with evidence | `PASS / PASS_WITH_WARNINGS / FAIL / NEEDS_MORE_CONTEXT` |
+| `goal-review` | Trace every acceptance criterion to proof; catch scope creep | `GOAL_MET / GOAL_PARTIALLY_MET / GOAL_NOT_MET / NEEDS_CONTEXT` |
+| `code-review` | Correctness, edge cases, conventions, diff hygiene, test integrity | `APPROVE / REQUEST_CHANGES / NEEDS_DISCUSSION` |
+| `qa` | Review test coverage, run real checks, may add own tests | `QUALITY_PASSED / QUALITY_FAILED / BLOCKED` |
+| `manager` | Final acceptance: initial data vs final artifacts, traced evidence | `ACCEPTED / REJECTED` + return stage |
+| `summarizer` | After ACCEPTED: distill the epic into the knowledge base | `.ai/docs/` wiki + chronicles + `INDEX.md` |
+
+## Artifacts and statuses
+
+Every project gets a `.ai/` trail: `briefs/ · architecture/ · decomposition/ · tasks/{epic}/ (+INDEX.md) · reviews/ · qa/ · guides/ · docs/` (knowledge base: `wiki/{component}.md`, `epics/{epic}-{date}/REPORT.md`, `INDEX.md`, `manual-checklist.md`).
+
+Task lifecycle: `created → in_progress → implemented → reviewed → tested → accepted | rejected`.
+
+The wiki is authoritative-but-verifiable: pages carry a "verified at commit" stamp, and readers are told to re-check claims against actual code.
+
+## Install
+
+**From marketplace (primary):**
+1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → paste this repository's URL.
+2. **Personal → ZCode Pipeline → Install** → restart the session.
+3. Verify: 12 agents, `/init-project`, `pipeline` skill.
+
+**Fallback (no marketplace):** open `zcode-pipeline-bundle.md` in ZCode and say "install from this document" — it recreates all files at user scope.
+
+## Usage
+
+```
+/init-project                                  # once per project
+"Run the pipeline: add password-phrase mode"   # any feature/fix/refactor
+```
+
+Then simply answer the interactive question rounds — everything else (stages, reviews, fixes, statuses, commits) is driven by the conveyor.
+
+## Repository layout & contributing
+
+```
+marketplace.json            # marketplace catalog (repo root = marketplace)
+zcode-pipeline/             # the plugin (dir name == manifest name)
+  .zcode-plugin/plugin.json
+  agents/                   # 12 subagents
+  commands/init-project.md
+  skills/pipeline/SKILL.md  # coordinator rules
+  assets/AGENTS-template.md # global-rules template with personalization placeholders
+scripts/build_bundle.py     # bundle builder (self-contained from the repo)
+zcode-pipeline-bundle.md    # generated artifact — do not edit by hand
+```
+
+Update cycle (commits and CHANGELOG in English):
+1. Edit only `zcode-pipeline/{agents,commands,skills,assets}`.
+2. Bump `version` in `zcode-pipeline/.zcode-plugin/plugin.json` **and** the plugin entry in `marketplace.json`.
+3. `python3 scripts/build_bundle.py` (it fails on personal-data leaks or broken markup — do not bypass).
+4. Commit + CHANGELOG entry; tag milestones; `git push --follow-tags`.
+5. Update the plugin in ZCode → Settings → Plugins.
+
+History: [CHANGELOG.md](CHANGELOG.md)

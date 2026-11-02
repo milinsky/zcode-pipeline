@@ -1,59 +1,35 @@
-# ZCode Pipeline (плагин)
+# ZCode Pipeline
 
-Конвейер разработки ПО на субагентах ZCode: от инициализации проекта до приёмки,
-с тройным ревью, QA, базой знаний («Карпати-вики») и скиллом координатора.
+**A multi-agent development conveyor for ZCode: from a raw request to an accepted, verified change — with enforced briefs, architecture, decomposition, triple review, QA and a living knowledge base.**
 
-Оформлено как **плагин ZCode** `.zcode-plugin/plugin.json`: 12 агентов + команда
-`/init-project` + скилл `pipeline`. Бандл — запасной канал установки без маркетплейса.
+[![English](https://img.shields.io/badge/README-English-blue)](README.en.md)
+[![Русский](https://img.shields.io/badge/README-Русский-red)](README.ru.md)
+[![中文](https://img.shields.io/badge/README-中文-green)](README.zh.md)
 
-## Установка
+## Why
 
-**Основной канал (плагин):**
-1. Plugin Marketplace → **Add → Add Plugin Marketplace** → вставьте корень ЭТОГО репозитория
-   (локально: `/Users/milinsky/.zcode/pipeline`; для других машин — GitHub `milinsky/agents-bundle`).
-   Маркетплейс определяется корневым `marketplace.json`.
-2. Personal → маркетплейс `milinsky-agents-bundle` → плагин `ZCode Pipeline` → Install → перезапустить сессию.
-3. Проверка: 12 агентов, команда `/init-project`, скилл `pipeline`.
+LLM coding agents are fast — and unreliable in the same predictable ways: they guess requirements, skip steps, claim tests pass without running them, and forget everything between sessions. ZCode Pipeline turns development into a **conveyor of specialized subagents** where every stage is gated by the previous one's artifact, every claim must be proven by actual runs, and every accepted epic feeds a permanent project wiki.
 
-**Запасной канал (бандл):** скопируйте `zcode-pipeline-bundle.md` на чистую машину,
-откройте в ZCode и скажите «установи по этому документу».
+## What you get
 
-> После установки плагина уберите дубликаты из `~/.zcode/agents/` и `~/.zcode/commands/` —
-> user-scope перекрывает плагин, и его обновления перестанут применяться.
+- **12 specialized agents** — initializer, briefer, architect, tech lead, technical writer, developer, security / goal / code reviewers, QA, manager, summarizer.
+- **`/init-project` command** — detects the project stack, pulls current best practices from official sources into `.ai/guides/`, generates the project `AGENTS.md`.
+- **`pipeline` skill** — rules for the coordinating main agent: stage order, escalation routing, review cycles, task statuses, commit policy.
+- **Knowledge base (`.ai/docs/`)** — living per-component wiki + epic chronicles, updated after every accepted epic.
 
-## Цикл обновления (обязателен)
+## Install
 
-Источник правды — ЭТОТ репозиторий. Живые файлы `~/.zcode/` при сборке не нужны.
+1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → paste this repository's URL.
+2. **Personal → ZCode Pipeline → Install** → restart the session.
+3. Verify: 12 agents, the `/init-project` command, the `pipeline` skill.
 
-1. Правки только здесь: `zcode-pipeline/{agents,commands,skills,assets}`.
-2. Обнови `version` в `zcode-pipeline/.zcode-plugin/plugin.json` и запись плагина в `marketplace.json`.
-3. `python3 scripts/build_bundle.py` — пересборка бандла (падает при утечке персональных
-   данных или сломанной разметке — не обходить).
-4. Коммит + запись в `CHANGELOG.md`; для вех — тег; `git push --follow-tags`.
-5. Settings → Plugin Management → обновить плагин.
+No-marketplace fallback: open `zcode-pipeline-bundle.md` in ZCode and say "install from this document".
 
-## Состав
+## Quick start
 
 ```
-marketplace.json            # каталог маркетплейса (корень репо = маркетплейс)
-zcode-pipeline/             # плагин (имя каталога == name манифеста)
-  .zcode-plugin/plugin.json # манифест плагина (name, version, компоненты)
-  agents/                   # 12 субагентов конвейера
-  commands/init-project.md  # /init-project
-  skills/pipeline/SKILL.md  # правила координатора (триггеры во frontmatter)
-  assets/AGENTS-template.md # шаблон глобальных правил с плейсхолдерами персонализации
-scripts/build_bundle.py     # сборщик бандла (самодостаточен от репо)
-zcode-pipeline-bundle.md    # артефакт сборки (не редактировать руками)
-CHANGELOG.md                # история изменений
-README.md                   # этот файл
+/init-project                              # once per project: stack, guides, AGENTS.md
+"Run the pipeline: <your feature request>" # the coordinator skill takes over
 ```
 
-## Справка: конвейер
-
-Инициализатор (этап 0, `/init-project`) → Брифер → Архитектор → Техлид → Техписатель →
-Исполнитель → Ревью (Security → Goal → Code, циклы до полного одобрения) → QA → Менеджер
-(ACCEPTED/REJECTED) → Саммарйзер (база знаний `.ai/docs/`) → коммит координатором.
-
-Полные правила — в `skills/pipeline/SKILL.md` (и в шапке бандла).
-Артефакты в проекте: `.ai/briefs|architecture|decomposition|tasks|reviews|qa|docs|guides`.
-Статусы задач: `created → in_progress → implemented → reviewed → tested → accepted | rejected`.
+Full documentation: **[English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md)** · History: [CHANGELOG.md](CHANGELOG.md)

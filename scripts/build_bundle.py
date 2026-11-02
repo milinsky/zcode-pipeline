@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Сборка zcode-pipeline-bundle.md из файлов ЭТОГО репозитория (самодостаточен).
 
-Источник правды — репозиторий плагина: agents/, commands/, skills/, assets/.
+Источник правды — репозиторий плагина: zcode-pipeline/{agents,commands,skills,assets}.
 Живая установка ~/.zcode при сборке не требуется.
 
 Запуск: python3 scripts/build_bundle.py   (из корня репозитория)
@@ -50,7 +50,7 @@ def read(path: str) -> str:
 
 
 def build() -> str:
-    version = json.loads(read(os.path.join(HERE, ".zcode-plugin", "plugin.json")))["version"]
+    version = json.loads(read(os.path.join(HERE, "zcode-pipeline", ".zcode-plugin", "plugin.json")))["version"]
     parts = []
     parts.append(f"""# ZCode Development Pipeline — Bundle
 **Версия:** {version} | **Целевая среда:** ZCode (чистая установка)
@@ -102,16 +102,16 @@ def build() -> str:
 
     parts.append("\n## Файлы агентов\n")
     for a in AGENTS:
-        content = read(os.path.join(HERE, "agents", f"{a}.md"))
+        content = read(os.path.join(HERE, "zcode-pipeline", "agents", f"{a}.md"))
         parts.append(f"### `~/.zcode/agents/{a}.md`\n{ROLES[a]}\n\n{wrap(content)}\n")
 
-    cmd = read(os.path.join(HERE, "commands", "init-project.md"))
+    cmd = read(os.path.join(HERE, "zcode-pipeline", "commands", "init-project.md"))
     parts.append(f"## Команда\n### `~/.zcode/commands/init-project.md`\nЗапуск инициализатора проекта.\n\n{wrap(cmd)}\n")
 
-    skill = read(os.path.join(HERE, "skills", "pipeline", "SKILL.md"))
+    skill = read(os.path.join(HERE, "zcode-pipeline", "skills", "pipeline", "SKILL.md"))
     parts.append(f"## Скилл координатора\n### `~/.zcode/skills/pipeline/SKILL.md`\nПравила ведения конвейера (триггеры и порядок — во frontmatter).\n\n{wrap(skill)}\n")
 
-    template = read(os.path.join(HERE, "assets", "AGENTS-template.md"))
+    template = read(os.path.join(HERE, "zcode-pipeline", "assets", "AGENTS-template.md"))
     parts.append("""## Глобальный AGENTS.md (персональный, опционально)
 
 Сначала спроси пользователя (если ещё не спрашивал): обращение — «Имя + роль» (свободный ввод «Имя, роль» → `Меня зовут {имя}, я твой {роль}.`), «Только имя» (`Меня зовут {имя}.`) или «Без обращения» (строка исключается); язык — русский (`Всегда общайся со мной на русском языке.`), english (`Always communicate with me in English.`), другой (свободный ввод) или «Не указывать» (строка исключается). Затем создай файл с подставленными строками. Остатков `{ОБРАЩЕНИЕ}`/`{ЯЗЫК_ОБЩЕНИЯ}` в готовом файле быть не должно. Если пользователь отказался — пропусти файл целиком.

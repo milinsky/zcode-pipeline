@@ -78,3 +78,15 @@
 - После успешного теста плагина: удалить дубликаты из `~/.zcode/agents/` и
   `~/.zcode/commands/` (user-scope перекрывает плагин).
 - Embedded-режим инициализатора на чистой машине — на проверке у автора.
+
+## v1.1.1 — 2026-11-03
+
+Фикс установки как маркетплейса (ошибка «Marketplace manifest not found»).
+
+### Изменено
+
+- Каноническая структура: маркетплейс — корень репозитория с `marketplace.json`
+  (name `milinsky-agents-bundle`, плагин `zcode-pipeline`, source `./zcode-pipeline`);
+  плагин перенесён в каталог `zcode-pipeline/` (имя каталога == name манифеста — требование загрузчика).
+- `build_bundle.py` читает из `zcode-pipeline/`; версия бандла — из манифеста плагина.
+- README: инструкции Add Plugin Marketplace → Personal → Install.

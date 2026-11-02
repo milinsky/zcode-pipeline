@@ -1,8 +1,11 @@
 {
   "name": "zcode-pipeline",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Конвейер разработки на субагентах: Инициализатор → Брифер → Архитектор → Техлид → Техписатель → Исполнитель → Ревью (Security/Goal/Code) → QA → Менеджер → Саммарйзер, плюс скилл координатора и команда /init-project.",
   "agents": "agents",
   "commands": "commands",
-  "skills": "skills"
+  "skills": "skills",
+  "author": {
+    "name": "Mikhail Ilinsky"
+  }
 }

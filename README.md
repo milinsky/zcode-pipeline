@@ -9,9 +9,10 @@
 ## Установка
 
 **Основной канал (плагин):**
-1. ZCode → Settings → Plugin Management → Discover → «+» → добавить маркетплейс:
-   GitHub-репозиторий `milinsky/agents-bundle` (или локальную директорию этого репо для теста).
-2. Install `zcode-pipeline` → перезапустить сессию.
+1. Plugin Marketplace → **Add → Add Plugin Marketplace** → вставьте корень ЭТОГО репозитория
+   (локально: `/Users/milinsky/.zcode/pipeline`; для других машин — GitHub `milinsky/agents-bundle`).
+   Маркетплейс определяется корневым `marketplace.json`.
+2. Personal → маркетплейс `milinsky-agents-bundle` → плагин `ZCode Pipeline` → Install → перезапустить сессию.
 3. Проверка: 12 агентов, команда `/init-project`, скилл `pipeline`.
 
 **Запасной канал (бандл):** скопируйте `zcode-pipeline-bundle.md` на чистую машину,
@@ -24,8 +25,8 @@
 
 Источник правды — ЭТОТ репозиторий. Живые файлы `~/.zcode/` при сборке не нужны.
 
-1. Правки только здесь: `agents/`, `commands/`, `skills/`, `assets/`.
-2. Обнови `version` в `.zcode-plugin/plugin.json`.
+1. Правки только здесь: `zcode-pipeline/{agents,commands,skills,assets}`.
+2. Обнови `version` в `zcode-pipeline/.zcode-plugin/plugin.json` и запись плагина в `marketplace.json`.
 3. `python3 scripts/build_bundle.py` — пересборка бандла (падает при утечке персональных
    данных или сломанной разметке — не обходить).
 4. Коммит + запись в `CHANGELOG.md`; для вех — тег; `git push --follow-tags`.
@@ -34,11 +35,13 @@
 ## Состав
 
 ```
-.zcode-plugin/plugin.json   # манифест плагина (name, version, компоненты)
-agents/                     # 12 субагентов конвейера
-commands/init-project.md    # /init-project
-skills/pipeline/SKILL.md    # правила координатора (триггеры во frontmatter)
-assets/AGENTS-template.md   # шаблон глобальных правил с плейсхолдерами персонализации
+marketplace.json            # каталог маркетплейса (корень репо = маркетплейс)
+zcode-pipeline/             # плагин (имя каталога == name манифеста)
+  .zcode-plugin/plugin.json # манифест плагина (name, version, компоненты)
+  agents/                   # 12 субагентов конвейера
+  commands/init-project.md  # /init-project
+  skills/pipeline/SKILL.md  # правила координатора (триггеры во frontmatter)
+  assets/AGENTS-template.md # шаблон глобальных правил с плейсхолдерами персонализации
 scripts/build_bundle.py     # сборщик бандла (самодостаточен от репо)
 zcode-pipeline-bundle.md    # артефакт сборки (не редактировать руками)
 CHANGELOG.md                # история изменений

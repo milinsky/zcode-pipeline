@@ -130,7 +130,7 @@ Bridge: "findings N and M are ready to become an epic — run the conveyor?"
 **From marketplace (primary):**
 1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → paste this repository's URL.
 2. **Personal → ZCode Pipeline → Install** → restart the session.
-3. Verify: 12 agents, `/init-project`, `pipeline` skill.
+3. Verify: 13 agents, `/init-project`, `pipeline` skill.
 
 ## Usage
 

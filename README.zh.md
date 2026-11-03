@@ -130,7 +130,7 @@ analyst — 综合：按实际代码复核专家断言，依证据裁决矛盾�
 **插件市场（主渠道）：**
 1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → 粘贴本仓库 URL。
 2. **Personal → ZCode Pipeline → Install** → 重启会话。
-3. 验证：12 个智能体、`/init-project` 命令、`pipeline` 技能。
+3. 验证：13 个智能体、`/init-project` 命令、`pipeline` 技能。
 
 
 ## 使用

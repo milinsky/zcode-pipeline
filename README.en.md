@@ -36,7 +36,7 @@ Initializer → Briefer → Architect → Tech Lead → Tech Writer → Develope
 - **Escalations**: any blocked agent emits a structured `!!! ESCALATION !!!` marker; the coordinator routes it to the Tech Lead consultant and returns the binding resolution. Max one escalation per task per agent — guessing is a process violation.
 - **Stage gating** is built into every agent's prompt: no brief → no architecture; no decomposition → no tasks; no approved reviews → no QA; no `ACCEPTED` → no commit.
 
-## The 12 agents
+## The 13 agents
 
 | Agent | Role | Output / verdict |
 |---|---|---|
@@ -52,6 +52,7 @@ Initializer → Briefer → Architect → Tech Lead → Tech Writer → Develope
 | `qa` | Review test coverage, run real checks, may add own tests | `QUALITY_PASSED / QUALITY_FAILED / BLOCKED` |
 | `manager` | Final acceptance: initial data vs final artifacts, traced evidence | `ACCEPTED / REJECTED` + return stage |
 | `summarizer` | After ACCEPTED: distill the epic into the knowledge base | `.ai/docs/` wiki + chronicles + `INDEX.md` |
+| `analyst` | Analysis track: synthesize expert audits, verify against code, prioritize | `.ai/analysis/{epic}-{date}/REPORT.md` + bridge |
 
 ## Artifacts and statuses
 

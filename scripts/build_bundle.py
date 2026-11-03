@@ -22,7 +22,7 @@ import sys
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AGENTS = ["briefer", "architect", "tech-lead", "tech-writer", "developer",
           "security-review", "goal-review", "code-review", "qa", "manager",
-          "summarizer", "initializer"]
+          "summarizer", "initializer", "analyst"]
 
 ROLES = {
     "briefer": "Первый этап: превращает любой запрос в финальный бриф (интерактивные раунды вопросов).",
@@ -37,6 +37,7 @@ ROLES = {
     "manager": "Финальная приёмка: сверка начальных и конечных данных; ACCEPTED | REJECTED + этап возврата.",
     "summarizer": "После ACCEPTED: обновляет базу знаний .ai/docs/ (вики, хроники, INDEX, чек-лист).",
     "initializer": "Этап 0: инициализация проекта — стек, .ai/guides/ с лучшими практиками, AGENTS.md.",
+    "analyst": "Аналитический трек: синтез экспертных аудитов с верификацией по коду → REPORT.md + мостик в конвейер.",
 }
 
 

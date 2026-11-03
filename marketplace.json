@@ -4,8 +4,8 @@
     {
       "name": "zcode-pipeline",
       "source": "./zcode-pipeline",
-      "version": "1.1.1",
-      "description": "Конвейер разработки на субагентах: Инициализатор → Брифер → Архитектор → Техлид → Техписатель → Исполнитель → Ревью (Security/Goal/Code) → QA → Менеджер → Саммарйзер + скилл координатора и /init-project.",
+      "version": "1.2.0",
+      "description": "Конвейер разработки на субагентах: Инициализатор → Брифер → Архитектор → Техлид → Техписатель → Исполнитель → Ревью (Security/Goal/Code) → QA → Менеджер → Саммарйзер; аналитический трек (analyst + /analyze); скилл координатора, /init-project.",
       "displayName": "ZCode Pipeline",
       "category": "developer-tools"
     }

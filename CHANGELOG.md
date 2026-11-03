@@ -2,6 +2,34 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v1.2.0 — 2026-11-03
+
+Analysis track: deep project/feature analysis without development, parallel to the conveyor.
+
+### Added
+
+- **`analyst` agent** (expert synthesizer): input — an analysis-track brief plus expert audit
+  reports; selectively verifies claims against the actual code (manager pattern), resolves
+  inter-expert contradictions by evidence, prioritizes findings (severity × effort) and writes
+  `.ai/analysis/{epic}-{date}/REPORT.md` + one line in `.ai/docs/INDEX.md` (new "Analyses"
+  section). Ends with a bridge: which findings are ready to become a development epic.
+- **`/analyze` command**: brief (track: analysis) → parallel expert fan-out by focus →
+  coordinator saves reports → analyst → summary + bridge to the user.
+- **Analysis modes** in `architect` (architecture audit), `security-review` (whole-project
+  security audit), `code-review` (code-quality/tech-debt audit), `tech-lead` (feature
+  feasibility): activated by an analysis-track brief input; the conveyor modes are unchanged
+  and distinguished by the input artifact type.
+- `briefer`: new `analysis` request category; analysis briefs carry `**Трек:** analysis` and
+  success criteria formulated as questions the report must answer; focus recorded
+  (security | architecture | quality | all | feasibility).
+- `pipeline` skill: "Analysis track" section (fan-out rules, no QA/Manager/review cycles in
+  this track, bridge procedure).
+
+### Compatibility
+
+The development conveyor is untouched: all gates, review cycles and statuses behave exactly
+as before; the analysis track is opt-in via `/analyze` or an explicit analysis request.
+
 ## Licensing — 2026-11-03
 
 - Added the canonical GNU GPL v3 text as `LICENSE` (SPDX: GPL-3.0-or-later).

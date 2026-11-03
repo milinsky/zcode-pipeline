@@ -36,7 +36,7 @@
 - **升级机制（Escalation）**：被卡住的智能体返回结构化标记 `!!! ESCALATION !!!`；协调者将其路由给技术负责人顾问，并把约束性决议送回。每个智能体每个任务最多一次升级——瞎猜即违反流程。
 - **阶段门禁**写入每个智能体的提示词：没有简报 → 没有架构；没有分解 → 没有任务；评审未全部通过 → 没有 QA；没有 `ACCEPTED` → 没有提交。
 
-## 12 个智能体
+## 13 个智能体
 
 | 智能体 | 职责 | 产出 / 结论 |
 |---|---|---|
@@ -52,6 +52,7 @@
 | `qa` | 评审测试覆盖、真实运行检查、可补写自己的测试 | `QUALITY_PASSED / QUALITY_FAILED / BLOCKED` |
 | `manager` | 终审：初始数据 vs 最终产物，证据可trace | `ACCEPTED / REJECTED` + 退回阶段 |
 | `summarizer` | ACCEPTED 之后：把史诗蒸馏进知识库 | `.ai/docs/` wiki + 编年史 + `INDEX.md` |
+| `analyst` | 分析轨道：综合各专家审计并按代码验证 | `.ai/analysis/{epic}-{date}/REPORT.md` + 桥接 |
 
 ## 产物与状态
 

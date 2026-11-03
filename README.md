@@ -13,8 +13,9 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 
 ## What you get
 
-- **12 specialized agents** — initializer, briefer, architect, tech lead, technical writer, developer, security / goal / code reviewers, QA, manager, summarizer.
+- **13 specialized agents** — initializer, briefer, architect, tech lead, technical writer, developer, security / goal / code reviewers, QA, manager, summarizer, analyst.
 - **`/init-project` command** — detects the project stack, pulls current best practices from official sources into `.ai/guides/`, generates the project `AGENTS.md`.
+- **`/analyze` command (analysis track)** — deep project or feature analysis without development: brief → parallel expert audits (architecture / security / code quality / feasibility) → verified, prioritized synthesis report with a bridge into the development conveyor.
 - **`pipeline` skill** — rules for the coordinating main agent: stage order, escalation routing, review cycles, task statuses, commit policy.
 - **Knowledge base (`.ai/docs/`)** — living per-component wiki + epic chronicles, updated after every accepted epic.
 
@@ -31,6 +32,7 @@ No-marketplace fallback: open `zcode-pipeline-bundle.md` in ZCode and say "insta
 ```
 /init-project                              # once per project: stack, guides, AGENTS.md
 "Run the pipeline: <your feature request>" # the coordinator skill takes over
+/analyze "<project or feature>"            # expert analysis, no code changes
 ```
 
 Full documentation: **[English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md)** · History: [CHANGELOG.md](CHANGELOG.md)

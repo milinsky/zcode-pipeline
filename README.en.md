@@ -132,8 +132,6 @@ Bridge: "findings N and M are ready to become an epic — run the conveyor?"
 2. **Personal → ZCode Pipeline → Install** → restart the session.
 3. Verify: 12 agents, `/init-project`, `pipeline` skill.
 
-**Fallback (no marketplace):** open `zcode-pipeline-bundle.md` in ZCode and say "install from this document" — it recreates all files at user scope.
-
 ## Usage
 
 ```

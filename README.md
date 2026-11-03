@@ -36,8 +36,6 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 2. **Personal → ZCode Pipeline → Install** → restart the session.
 3. Verify: 12 agents, the `/init-project` command, the `pipeline` skill.
 
-No-marketplace fallback: open `zcode-pipeline-bundle.md` in ZCode and say "install from this document".
-
 ## Quick start
 
 ```

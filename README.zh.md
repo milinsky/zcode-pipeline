@@ -79,7 +79,7 @@ wiki 具有权威性但可验证：页面带有"已在某 commit 验证"戳记�
 - **史诗状态文件**（`.ai/state.md`）：实时状态——阶段、下一步、未闭合的评审循环、token 消耗——每步更新。插件的 SessionStart 钩子会在新会话打开时提醒未完成的工作。
 - **史诗分支**：每个开发史诗在 `epic/{name}` 分支中进行，仅在 Manager ACCEPTED 后合入 `main`：干净回滚、并行史诗。
 - **DAG 允许处的并行**：独立任务并发执行；Security 与 Goal 评审并行，Code 评审在其后。
-- **提示词 lint**：bundle 构建器校验每个智能体提示词的必备章节（升级协议、严重违规、结论格式）——损坏的提示词会让构建失败。
+- **提示词 lint**：validate_prompts.py 校验每个智能体提示词的必备章节（升级协议、严重违规、结论格式）——损坏的提示词会让构建失败。
 - **消耗指标与预算**：各阶段 token 消耗写入 state，并按史诗累积到 `.ai/metrics.md`；每个史诗有预算（默认 5M）——70% 预警，100% 停下询问。
 - **多史诗**：每个史诗独立 state 文件（`.ai/state/{epic}.md`）加队列；同时只有一个活跃史诗，仅在阶段边界切换，各自使用独立分支。
 - **分析→开发桥接**：analyst 为可立项的发现保存现成的 draft-brief（`.ai/briefs/{slug}-draft.md`），分析之后一步即可启动流水线。
@@ -132,7 +132,6 @@ analyst — 综合：按实际代码复核专家断言，依证据裁决矛盾�
 2. **Personal → ZCode Pipeline → Install** → 重启会话。
 3. 验证：12 个智能体、`/init-project` 命令、`pipeline` 技能。
 
-**备选渠道（无市场）：** 在 ZCode 中打开 `zcode-pipeline-bundle.md` 并说"按此文档安装"——它会在用户作用域重建全部文件。
 
 ## 使用
 
@@ -150,18 +149,17 @@ analyst — 综合：按实际代码复核专家断言，依证据裁决矛盾�
 marketplace.json            # 市场目录（仓库根 = 市场）
 zcode-pipeline/             # 插件（目录名 == 清单名）
   .zcode-plugin/plugin.json
-  agents/                   # 12 个子智能体
+  agents/                   # 13 个子智能体
   commands/init-project.md
   skills/pipeline/SKILL.md  # 协调者规则
   assets/AGENTS-template.md # 带个性化占位符的全局规则模板
-scripts/build_bundle.py     # bundle 构建器（仓库自包含）
-zcode-pipeline-bundle.md    # 生成产物——请勿手改
+scripts/validate_prompts.py # 提示词 lint（必备章节、泄漏检查）
 ```
 
 更新流程（提交与 CHANGELOG 使用英文）：
 1. 只修改 `zcode-pipeline/{agents,commands,skills,assets}`。
 2. 同步更新 `zcode-pipeline/.zcode-plugin/plugin.json` 与 `marketplace.json` 中的 `version`。
-3. `python3 scripts/build_bundle.py`（检测到个人数据泄漏或标记损坏时会直接失败——不要绕过）。
+3. `python3 scripts/validate_prompts.py`（检测到个人数据泄漏或标记损坏时会直接失败——不要绕过）。
 4. 提交 + CHANGELOG 记录；里程碑打 tag；`git push --follow-tags`。
 5. 在 ZCode → Settings → Plugins 中更新插件。
 

@@ -2,6 +2,23 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.1.0 — 2026-11-03
+
+Bundle removed; git-marketplace is the sole install channel. Prompt linter preserved.
+
+### Changed
+
+- Removed `zcode-pipeline-bundle.md` and `scripts/build_bundle.py` — the fallback
+  install channel is no longer needed (git-marketplace installation is confirmed
+  working). One source of truth, one install path.
+- `scripts/validate_prompts.py` — extracted from the bundle builder: checks mandatory
+  agent sections (escalation, gross violations, verdict formats, language rule),
+  personal-data leaks, and component file existence. Run after any prompt change.
+
+### Removed
+
+- `zcode-pipeline-bundle.md` (161KB generated artifact, prone to desynchronization).
+
 ## v2.0.0 — 2026-11-03
 
 English Core: all agent system prompts, the coordinator skill and commands translated to

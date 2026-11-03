@@ -148,7 +148,7 @@ Then simply answer the interactive question rounds — everything else (stages, 
 marketplace.json            # marketplace catalog (repo root = marketplace)
 zcode-pipeline/             # the plugin (dir name == manifest name)
   .zcode-plugin/plugin.json
-  agents/                   # 12 subagents
+  agents/                   # 13 subagents
   commands/init-project.md
   skills/pipeline/SKILL.md  # coordinator rules
   assets/AGENTS-template.md # global-rules template with personalization placeholders

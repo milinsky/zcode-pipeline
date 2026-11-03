@@ -148,7 +148,7 @@ analyst — синтез: перепроверяет утверждения эк
 marketplace.json            # каталог маркетплейса (корень репо = маркетплейс)
 zcode-pipeline/             # плагин (имя каталога == имени манифеста)
   .zcode-plugin/plugin.json
-  agents/                   # 12 субагентов
+  agents/                   # 13 субагентов
   commands/init-project.md
   skills/pipeline/SKILL.md  # правила координатора
   assets/AGENTS-template.md # шаблон глобальных правил с плейсхолдерами персонализации

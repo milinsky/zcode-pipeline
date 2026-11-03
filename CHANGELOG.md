@@ -2,6 +2,13 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## Releases — 2026-11-03
+
+- All 9 versions (v1.0 → v2.1.1) now have GitHub Releases with titles and
+  change summaries. Future releases must create a Release, not just a tag:
+  `gh release create vX.Y.Z --title "vX.Y.Z — Title" --notes "Summary"`.
+- READMEs (EN/RU/ZH): release creation step added to the update cycle.
+
 ## CI — 2026-11-03
 
 Automatic prompt-lint enforcement.

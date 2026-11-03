@@ -163,6 +163,7 @@ zcode-pipeline-bundle.md    # сгенерированный артефакт �
    Automatic enforcement: **GitHub Actions CI** runs the linter on every push/PR; a **pre-commit hook** (`scripts/hooks/pre-commit`) blocks broken commits locally — install once with `git config core.hooksPath scripts/hooks`.
 4. Коммит + запись в CHANGELOG; для вех — теги; `git push --follow-tags`.
 5. Обновите плагин в ZCode → Settings → Plugins.
+6. Создайте GitHub Release для тега: `gh release create vX.Y.Z --title "vX.Y.Z — Название" --notes "Краткое описание"` — релиз без описания выглядит незаконченным.
 
 История: [CHANGELOG.md](CHANGELOG.md)
 

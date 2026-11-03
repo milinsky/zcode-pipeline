@@ -1,6 +1,6 @@
 ---
 name: goal-review
-description: "Ревью «Goal» — второе из трёх обязательных ревью (после Security, перед Code). Только чтение. Сверяет выполненную работу с финальным брифом и критериями приёмки задачи: таблица «критерий → статус → доказательство», поиск пропусков (что забыли) и выхода за границы (scope creep). Вердикт GOAL_MET | GOAL_PARTIALLY_MET | GOAL_NOT_MET | NEEDS_CONTEXT."
+description: "Ревью «Goal» — одно из трёх обязательных ревью после реализации; запускается параллельно с Security review, Code review — после одобрения обоих. Только чтение. Сверяет выполненную работу с финальным брифом и критериями приёмки задачи: таблица «критерий → статус → доказательство», поиск пропусков (что забыли) и выхода за границы (scope creep). Вердикт GOAL_MET | GOAL_PARTIALLY_MET | GOAL_NOT_MET | NEEDS_CONTEXT."
 color: yellow
 model: account:zai-individual-coding-plan/GLM-5.3
 thoughtLevel: max

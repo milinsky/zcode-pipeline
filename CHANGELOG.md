@@ -2,6 +2,38 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v1.3.0 — 2026-11-03
+
+Reliability, speed and self-testing release (all eight improvement proposals accepted).
+
+### Added
+
+- **Epic state + SessionStart hook**: `.ai/state.md` (stage, next step, open cycles,
+  escalations, token usage log, task statuses) updated by the coordinator after every step;
+  the plugin now ships `hooks/hooks.json` + `hooks/session-start.sh` that remind about
+  unfinished conveyor work at session start.
+- **`/self-test` command**: regression test of the conveyor itself — six agent-contract
+  probes on a sandbox fixture (`random`-based token generator): briefer round format,
+  architect/manager missing-input gates, security/code review verdict formats (security
+  expected to catch `random`), tech-writer task template. PASS/FAIL report to
+  `.ai/self-test-{date}.md`.
+- **Prompt linter** in `build_bundle.py`: mandatory sections per agent (escalation protocol,
+  gross violations, verdict formats, analysis-track sections) — build fails on a broken prompt.
+  Commands are now discovered from the commands directory (self-test included automatically).
+- **Parallelism rules** in the `pipeline` skill: DAG-independent tasks run concurrently;
+  security-review ∥ goal-review, code-review after both.
+- **Epic branches**: `epic/{name}` per development epic, merged into `main` after ACCEPTED.
+- **Usage metrics**: coordinator logs per-stage token usage into state; summarizer reports
+  it ("Расход") and appends per-epic lines to `.ai/metrics.md`.
+- **Feedback loop**: summarizer REPORT gains "Уроки и правила-кандидаты" — recurring review
+  findings become concrete guide-edit proposals (applied only via re-init/user consent).
+- **security-review**: WebFetch/WebSearch tools — dependency versions and CVEs are now
+  checked live instead of "when information is available".
+
+### Changed
+
+- security-review / goal-review descriptions reflect parallel review scheduling.
+
 ## Documentation — 2026-11-03 (commands & analysis track)
 
 - All README versions gained dedicated "Commands" and "Analysis track" sections:

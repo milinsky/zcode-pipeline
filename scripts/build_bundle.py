@@ -41,6 +41,24 @@ ROLES = {
 }
 
 
+AGENT_CHECKS = {
+    "briefer": ["Раунд вопросов", "Финальный бриф", "Трек:"],
+    "architect": ["Рекомендации следующим агентам", "Аналитический трек"],
+    "tech-lead": ["декомпоз", "Решение Техлида", "feasibility"],
+    "tech-writer": ["Phase 0", "Применимые правила", "Критерии приёмки"],
+    "developer": ["Phase 0", "implemented", "MUST NOT DO"],
+    "security-review": ["PASS_WITH_WARNINGS", "Аналитический трек", "NEEDS_MORE_CONTEXT"],
+    "goal-review": ["GOAL_MET", "GOAL_PARTIALLY_MET", "трассируем"],
+    "code-review": ["REQUEST_CHANGES", "NEEDS_DISCUSSION", "Аналитический трек"],
+    "qa": ["QUALITY_PASSED", "QUALITY_FAILED"],
+    "manager": ["ACCEPTED", "REJECTED", "Этап возврата"],
+    "summarizer": ["База знаний обновлена", "Уроки и правила-кандидаты", "manual-checklist"],
+    "initializer": ["source=file|embedded", "Персонализация"],
+    "analyst": ["[verified]", "[hypothesis]", "Мостик"],
+}
+REQUIRED_ALL = ["## Грубые нарушения", "### !!! ESCALATION !!!"]
+
+
 def wrap(content: str) -> str:
     return "`````markdown\n" + content.rstrip("\n") + "\n`````"
 
@@ -106,8 +124,12 @@ def build() -> str:
         content = read(os.path.join(HERE, "zcode-pipeline", "agents", f"{a}.md"))
         parts.append(f"### `~/.zcode/agents/{a}.md`\n{ROLES[a]}\n\n{wrap(content)}\n")
 
-    cmd = read(os.path.join(HERE, "zcode-pipeline", "commands", "init-project.md"))
-    parts.append(f"## Команда\n### `~/.zcode/commands/init-project.md`\nЗапуск инициализатора проекта.\n\n{wrap(cmd)}\n")
+    cmd_dir = os.path.join(HERE, "zcode-pipeline", "commands")
+    for fname in sorted(os.listdir(cmd_dir)):
+        if not fname.endswith(".md"):
+            continue
+        cmd = read(os.path.join(cmd_dir, fname))
+        parts.append(f"### `~/.zcode/commands/{fname}`\n\n{wrap(cmd)}\n")
 
     skill = read(os.path.join(HERE, "zcode-pipeline", "skills", "pipeline", "SKILL.md"))
     parts.append(f"## Скилл координатора\n### `~/.zcode/skills/pipeline/SKILL.md`\nПравила ведения конвейера (триггеры и порядок — во frontmatter).\n\n{wrap(skill)}\n")
@@ -129,7 +151,14 @@ def main() -> None:
     with open(out, "w", encoding="utf-8") as fh:
         fh.write(bundle)
     wrappers = bundle.count("`````markdown")
-    expected = len(AGENTS) + 3
+    n_cmds = len([f for f in os.listdir(os.path.join(HERE, "zcode-pipeline", "commands")) if f.endswith(".md")])
+    expected = len(AGENTS) + n_cmds + 2
+    lint_errors = []
+    for a in AGENTS:
+        body = read(os.path.join(HERE, "zcode-pipeline", "agents", f"{a}.md"))
+        for token in REQUIRED_ALL + AGENT_CHECKS.get(a, []):
+            if token not in body:
+                lint_errors.append(f"{a}: нет маркера {token!r}")
     personal_leak = "Михаил" in bundle
     lines = bundle.count("\n") + 1
     print(f"бандл: {out}")
@@ -137,6 +166,10 @@ def main() -> None:
     print(f"персональные данные в бандле: {'НАЙДЕНЫ — ОШИБКА' if personal_leak else 'отсутствуют (ok)'}")
     if wrappers != expected or personal_leak:
         sys.exit("СБОЙ СБОРКИ — проверь исходники.")
+    if lint_errors:
+        for e in lint_errors:
+            print("LINT FAIL:", e)
+        sys.exit("СБОЙ ЛИНТЕРА ПРОМПТОВ — восстанови обязательные секции.")
 
 
 if __name__ == "__main__":

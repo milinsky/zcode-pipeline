@@ -24,6 +24,7 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 - `/init-project` — stack detection, best-practice guides (`.ai/guides/`), project `AGENTS.md`; once per project.
 - `/analyze "<project or feature>"` — expert analysis without development: brief → parallel expert audits → verified synthesis report → optional bridge into the conveyor.
 - `"Run the pipeline: …"` — the full development conveyor (brief → architecture → tasks → code → triple review → QA → acceptance).
+- `/self-test` — regression test of the conveyor itself (agent-contract probes on a sandbox fixture).
 
 ## Install
 

@@ -68,8 +68,17 @@ The wiki is authoritative-but-verifiable: pages carry a "verified at commit" sta
 |---|---|
 | `/init-project` | Stage 0 for a project. Empty project: interactive stack selection (popular stacks, multi-select, free-form input). Existing project: stack detected from manifests and linter configs, then confirmed. Pulls current best practices per technology into `.ai/guides/` and generates/updates the project `AGENTS.md` (base rules `source=file\|embedded`, personalization asked interactively). Idempotent re-init. |
 | `/analyze "<project or feature>"` | Deep expert analysis **without development**: brief (track: analysis) → parallel expert audits by focus → verified, prioritized synthesis report → optional bridge into the development conveyor. |
+| `/self-test` | Regression test of the conveyor itself: six agent-contract probes on a sandbox fixture (response formats, stage gates, verdicts) → PASS/FAIL report in `.ai/self-test-{date}.md`. |
 
 Natural language works too: "initialize the project", "analyze the project for…", "run the pipeline: …".
+
+## Reliability features
+
+- **Epic state file** (`.ai/state.md`): live status — stage, next step, open review cycles, token usage — updated after every step. The plugin's SessionStart hook reminds about unfinished work when a new session opens.
+- **Epic branches**: each development epic runs in an `epic/{name}` branch, merged into `main` only after the Manager's ACCEPTED — clean rollbacks and parallel epics.
+- **Parallelism where the DAG allows**: independent tasks run concurrently; Security and Goal reviews run in parallel, Code review after both.
+- **Prompt linter**: the bundle builder verifies mandatory sections of every agent prompt (escalation protocol, gross violations, verdict formats) — a broken prompt fails the build.
+- **Usage metrics**: per-stage token usage is logged in the state file and accumulated per epic into `.ai/metrics.md`.
 
 ## Analysis track
 

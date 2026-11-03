@@ -152,14 +152,14 @@ zcode-pipeline/             # плагин (имя каталога == имен�
   commands/init-project.md
   skills/pipeline/SKILL.md  # правила координатора
   assets/AGENTS-template.md # шаблон глобальных правил с плейсхолдерами персонализации
-scripts/build_bundle.py     # сборщик бандла (самодостаточен от репо)
+scripts/validate_prompts.py  # линтер промптов (самодостаточен от репо)
 zcode-pipeline-bundle.md    # сгенерированный артефакт — не редактировать руками
 ```
 
 Цикл обновления (коммиты и CHANGELOG на английском):
 1. Правки только в `zcode-pipeline/{agents,commands,skills,assets}`.
 2. Обновите `version` в `zcode-pipeline/.zcode-plugin/plugin.json` **и** запись плагина в `marketplace.json`.
-3. `python3 scripts/build_bundle.py` (падает при утечке персональных данных или сломанной разметке — не обходить).
+3. `python3 scripts/validate_prompts.py` (падает при отсутствии обязательных секций или утечке персональных данных — не обходить).
 4. Коммит + запись в CHANGELOG; для вех — теги; `git push --follow-tags`.
 5. Обновите плагин в ZCode → Settings → Plugins.
 

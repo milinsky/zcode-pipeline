@@ -152,14 +152,14 @@ zcode-pipeline/             # the plugin (dir name == manifest name)
   commands/init-project.md
   skills/pipeline/SKILL.md  # coordinator rules
   assets/AGENTS-template.md # global-rules template with personalization placeholders
-scripts/build_bundle.py     # bundle builder (self-contained from the repo)
+scripts/validate_prompts.py  # prompt linter (self-contained from the repo)
 zcode-pipeline-bundle.md    # generated artifact — do not edit by hand
 ```
 
 Update cycle (commits and CHANGELOG in English):
 1. Edit only `zcode-pipeline/{agents,commands,skills,assets}`.
 2. Bump `version` in `zcode-pipeline/.zcode-plugin/plugin.json` **and** the plugin entry in `marketplace.json`.
-3. `python3 scripts/build_bundle.py` (it fails on personal-data leaks or broken markup — do not bypass).
+3. `python3 scripts/validate_prompts.py` (it fails on missing mandatory sections or personal-data leaks — do not bypass).
 4. Commit + CHANGELOG entry; tag milestones; `git push --follow-tags`.
 5. Update the plugin in ZCode → Settings → Plugins.
 

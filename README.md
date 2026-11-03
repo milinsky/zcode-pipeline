@@ -5,6 +5,7 @@
 [![English](https://img.shields.io/badge/README-English-blue)](README.en.md)
 [![Русский](https://img.shields.io/badge/README-Русский-red)](README.ru.md)
 [![中文](https://img.shields.io/badge/README-中文-green)](README.zh.md)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL--3.0--or--later-blue)](LICENSE)
 
 ## Why
 
@@ -33,3 +34,7 @@ No-marketplace fallback: open `zcode-pipeline-bundle.md` in ZCode and say "insta
 ```
 
 Full documentation: **[English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md)** · History: [CHANGELOG.md](CHANGELOG.md)
+
+## License
+
+[GPL-3.0-or-later](LICENSE) · © 2026 Mikhail Ilinsky

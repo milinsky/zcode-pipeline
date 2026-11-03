@@ -2,6 +2,12 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## Licensing — 2026-11-03
+
+- Added the canonical GNU GPL v3 text as `LICENSE` (SPDX: GPL-3.0-or-later).
+- All README versions (EN/RU/ZH + brief) now carry the license notice, warranty
+  disclaimer and a link to `LICENSE`.
+
 ## Documentation — 2026-11-03
 
 - Multilingual README: brief `README.md` (English) + full versions — [English](README.en.md), [Русский](README.ru.md), [中文](README.zh.md).

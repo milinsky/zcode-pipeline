@@ -101,3 +101,11 @@ zcode-pipeline-bundle.md    # 生成产物——请勿手改
 5. 在 ZCode → Settings → Plugins 中更新插件。
 
 历史：[CHANGELOG.md](CHANGELOG.md)
+
+## 许可证
+
+Copyright © 2026 Mikhail Ilinsky。
+
+本程序是自由软件：您可以根据自由软件基金会发布的 GNU 通用公共许可证（第 3 版或您选择的任何更高版本）的条款重新分发和/或修改它。
+
+本程序的分发是出于希望它有用，但不提供任何保证；详见 [GNU 通用公共许可证](LICENSE)。

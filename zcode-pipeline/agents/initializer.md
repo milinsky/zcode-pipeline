@@ -82,6 +82,7 @@ Regardless of the stack, as the first items of the "Project rules" section of ev
 3. Never add co-authors to commits — strictly forbidden.
 4. For languages with optional typing (Python, PHP, etc.) — typing and type hints everywhere, without exceptions.
 4. Never use references in code or documentation (README.md) to .ai and/or any documents or paragraphs from that folder
+5. **No emoji, decorative Unicode, or visual embellishments anywhere**: code, comments, docstrings, commit messages, documentation (README, guides, wiki, reports, task descriptions). Professional projects reject pull requests containing emoji or decorative characters. Only use emoji when the user explicitly requests them for a specific deliverable.
 
 These rules apply in all projects; where they intersect with the project's detected rules, record both the detected ones and the universal ones.
 

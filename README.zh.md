@@ -160,6 +160,7 @@ scripts/validate_prompts.py # 提示词 lint（必备章节、泄漏检查）
 1. 只修改 `zcode-pipeline/{agents,commands,skills,assets}`。
 2. 同步更新 `zcode-pipeline/.zcode-plugin/plugin.json` 与 `marketplace.json` 中的 `version`。
 3. `python3 scripts/validate_prompts.py`（检测到个人数据泄漏或标记损坏时会直接失败——不要绕过）。
+   自动强制：**GitHub Actions CI** 在每次 push/PR 时运行 lint；**pre-commit 钩子**（`scripts/hooks/pre-commit`）在本地阻止损坏的提交——安装一次：`git config core.hooksPath scripts/hooks`。
 4. 提交 + CHANGELOG 记录；里程碑打 tag；`git push --follow-tags`。
 5. 在 ZCode → Settings → Plugins 中更新插件。
 

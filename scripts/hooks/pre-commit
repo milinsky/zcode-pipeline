@@ -1,0 +1,9 @@
+#!/bin/sh
+# zcode-pipeline pre-commit hook: validate agent prompts.
+# Install: git config core.hooksPath scripts/hooks
+python3 "$(dirname "$0")/../../scripts/validate_prompts.py" || {
+  echo ""
+  echo "PROMPT LINT FAILED — fix the issues above before committing."
+  echo "See scripts/validate_prompts.py for the check list."
+  exit 1
+}

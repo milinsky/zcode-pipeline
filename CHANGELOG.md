@@ -2,6 +2,19 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## CI — 2026-11-03
+
+Automatic prompt-lint enforcement.
+
+### Added
+
+- **GitHub Actions CI** (`.github/workflows/lint.yml`): runs `validate_prompts.py`
+  on every push and pull request — broken prompts fail the build for everyone,
+  including fork contributors.
+- **Pre-commit hook** (`scripts/hooks/pre-commit`): blocks committing broken
+  prompts locally. Install once: `git config core.hooksPath scripts/hooks`.
+- READMEs (EN/RU/ZH): CI and hook installation documented in the update cycle.
+
 ## v2.1.0 — 2026-11-03
 
 Bundle removed; git-marketplace is the sole install channel. Prompt linter preserved.

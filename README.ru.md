@@ -160,6 +160,7 @@ zcode-pipeline-bundle.md    # сгенерированный артефакт �
 1. Правки только в `zcode-pipeline/{agents,commands,skills,assets}`.
 2. Обновите `version` в `zcode-pipeline/.zcode-plugin/plugin.json` **и** запись плагина в `marketplace.json`.
 3. `python3 scripts/validate_prompts.py` (падает при отсутствии обязательных секций или утечке персональных данных — не обходить).
+   Automatic enforcement: **GitHub Actions CI** runs the linter on every push/PR; a **pre-commit hook** (`scripts/hooks/pre-commit`) blocks broken commits locally — install once with `git config core.hooksPath scripts/hooks`.
 4. Коммит + запись в CHANGELOG; для вех — теги; `git push --follow-tags`.
 5. Обновите плагин в ZCode → Settings → Plugins.
 

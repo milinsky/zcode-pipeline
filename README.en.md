@@ -160,6 +160,7 @@ Update cycle (commits and CHANGELOG in English):
 1. Edit only `zcode-pipeline/{agents,commands,skills,assets}`.
 2. Bump `version` in `zcode-pipeline/.zcode-plugin/plugin.json` **and** the plugin entry in `marketplace.json`.
 3. `python3 scripts/validate_prompts.py` (it fails on missing mandatory sections or personal-data leaks — do not bypass).
+   Automatic enforcement: **GitHub Actions CI** runs the linter on every push/PR; a **pre-commit hook** (`scripts/hooks/pre-commit`) blocks broken commits locally — install once with `git config core.hooksPath scripts/hooks`.
 4. Commit + CHANGELOG entry; tag milestones; `git push --follow-tags`.
 5. Update the plugin in ZCode → Settings → Plugins.
 

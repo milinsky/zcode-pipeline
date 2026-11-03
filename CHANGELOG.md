@@ -2,6 +2,36 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v1.4.0 — 2026-11-03
+
+Full-coverage self-testing, analysis-to-development bridge, budgets, multi-epic.
+
+### Added
+
+- **Full self-test**: `/self-test` now runs 13 probes covering every agent (added:
+  developer run from a sandbox task, QA gate before reviews, goal-review verdict format,
+  analyst synthesis with [verified]/[hypothesis] and bridge-brief, tech-lead feasibility
+  format, initializer questions-only mode, summarizer over a prepared mini-epic trail).
+  Waves of parallel probes; spend of the run is reported.
+- **Bridge-brief**: the analyst saves a ready `.ai/briefs/{slug}-draft.md` for findings
+  that are ready to become an epic — after an analysis, the conveyor starts in one step
+  (Briefer confirms the draft with the user).
+- **Epic token budgets**: state files carry a budget (default 5,000,000) and accumulated
+  spend; the coordinator warns at 70% and stops to ask at 100%.
+- **`/pipeline-status` command**: live summary — active epic(s), stage, next step, open
+  cycles, unfinished tasks, manual-checklist items, recent metrics.
+- **Multi-epic**: per-epic state `.ai/state/{epic}.md` + `.ai/state/QUEUE.md`; one active
+  epic, switching only at stage boundaries; legacy single state.md is migrated on first
+  update; the SessionStart hook now lists all state files and the queue.
+- **Guides freshness**: on re-init the initializer checks each guide's "actual on" date;
+  guides older than 90 days get a full practice re-verification and an explicit
+  "refreshed as stale" note in the summary.
+
+### Changed
+
+- README (EN/RU/ZH + brief): /self-test is 13 probes; /pipeline-status documented;
+  Reliability sections extended with budgets, multi-epic and the bridge-brief.
+
 ## v1.3.0 — 2026-11-03
 
 Reliability, speed and self-testing release (all eight improvement proposals accepted).

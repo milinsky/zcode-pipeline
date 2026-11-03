@@ -1,6 +1,6 @@
 {
   "name": "zcode-pipeline",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Конвейер разработки на субагентах: Инициализатор → Брифер → Архитектор → Техлид → Техписатель → Исполнитель → Ревью (Security/Goal/Code) → QA → Менеджер → Саммарйзер; аналитический трек (analyst + /analyze); скилл координатора, /init-project.",
   "agents": "agents",
   "commands": "commands",

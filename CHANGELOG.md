@@ -2,6 +2,38 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v1.5.0 — 2026-11-03
+
+Fast-track profile: a cheap path for small changes — deliberately not a "skip stages" mechanism.
+
+### Design rationale
+
+Arbitrary skip markers were considered and rejected: they cascade through stage gates (every
+agent would have to accept "stage skipped" as valid input), erode process discipline, hurt
+auditability and do not even reduce cost meaningfully. Named flow profiles do: the analysis
+track already proved the pattern; fast-track completes it.
+
+### Added
+
+- **Flow profiles** (pipeline skill): full (default) | fast-track | analysis. Profile choice
+  is explicit and confirmed by the user — never a silent skip.
+- **Fast-track**: Briefer → Developer → Code review (→ Security review as a second gate on
+  risk triggers: crypto/secrets, user input, file paths, network, dependencies, auth) →
+  coordinator commit tagged `fast-track`. Budget 1M tokens. Smallness criteria (1–2 files,
+  no new contracts, no architectural decisions, reversible, <2h) checked by the Briefer,
+  which proposes the profile and emits a mandatory "Fast-задача" mini-task section
+  (scope/files/acceptance criteria) — no Tech Writer needed.
+- **Never-cut guarantees**: brief, developer Phase 0, at least one full review (to APPROVE),
+  commit only after approval.
+- **Profile escalation**: developer or reviewer smelling architectural scale escalates —
+  the task moves to the full conveyor with the brief already done (task file migrates from
+  `_fast/` to the epic folder).
+- **`/fast` command**; task files land in `.ai/tasks/_fast/{date}-{slug}.md` with statuses
+  `created → implemented → fast-accepted`.
+- `briefer`: smallness criteria, `**Профиль:**` brief field, "Fast-задача" section rules.
+- READMEs (EN/RU/ZH + brief): /fast command, "Fast track" section with the profiles table
+  and the anti-skip rationale.
+
 ## v1.4.0 — 2026-11-03
 
 Full-coverage self-testing, analysis-to-development bridge, budgets, multi-epic.

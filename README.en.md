@@ -70,6 +70,7 @@ The wiki is authoritative-but-verifiable: pages carry a "verified at commit" sta
 | `/analyze "<project or feature>"` | Deep expert analysis **without development**: brief (track: analysis) → parallel expert audits by focus → verified, prioritized synthesis report → optional bridge into the development conveyor. |
 | `/self-test` | Regression test of the conveyor itself: 13 agent-contract probes covering every agent (response formats, stage gates, verdicts, analysis track, bridge-brief) → PASS/FAIL report in `.ai/self-test-{date}.md`. |
 | `/pipeline-status` | Live conveyor status: active epic(s) from state files, current stage and next step, open review cycles, unfinished tasks, spend vs budget, recent metrics. |
+| `/fast "<small change>"` | Fast-track profile: brief → developer → code review (security review added on risk triggers: crypto, user input, file paths, network, dependencies, auth) → commit. For small reversible edits (1–2 files, no new contracts). |
 
 Natural language works too: "initialize the project", "analyze the project for…", "run the pipeline: …".
 
@@ -82,6 +83,18 @@ Natural language works too: "initialize the project", "analyze the project for�
 - **Usage metrics and budgets**: per-stage token usage is logged in the state file and accumulated per epic into `.ai/metrics.md`; each epic gets a token budget (default 5M) — warn at 70%, stop-and-ask at 100%.
 - **Multi-epic**: per-epic state files (`.ai/state/{epic}.md`) plus a queue; one active epic, switching only at stage boundaries, each epic on its own branch.
 - **Analysis → development bridge**: the analyst saves a ready draft-brief (`.ai/briefs/{slug}-draft.md`) for findings that are ready — starting the conveyor after an analysis is a single step.
+
+## Fast track (small changes)
+
+Deliberately **not** a "skip stages" mechanism — arbitrary skips would cascade through the stage gates and erode the discipline the conveyor exists for. Instead, three named flow profiles:
+
+| Profile | Path | When |
+|---|---|---|
+| full | the whole conveyor (default) | anything touching contracts, architecture, several modules |
+| fast-track | Briefer → Developer → Code review (→ Security on risk triggers) → commit | small reversible edits: 1–2 files, no new contracts, no architectural decisions |
+| analysis | the analysis track | expert judgment without code changes |
+
+Fast-track guarantees that are never cut: a brief, the developer Phase 0, at least one full review, and a commit only after approval. The Briefer proposes the profile when a request meets the smallness criteria; the user always confirms. If the developer or reviewer smells architectural scale, they escalate and the task moves to the full conveyor with the brief already done.
 
 ## Analysis track
 

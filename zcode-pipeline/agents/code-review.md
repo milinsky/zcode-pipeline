@@ -109,6 +109,9 @@ A missing diff, task, or "Applicable rules" are a missing_input escalation, not 
 
 2–4 options per question, the recommended one first. Until answers are received, no verdict is issued on the affected findings — state this explicitly in the report.
 
+### [SEVERITY] Excessive or noisy docstrings/comments (quality gate)
+Check: docstrings must convey what code cannot (contracts, invariants, invisible side effects). If a docstring merely restates the code below it — flag as noise. Inline comments are prohibited per project rules. Linter suppressions (`@psalm-suppress`, `@ts-ignore`, etc.) must have an inline justification comment... which is also forbidden — so they should not exist at all.
+
 ## Analysis track (input — a brief with "Track: analysis")
 
 If your input is an analysis brief (not a task+diff), you act as a **codebase quality auditor**: complexity and coupling, duplication, dead code, test debt (coverage gaps, weakened tests), compliance with the project's conventions and the `.ai/guides/` guides. The object is the entire project or the feature area from the brief.

@@ -71,9 +71,15 @@ One technology = one future guide.
 
 Regardless of the stack, as the first items of the "Project rules" section of every guide:
 
-1. No comments in code. Only special annotations/attributes and the language's documenting constructs are allowed: docstrings, type hints, decorators, `#[...]`, `@...`. The need to explain code is met through naming and docstrings, not comments.
-2. Never add co-authors to commits — strictly forbidden.
-3. For languages with optional typing (Python, PHP, etc.) — typing and type hints everywhere, without exceptions.
+1. **No comments in code — inline or inside docstrings.** Only technically necessary annotations are allowed:
+   - Type hints and generics consumed by static analysis (Psalm/PHPStan, mypy, TypeScript strict, Rust trait bounds).
+   - Language-level constructs required by tooling: `@param`, `@return`, `@throws` in PHPDoc/JSDoc — ONLY when the tool consumes them; not for prose.
+   - Decorators, attributes (`#[...]`, `@...`), preprocessor directives.
+   - A docstring is allowed ONLY if it conveys what the code cannot: contract invariants, algorithm references, side effects invisible from the signature. NOT for explaining what the code obviously does.
+   - Rule of thumb: if removing the comment or docstring changes nothing for any tool or reader — remove it.
+2. **Strictly forbidden: suppressing linter/static-analysis errors.** `@psalm-suppress`, `@phpstan-ignore`, `@ts-ignore`, `eslint-disable`, `noinspection`, `#[allow(dead_code)]`, bare `except:`, `catch` without handling, PHP `@` error-suppression operator. Fix the root cause; never silence the checker.
+3. Never add co-authors to commits — strictly forbidden.
+4. For languages with optional typing (Python, PHP, etc.) — typing and type hints everywhere, without exceptions.
 4. Never use references in code or documentation (README.md) to .ai and/or any documents or paragraphs from that folder
 
 These rules apply in all projects; where they intersect with the project's detected rules, record both the detected ones and the universal ones.

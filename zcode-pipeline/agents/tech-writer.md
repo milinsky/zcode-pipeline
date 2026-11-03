@@ -132,7 +132,8 @@ What we leave / which invariant is established for reuse.
 
 ### Compliance (rule adherence)
 - [ ] All items of the "Applicable rules" are followed — an explicit checklist for each item with its source
-- [ ] No stack suppression mechanisms (PHP: `@psalm-suppress`/`@`; TS: `any`/`as`/`@ts-ignore`; Rust: `unwrap()` outside tests / `unsafe` without justification — provide the list for the project's stack)
+- [ ] No stack suppression mechanisms (PHP: `@psalm-suppress`/`@phpstan-ignore`/`@`; TS: `any`/`as`/`@ts-ignore`/`eslint-disable`; Python: bare `except:`/`# type: ignore`; Rust: `unwrap()` outside tests / `unsafe`/`#[allow(...)]` without justification — provide the list for the project's stack)
+- [ ] No explanatory comments disguised as docstrings: docstrings contain only technical contract info (types, invariants, side effects), never prose describing what the code does
 - [ ] The code matches the Target shape
 
 ### Quality gates (tooling)

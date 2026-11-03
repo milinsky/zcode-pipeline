@@ -7,5 +7,6 @@
   "skills": "skills",
   "author": {
     "name": "Mikhail Ilinsky"
-  }
+  },
+  "icon": "./icon.svg"
 }

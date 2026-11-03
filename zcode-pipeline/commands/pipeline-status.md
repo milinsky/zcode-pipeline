@@ -1,13 +1,13 @@
 ---
-description: Статус конвейера — активный эпик(и), этапы, незакрытые задачи, открытые циклы, расход против бюджета
+description: Conveyor status — active epic(s), stages, unclosed tasks, open loops, spend against budget
 ---
 
-Покажи статус конвейера в этом проекте (только чтение, ничего не запускай и не меняй):
+Show the conveyor status in this project (read-only; launch nothing and change nothing):
 
-1. Файлы состояния: `.ai/state/*.md` (и легаси `.ai/state.md`, если есть) — по каждому: эпик, трек, ветка, текущий этап, следующий шаг, открытые циклы, эскалации, расход vs бюджет.
-2. Очередь эпиков: `.ai/state/QUEUE.md` (если существует).
-3. Незакрытые задачи: `grep -l '^\*\*Статус:\*\* \(created\|in_progress\|implemented\|reviewed\|tested\)' .ai/tasks/*/*.md` — списком со статусами.
-4. Ручной остаток: открытые пункты `.ai/docs/manual-checklist.md`.
-5. Метрики: последние 3 строки `.ai/metrics.md` (если существует).
+1. State files: `.ai/state/*.md` (and the legacy `.ai/state.md`, if present) — for each: epic, track, branch, current stage, next step, open loops, escalations, spend vs budget.
+2. Epic queue: `.ai/state/QUEUE.md` (if it exists).
+3. Unclosed tasks: `grep -l -E '^\*\*(Status|Статус):\*\* \(created\|in_progress\|implemented\|reviewed\|tested\)' .ai/tasks/*/*.md` — as a list with statuses.
+4. Manual remainder: open items of `.ai/docs/manual-checklist.md`.
+5. Metrics: the last 3 lines of `.ai/metrics.md` (if it exists).
 
-Формат ответа: компактная сводка на каждый активный/очередной эпик + общая секция «долги» (незакрытые задачи, ручной остаток). Если ничего не найдено — так и скажи («конвейер в этом проекте не активен»).
+Answer format: a compact summary for each active/queued epic + a common “debts” section (unclosed tasks, manual remainder). If nothing is found — say so (“the conveyor is not active in this project”).

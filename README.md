@@ -2,6 +2,8 @@
 
 **A multi-agent development conveyor for ZCode: from a raw request to an accepted, verified change — with enforced briefs, architecture, decomposition, triple review, QA and a living knowledge base.**
 
+English Core since v2.0: all agent prompts and coordinator rules are English; agents communicate with users and write project artifacts in the user's language.
+
 [![English](https://img.shields.io/badge/README-English-blue)](README.en.md)
 [![Русский](https://img.shields.io/badge/README-Русский-red)](README.ru.md)
 [![中文](https://img.shields.io/badge/README-中文-green)](README.zh.md)

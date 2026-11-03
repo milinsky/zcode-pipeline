@@ -2,7 +2,7 @@
 
 [English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md) · [Back to brief README](README.md)
 
-A multi-agent development conveyor for [ZCode](https://z.ai): it turns a raw user request into an accepted, verified change through a chain of specialized subagents — with enforced briefs, architecture, decomposition, triple review, QA and a living knowledge base.
+A multi-agent development conveyor for [ZCode](https://z.ai). Since v2.0 all system prompts and coordinator rules are English (English Core), while agents communicate with users and write project artifacts in the user's language — fixed protocol tokens are never translated. It turns a raw user request into an accepted, verified change through a chain of specialized subagents — with enforced briefs, architecture, decomposition, triple review, QA and a living knowledge base.
 
 ## Problems it solves
 

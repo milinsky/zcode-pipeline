@@ -25,38 +25,38 @@ AGENTS = ["briefer", "architect", "tech-lead", "tech-writer", "developer",
           "summarizer", "initializer", "analyst"]
 
 ROLES = {
-    "briefer": "Первый этап: превращает любой запрос в финальный бриф (интерактивные раунды вопросов).",
-    "architect": "Архитектура решения + обязательные рекомендации всем следующим агентам.",
-    "tech-lead": "Декомпозиция в задачи (файлы задач НЕ создаёт) + консультант при эскалациях.",
-    "tech-writer": "Создаёт .ai/tasks/{epic}/{NN}-{name}-{date}.md по шаблону + INDEX.md.",
-    "developer": "Реализация задачи строго по файлу: Phase 0, минимальный дифф, честная верификация, отчёт.",
-    "security-review": "Ревью 1/3: безопасность; вердикт PASS | PASS_WITH_WARNINGS | FAIL | NEEDS_MORE_CONTEXT.",
-    "goal-review": "Ревью 2/3: соответствие брифу и критериям приёмки; GOAL_MET | GOAL_PARTIALLY_MET | GOAL_NOT_MET | NEEDS_CONTEXT.",
-    "code-review": "Ревью 3/3: качество кода; APPROVE | REQUEST_CHANGES | NEEDS_DISCUSSION.",
-    "qa": "После одобрения всех трёх ревью: ревью тестов, свои тесты, QUALITY_PASSED | QUALITY_FAILED | BLOCKED.",
-    "manager": "Финальная приёмка: сверка начальных и конечных данных; ACCEPTED | REJECTED + этап возврата.",
-    "summarizer": "После ACCEPTED: обновляет базу знаний .ai/docs/ (вики, хроники, INDEX, чек-лист).",
-    "initializer": "Этап 0: инициализация проекта — стек, .ai/guides/ с лучшими практиками, AGENTS.md.",
-    "analyst": "Аналитический трек: синтез экспертных аудитов с верификацией по коду → REPORT.md + мостик в конвейер.",
+    "briefer": "First stage: turns any raw request into a final brief (interactive question rounds).",
+    "architect": "Solution architecture plus mandatory recommendations for every following agent.",
+    "tech-lead": "Decomposes work into future tasks (never writes task files); resolves escalations as a consultant.",
+    "tech-writer": "Creates .ai/tasks/{epic}/{NN}-{name}-{date}.md from the mandatory template + INDEX.md.",
+    "developer": "Implements one task exactly as specified: Phase 0, minimal diff, honest verification, report.",
+    "security-review": "Review 1/3: security; verdict PASS | PASS_WITH_WARNINGS | FAIL | NEEDS_MORE_CONTEXT.",
+    "goal-review": "Review 2/3: compliance with the brief and acceptance criteria; GOAL_MET | GOAL_PARTIALLY_MET | GOAL_NOT_MET | NEEDS_CONTEXT.",
+    "code-review": "Review 3/3: code quality; APPROVE | REQUEST_CHANGES | NEEDS_DISCUSSION.",
+    "qa": "After all three reviews pass: test-coverage review, may write its own tests; QUALITY_PASSED | QUALITY_FAILED | BLOCKED.",
+    "manager": "Final acceptance: traces initial data against final artifacts; ACCEPTED | REJECTED + return stage.",
+    "summarizer": "After ACCEPTED: updates the .ai/docs/ knowledge base (wiki, chronicles, INDEX, checklist).",
+    "initializer": "Stage 0: project initialization — stack, .ai/guides/ with best practices, AGENTS.md.",
+    "analyst": "Analysis track: synthesizes expert audits with code verification -> REPORT.md + bridge into the conveyor.",
 }
 
 
 AGENT_CHECKS = {
-    "briefer": ["Раунд вопросов", "Финальный бриф", "Трек:", "fast-track"],
-    "architect": ["Рекомендации следующим агентам", "Аналитический трек"],
-    "tech-lead": ["декомпоз", "Решение Техлида", "feasibility"],
-    "tech-writer": ["Phase 0", "Применимые правила", "Критерии приёмки"],
-    "developer": ["Phase 0", "implemented", "MUST NOT DO"],
-    "security-review": ["PASS_WITH_WARNINGS", "Аналитический трек", "NEEDS_MORE_CONTEXT"],
-    "goal-review": ["GOAL_MET", "GOAL_PARTIALLY_MET", "трассируем"],
-    "code-review": ["REQUEST_CHANGES", "NEEDS_DISCUSSION", "Аналитический трек"],
-    "qa": ["QUALITY_PASSED", "QUALITY_FAILED"],
-    "manager": ["ACCEPTED", "REJECTED", "Этап возврата"],
-    "summarizer": ["База знаний обновлена", "Уроки и правила-кандидаты", "manual-checklist"],
-    "initializer": ["source=file|embedded", "Персонализация"],
-    "analyst": ["[verified]", "[hypothesis]", "Мостик"],
+    "briefer": ["Question round", "Final brief", "Track:", "fast-track", "Final brief readiness criterion"],
+    "architect": ["Design principles", "Analysis track", "Position in the pipeline"],
+    "tech-lead": ["decompos", "Tech Lead's decision", "feasibility", "Analysis track"],
+    "tech-writer": ["Phase 0", "Applicable rules", "Acceptance criteria", "Mandatory task template"],
+    "developer": ["Phase 0", "implemented", "MUST NOT DO", "Implementation rules"],
+    "security-review": ["PASS_WITH_WARNINGS", "Analysis track", "NEEDS_MORE_CONTEXT"],
+    "goal-review": ["GOAL_MET", "GOAL_PARTIALLY_MET", "traceability"],
+    "code-review": ["REQUEST_CHANGES", "NEEDS_DISCUSSION", "Analysis track"],
+    "qa": ["QUALITY_PASSED", "QUALITY_FAILED", "Edge case checklist"],
+    "manager": ["ACCEPTED", "REJECTED", "Return stage"],
+    "summarizer": ["Knowledge base updated", "Lessons and rule candidates", "manual-checklist"],
+    "initializer": ["source=file|embedded", "Personalization", "Determine the project state"],
+    "analyst": ["[verified]", "[hypothesis]", "Bridge"],
 }
-REQUIRED_ALL = ["## Грубые нарушения", "### !!! ESCALATION !!!"]
+REQUIRED_ALL = ["## Gross violations", "### !!! ESCALATION !!!", "system prompts are English"]
 
 
 def wrap(content: str) -> str:

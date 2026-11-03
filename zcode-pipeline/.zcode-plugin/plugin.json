@@ -1,7 +1,7 @@
 {
   "name": "zcode-pipeline",
-  "version": "1.5.0",
-  "description": "Конвейер разработки на субагентах: Инициализатор → Брифер → Архитектор → Техлид → Техписатель → Исполнитель → Ревью (Security/Goal/Code) → QA → Менеджер → Саммарйзер; аналитический трек (analyst + /analyze); скилл координатора, /init-project.",
+  "version": "2.0.0",
+  "description": "Multi-agent development conveyor for ZCode: initializer -> briefer -> architect -> tech lead -> tech writer -> developer -> reviews (security/goal/code) -> QA -> manager -> summarizer; analysis track (analyst + /analyze), fast-track profile (/fast), coordinator skill, /init-project, /self-test and /pipeline-status.",
   "agents": "agents",
   "commands": "commands",
   "skills": "skills",

@@ -2,6 +2,44 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.0.0 — 2026-11-03
+
+English Core: all agent system prompts, the coordinator skill and commands translated to
+English; the project is now fully international. Validated by paired RU-EN review and a
+full 13-probe self-test run.
+
+### Added
+
+- **Language rule** in every agent + the skill: system prompts are English; communication
+  and conveyor artifacts follow the user's language (messages / project AGENTS.md); fixed
+  protocol tokens and verdicts are never translated. Verified live: EN dispatches produced
+  Russian-language task files in the Russian project, with English protocol tokens intact.
+- `assets/AGENTS-template.md`: English template extracted from the translated initializer
+  baseline ({SALUTATION}/{LANGUAGE} placeholders; ru personalization examples kept).
+
+### Changed
+
+- 13 agent prompts + `skills/pipeline/SKILL.md` + 5 commands translated to English
+  (canonical glossary: Question round, Final brief, Track, Profile, Gross violations,
+  Applicable rules, Acceptance criteria, Bridge, Knowledge base, Flow profiles...).
+- Terminology canonicalized after a paired RU-EN review (14 CLEAN / 5 MINOR / 0 CRITICAL;
+  all MINOR were cross-translator drift: Briefer/Developer/Technical Writer role names,
+  "## Spend" section): role names now equal agent names everywhere.
+- `build_bundle.py`: EN linter markers (incl. a new check that the language rule block is
+  present in every agent); EN ROLES; bundle header/install text in English. Bundle size
+  161KB vs 240KB (-33%) — a standing token saving on every agent call.
+- `plugin.json` / `marketplace.json`: v2.0.0, English descriptions.
+- `commands/pipeline-status.md` + skill + tech-writer: the task status-line label
+  `**Status:**` is a fixed protocol token (kept in English in user-language tasks);
+  /pipeline-status accepts legacy localized labels as a fallback.
+- READMEs: English Core note (EN/RU/ZH + brief).
+
+### Validation
+
+- Full self-test on the English prompts: 13/13 PASS (see the run report); the language
+  rule and artifact localization verified live; the self-test itself caught the status-label
+  localization regression, fixed in this release.
+
 ## v1.5.0 — 2026-11-03
 
 Fast-track profile: a cheap path for small changes — deliberately not a "skip stages" mechanism.

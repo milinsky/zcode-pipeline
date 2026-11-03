@@ -1,12 +1,12 @@
 ---
-description: Инициализация проекта конвейером — определение стека (мультивыбор), актуальные лучшие практики в .ai/guides/, проектный AGENTS.md
+description: Conveyor project initialization — stack selection (multi-select), up-to-date best practices in .ai/guides/, project AGENTS.md
 ---
 
-Запусти субагента `initializer`, передав корень текущего проекта.
+Launch the `initializer` subagent, passing the root of the current project.
 
-Правила запуска:
+Launch rules:
 
-- Его блоки «## Вопросы пользователю» рендерь мне интерактивно (AskUserQuestion; где он пометил «мультивыбор» — включи multiSelect; «Other» уже даёт свободный ввод).
-- Стек не подтверждён пользователем — дальше не продолжай.
-- После его завершения проверь артефакты (`.ai/guides/*.md` с датами актуальности и источниками; `AGENTS.md` в корне) и покажи итог.
-- Если проект — git-репозиторий, предложи коммит; агент сам не коммитит.
+- Render its “## Questions for the user” blocks to me interactively (AskUserQuestion; where it marked “multi-select” — enable multiSelect; “Other” already gives free input).
+- The stack is not confirmed by the user — do not continue.
+- After it completes, check the artifacts (`.ai/guides/*.md` with freshness dates and sources; `AGENTS.md` in the root) and show the result.
+- If the project is a git repository, offer a commit; the agent itself does not commit.

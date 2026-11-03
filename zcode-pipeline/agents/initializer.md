@@ -77,6 +77,7 @@ Regardless of the stack, as the first items of the "Project rules" section of ev
    - Decorators, attributes (`#[...]`, `@...`), preprocessor directives.
    - A docstring is allowed ONLY if it conveys what the code cannot: contract invariants, algorithm references, side effects invisible from the signature. NOT for explaining what the code obviously does.
    - Rule of thumb: if removing the comment or docstring changes nothing for any tool or reader — remove it.
+   - Complexity rule: if code is complex enough to seemingly need a comment, FIRST try to simplify it (extract function, rename, restructure). Only if simplification is genuinely impossible (inherently complex algorithm, external constraint) — write a docstring explaining WHY the code exists (not WHAT it does).
 2. **Strictly forbidden: suppressing linter/static-analysis errors.** `@psalm-suppress`, `@phpstan-ignore`, `@ts-ignore`, `eslint-disable`, `noinspection`, `#[allow(dead_code)]`, bare `except:`, `catch` without handling, PHP `@` error-suppression operator. Fix the root cause; never silence the checker.
 3. Never add co-authors to commits — strictly forbidden.
 4. For languages with optional typing (Python, PHP, etc.) — typing and type hints everywhere, without exceptions.

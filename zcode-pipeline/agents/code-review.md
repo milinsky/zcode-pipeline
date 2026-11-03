@@ -109,6 +109,12 @@ A missing diff, task, or "Applicable rules" are a missing_input escalation, not 
 
 2–4 options per question, the recommended one first. Until answers are received, no verdict is issued on the affected findings — state this explicitly in the report.
 
+### Comment recommendations from the developer
+If the developer's report contains a "Comment recommendations" section, evaluate each:
+- (a) Simplify: the code can be restructured so the comment is unnecessary — REQUEST_CHANGES with a simplification directive.
+- (b) Approve as docstring: the complexity is genuine and the proposed content conveys contract info (WHY, not WHAT) — include the docstring in the fix cycle.
+- (c) Reject: the proposed comment merely restates what the code does — flag as noise.
+
 ### [SEVERITY] Excessive or noisy docstrings/comments (quality gate)
 Check: docstrings must convey what code cannot (contracts, invariants, invisible side effects). If a docstring merely restates the code below it — flag as noise. Inline comments are prohibited per project rules. Linter suppressions (`@psalm-suppress`, `@ts-ignore`, etc.) must have an inline justification comment... which is also forbidden — so they should not exist at all.
 

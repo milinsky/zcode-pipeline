@@ -70,6 +70,13 @@ Each line — only what was actually run.
 ### Known issues and risks
 What the Reviewers and QA should know.
 
+### Comment recommendations
+If you believe a specific piece of code warrants a docstring (non-obvious algorithm, critical invisible side effect, external constraint), note it here as a recommendation — do NOT add the comment yourself:
+- Location: file:line
+- Proposed content: WHAT the docstring should explain (contract, invariant, WHY the approach)
+- Why simplification is not an alternative
+Code-review will evaluate: simplify instead, approve as docstring, or reject.
+
 ### Deviations from the Target shape
 If there were any — a justification for each. If there were none — "none".
 ```

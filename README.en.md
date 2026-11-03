@@ -62,6 +62,44 @@ Task lifecycle: `created → in_progress → implemented → reviewed → tested
 
 The wiki is authoritative-but-verifiable: pages carry a "verified at commit" stamp, and readers are told to re-check claims against actual code.
 
+## Commands
+
+| Command | What it does |
+|---|---|
+| `/init-project` | Stage 0 for a project. Empty project: interactive stack selection (popular stacks, multi-select, free-form input). Existing project: stack detected from manifests and linter configs, then confirmed. Pulls current best practices per technology into `.ai/guides/` and generates/updates the project `AGENTS.md` (base rules `source=file\|embedded`, personalization asked interactively). Idempotent re-init. |
+| `/analyze "<project or feature>"` | Deep expert analysis **without development**: brief (track: analysis) → parallel expert audits by focus → verified, prioritized synthesis report → optional bridge into the development conveyor. |
+
+Natural language works too: "initialize the project", "analyze the project for…", "run the pipeline: …".
+
+## Analysis track
+
+For requests that need expert judgment but no code changes: whole-project audits, feature feasibility, risk assessment. The track runs **parallel to the development conveyor** and never modifies code:
+
+```
+/analyze "audit the whole project"
+        │
+        ▼
+Briefer (track: analysis; success criteria = questions the report must answer,
+         focus: security | architecture | quality | all | feature feasibility)
+        │
+        ▼   parallel expert audits, by focus:
+   architect ── security-review ── code-review ── tech-lead (feature feasibility)
+        │
+        ▼
+analyst — synthesis: re-verifies expert claims against the actual code,
+        resolves contradictions by evidence, prioritizes (severity × effort)
+        │
+        ▼
+.ai/analysis/{epic}-{date}/REPORT.md + entry in the knowledge base (.ai/docs)
+        │
+        ▼
+Bridge: "findings N and M are ready to become an epic — run the conveyor?"
+```
+
+- Every claim in the report is either verified against the code (`[verified]`) or honestly marked `[hypothesis]` with a way to check it.
+- The report is registered in the project knowledge base, so the next development epic reads it through the wiki index.
+- No QA / Manager / review cycles in this track — it changes nothing; development starts only if you accept the bridge.
+
 ## Install
 
 **From marketplace (primary):**
@@ -76,6 +114,7 @@ The wiki is authoritative-but-verifiable: pages carry a "verified at commit" sta
 ```
 /init-project                                  # once per project
 "Run the pipeline: add password-phrase mode"   # any feature/fix/refactor
+/analyze "audit the whole project"             # expert analysis, no code changes
 ```
 
 Then simply answer the interactive question rounds — everything else (stages, reviews, fixes, statuses, commits) is driven by the conveyor.

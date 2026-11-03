@@ -2,6 +2,14 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## Documentation — 2026-11-03 (commands & analysis track)
+
+- All README versions gained dedicated "Commands" and "Analysis track" sections:
+  `/init-project` and `/analyze` described in full (inputs, behavior, idempotency),
+  the analysis flow diagram (brief → parallel expert audits → verified synthesis →
+  bridge), quality control ([verified]/[hypothesis]) and knowledge-base registration.
+- Quick-start blocks extended with `/analyze` examples (EN/RU/ZH).
+
 ## v1.2.0 — 2026-11-03
 
 Analysis track: deep project/feature analysis without development, parallel to the conveyor.

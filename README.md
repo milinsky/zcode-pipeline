@@ -19,6 +19,12 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 - **`pipeline` skill** — rules for the coordinating main agent: stage order, escalation routing, review cycles, task statuses, commit policy.
 - **Knowledge base (`.ai/docs/`)** — living per-component wiki + epic chronicles, updated after every accepted epic.
 
+## Commands
+
+- `/init-project` — stack detection, best-practice guides (`.ai/guides/`), project `AGENTS.md`; once per project.
+- `/analyze "<project or feature>"` — expert analysis without development: brief → parallel expert audits → verified synthesis report → optional bridge into the conveyor.
+- `"Run the pipeline: …"` — the full development conveyor (brief → architecture → tasks → code → triple review → QA → acceptance).
+
 ## Install
 
 1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → paste this repository's URL.

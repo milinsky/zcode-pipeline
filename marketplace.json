@@ -4,10 +4,11 @@
     {
       "name": "zcode-pipeline",
       "source": "./zcode-pipeline",
-      "version": "2.2.1",
+      "version": "2.2.2",
       "description": "Multi-agent development conveyor for ZCode: initializer -> briefer -> architect -> tech lead -> tech writer -> developer -> reviews (security/goal/code) -> QA -> manager -> summarizer; analysis track (analyst + /analyze), fast-track profile (/fast), coordinator skill, /init-project, /self-test and /pipeline-status.",
       "displayName": "ZCode Pipeline",
-      "category": "developer-tools"
+      "category": "developer-tools",
+      "icon": "https://raw.githubusercontent.com/milinsky/zcode-pipeline/main/assets/zcode-pipeline/icon.png"
     }
   ]
 }

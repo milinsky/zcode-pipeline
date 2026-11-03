@@ -1,6 +1,6 @@
 # ZCode Pipeline
 
-[English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md) · [返回简要 README](README.md)
+[English](README.en.md) · [Русский](README.ru.md) · [中文](README_CN.md) · [返回简要 README](README.md)
 
 面向 [ZCode](https://z.ai) 的多智能体开发流水线。自 v2.0 起所有系统提示词与协调规则均为英文（English Core），而智能体以用户语言沟通并书写项目工件，协议令牌永不翻译：通过一组专职子智能体，把用户的原始需求转化为一条经过验证、正式验收的变更——强制执行需求简报、架构设计、任务分解、三重评审、QA 以及持续更新的知识库。
 

@@ -6,7 +6,7 @@ English Core since v2.0: all agent prompts and coordinator rules are English; ag
 
 [![English](https://img.shields.io/badge/README-English-blue)](README.en.md)
 [![Русский](https://img.shields.io/badge/README-Русский-red)](README.ru.md)
-[![中文](https://img.shields.io/badge/README-中文-green)](README.zh.md)
+[![中文](https://img.shields.io/badge/README-中文-green)](README_CN.md)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL--3.0--or--later-blue)](LICENSE)
 
 ## Why
@@ -44,7 +44,7 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 /analyze "<project or feature>"            # expert analysis, no code changes
 ```
 
-Full documentation: **[English](README.en.md) · [Русский](README.ru.md) · [中文](README.zh.md)** · History: [CHANGELOG.md](CHANGELOG.md)
+Full documentation: **[English](README.en.md) · [Русский](README.ru.md) · [中文](README_CN.md)** · History: [CHANGELOG.md](CHANGELOG.md)
 
 ## License
 

@@ -2,6 +2,21 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.5.0 — 2026-11-04
+
+Safe git workflow slash commands (GUI-client replacement).
+
+### Added
+
+- **12 safe git workflow commands** (`/git-status`, `/git-commit`, `/git-pull`,
+  `/git-push`, `/git-fetch`, `/git-rebase`, `/git-squash`, `/git-push-force`,
+  `/git-resolve`, `/git-undo`, `/git-stash`, `/git-branch`): plan first, explicit
+  confirmation for remote and destructive actions, `--force-with-lease` only,
+  published history is never rewritten without an explicit override, and the
+  git-ignore decision saved at initialization is respected.
+- `validate_prompts.py`: command checks — 17 command paths, per-command safety
+  markers, personal-data scan of command bodies.
+
 ## v2.4.0 — 2026-11-04
 
 Interactive git hygiene at project initialization.

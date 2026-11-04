@@ -71,6 +71,18 @@ The wiki is authoritative-but-verifiable: pages carry a "verified at commit" sta
 | `/self-test` | Regression test of the conveyor itself: 13 agent-contract probes covering every agent (response formats, stage gates, verdicts, analysis track, bridge-brief) → PASS/FAIL report in `.ai/self-test-{date}.md`. |
 | `/pipeline-status` | Live conveyor status: active epic(s) from state files, current stage and next step, open review cycles, unfinished tasks, spend vs budget, recent metrics. |
 | `/fast "<small change>"` | Fast-track profile: brief → developer → code review (security review added on risk triggers: crypto, user input, file paths, network, dependencies, auth) → commit. For small reversible edits (1–2 files, no new contracts). |
+| `/git-status` | Read-only repository snapshot: branch, staged/untracked/conflicted files, ahead/behind vs upstream, recent commits — never mutates anything. |
+| `/git-commit` | Plan the staging, propose a commit message (Conventional Commits or the repo's style), commit after your explicit confirmation; never force-adds ignored files. |
+| `/git-pull` | Sync the branch with the strategy dictated by `pull.rebase` (never written or overridden); diverged history needs confirmation; conflicts go to `/git-resolve`. |
+| `/git-push` | Publish commits after showing exactly what will be sent (commits, diffstat); explicit confirmation every time; behind the remote → `/git-pull`. |
+| `/git-fetch` | Read-only remote sync (`git fetch --prune`) — updates remote-tracking refs only, the working tree is untouched; handoff to `/git-pull`. |
+| `/git-rebase` | Rebase onto the default branch base via a reviewed todo plan (`GIT_SEQUENCE_EDITOR`); refuses to rewrite published history. |
+| `/git-squash` | Group and squash unpushed commits into clean ones (soft reset or todo plan); already-pushed commits are refused without an explicit override. |
+| `/git-push-force` | Force-push with `--force-with-lease` only, after a fresh fetch; refused on main/master without an explicit override naming the lost commits. |
+| `/git-resolve` | Resolve merge/rebase conflicts: auto-resolves whitespace and import blocks only, per-hunk proposals for the rest, then runs tests and linter. |
+| `/git-undo` | Undo the last change the safe way: unstage, restore, soft reset, abort a merge — each variant confirmed separately; published commits get `git revert`. |
+| `/git-stash` | Stash working-tree changes under a name, then restore or drop them; pop conflicts go to `/git-resolve`, drop only after confirmation. |
+| `/git-branch` | Create, rename, list or delete branches; deletion defaults to `-d` with unmerged commits shown; deleting main/master is refused. |
 
 Natural language works too: "initialize the project", "analyze the project for…", "run the pipeline: …".
 
@@ -138,6 +150,7 @@ Bridge: "findings N and M are ready to become an epic — run the conveyor?"
 /init-project                                  # once per project
 "Run the pipeline: add password-phrase mode"   # any feature/fix/refactor
 /analyze "audit the whole project"             # expert analysis, no code changes
+/git-commit "fix: ..."                         # safe commit of staged changes
 ```
 
 Then simply answer the interactive question rounds — everything else (stages, reviews, fixes, statuses, commits) is driven by the conveyor.

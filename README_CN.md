@@ -13,7 +13,7 @@
 | 产出模糊的巨型任务 | **Tech Lead（技术负责人）** 分解出边界清晰、带契约的任务；**Tech Writer（技术撰稿人）** 生成自包含的任务文件（内联规则、目标形态、验收标准） |
 | 不跑测试就宣称"测试通过" | **Developer（执行者）** 必须用真实命令输出证明每一条声明；评审者独立复核 |
 | 给自己的工作盖橡皮章 | 三道独立的只读评审——**Security（安全）**、**Goal（目标）**、**Code（代码）**——循环直至*完全*通过（连 NIT 级别的发现也必须修复） |
-| 接受半成品 | **QA** 真实运行测试（并可补充自己的测试）；**Manager（经理）** 将初始数据与最终产物逐项对trace，给出 `ACCEPTED`/`REJECTED` |
+| 接受半成品 | **QA** 真实运行测试（并可补充自己的测试）；**Manager（经理）** 将初始数据与最终产物逐项对照，给出 `ACCEPTED`/`REJECTED` |
 | 下个会话就全忘了 | **Summarizer（总结者）** 把每个已验收的史诗蒸馏进活文档（`.ai/docs/`），供下个史诗的智能体阅读 |
 | 无视项目规范 | **Initializer（初始化器）** 按技术栈抓取当前最佳实践到 `.ai/guides/`，并接入项目 `AGENTS.md`；初始化时交互式提议将流水线工作文件排除在仓库之外（全局或本地 git ignore，由用户选择） |
 
@@ -47,10 +47,10 @@
 | `tech-writer` | 依据分解生成自包含的任务文件 | `.ai/tasks/{epic}/{NN}-{name}-{date}.md` + `INDEX.md` |
 | `developer` | 严格按任务文件实现；动码前必须 Phase 0；诚实验证 | 报告 + 状态 `implemented` |
 | `security-review` | 只报告真实可利用的风险，须附证据 | `PASS / PASS_WITH_WARNINGS / FAIL / NEEDS_MORE_CONTEXT` |
-| `goal-review` | 把每条验收标准对trace到证据；抓范围蔓延 | `GOAL_MET / GOAL_PARTIALLY_MET / GOAL_NOT_MET / NEEDS_CONTEXT` |
+| `goal-review` | 把每条验收标准对应到证据；抓范围蔓延 | `GOAL_MET / GOAL_PARTIALLY_MET / GOAL_NOT_MET / NEEDS_CONTEXT` |
 | `code-review` | 正确性、边界情况、规范、diff 卫生、测试完整性 | `APPROVE / REQUEST_CHANGES / NEEDS_DISCUSSION` |
 | `qa` | 评审测试覆盖、真实运行检查、可补写自己的测试 | `QUALITY_PASSED / QUALITY_FAILED / BLOCKED` |
-| `manager` | 终审：初始数据 vs 最终产物，证据可trace | `ACCEPTED / REJECTED` + 退回阶段 |
+| `manager` | 终审：初始数据 vs 最终产物，证据可追溯 | `ACCEPTED / REJECTED` + 退回阶段 |
 | `summarizer` | ACCEPTED 之后：把史诗蒸馏进知识库 | `.ai/docs/` wiki + 编年史 + `INDEX.md` |
 | `analyst` | 分析轨道：综合各专家审计并按代码验证 | `.ai/analysis/{epic}-{date}/REPORT.md` + 桥接 |
 

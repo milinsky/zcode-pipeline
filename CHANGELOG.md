@@ -35,6 +35,101 @@ Interactive git hygiene at project initialization.
   git-hygiene contract.
 - READMEs (EN/RU/ZH): the interactive git-ignore step documented.
 
+## v2.3.2 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+No emoji rule.
+
+### Fixed
+
+- Universal rule #5 — no emoji, decorative Unicode, or visual embellishments anywhere.
+- Real-world finding: agents added emoji to project documentation — many professional projects reject PRs containing emoji.
+- Scope: code, comments, docstrings, commit messages, README, guides, wiki, reports, task descriptions.
+- Exception: only when the user explicitly requests emoji for a specific deliverable.
+
+## v2.3.1 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+Comment recommendation flow.
+
+### Added
+
+- A structured way to handle genuinely complex code that warrants explanation:
+  1. Developer sees complex code → writes a "Comment recommendation" in the report (location, proposed content, why simplification won't work) — does NOT add the comment.
+  2. Code-review evaluates: (a) simplify the code instead, (b) approve as docstring with contract info (WHY not WHAT), or (c) reject as noise.
+  3. Initializer guides: complexity rule — try simplification first, docstring only if impossible.
+- No new channels, no interruptions — everything through the existing review cycle.
+
+## v2.3.0 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+Tightened no-comments rule.
+
+### Fixed
+
+- Real-world feedback: agents stopped inline comments but started writing verbose docstrings.
+
+### Changed
+
+- Universal rule #1 now precise: only technically necessary annotations (static analysis types, tooling constructs); docstrings limited to contract info (invariants, invisible side effects); "if removing it changes nothing — remove it".
+- New universal rule #2: explicit linter/static-analysis suppression ban (`@psalm-suppress`, `@ts-ignore`, `eslint-disable`, bare `except:`, etc.) — fix the root cause, never silence the checker.
+- Tech-writer task template: docstring noise checklist item added.
+- Code-review: docstring verbosity check added.
+
+## v2.2.3 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+Skill description: English primary.
+
+### Fixed
+
+- Skill description now starts in English (international default); Russian trigger phrases kept as a compact reference at the end for bilingual skill matching.
+
+## v2.2.2 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+Icon fix (PNG, marketplace.json).
+
+### Fixed
+
+- Plugin icon now displays: converted SVG to PNG (128×128) — ZCode marketplace requires PNG.
+- Icon placed at `assets/zcode-pipeline/icon.png` (standard marketplace path).
+- Icon URL set in `marketplace.json` (not `plugin.json`) — matching how official plugins reference icons.
+
+## v2.2.1 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+Plugin icon; README_CN.md rename.
+
+### Added
+
+- Plugin icon (SVG conveyor belt: brief → build → ship).
+
+### Changed
+
+- `README.zh.md` renamed to `README_CN.md` (community catalog requirement: bilingual docs as README.md + README_CN.md).
+
+## v2.2.0 — 2026-11-03
+
+*Note: backfilled on 2026-11-04 from the GitHub release notes — the original CHANGELOG entry was missing.*
+
+Hooks fix and version sync.
+
+### Fixed
+
+- Duplicate plugin hooks warning: removed the explicit `hooks` key from `plugin.json` — ZCode auto-discovers `hooks/hooks.json` at the standard path; the double registration caused the warning.
+- Version desync: manifest version now bumped before tagging (was stuck at 2.1.0 while tag v2.1.1 existed).
+
+### Added
+
+- Process rule: bump `version` in `plugin.json` and `marketplace.json` BEFORE creating the git tag.
+
 ## Releases — 2026-11-03
 
 - All 9 versions (v1.0 → v2.1.1) now have GitHub Releases with titles and

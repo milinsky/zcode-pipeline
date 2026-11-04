@@ -32,14 +32,14 @@ if __name__ == "__main__":
 | 3 | `security-review` | brief.md + fixture (analysis track) | “# Security Review”, verdict from the set; a finding about `random` with file:line |
 | 4 | `code-review` | brief.md + fixture | verdict from the set; findings with [SEVERITY] |
 | 5 | `goal-review` | mini development context: fixture brief → task “random→secrets” → implemented fixed.py | “# Goal Review”, verdict from {GOAL_MET, GOAL_PARTIALLY_MET, GOAL_NOT_MET, NEEDS_CONTEXT} |
-| 6 | `tech-writer` | mini decomposition (1 task “replace random with secrets”, output — `{sandbox}/tasks/`) | task file with sections “Phase 0”, “Applicable rules”, “Acceptance criteria” |
+| 6 | `tech-writer` | mini decomposition (1 task "replace random with secrets", its task line carrying `**Estimate:** 1.5 h | **Escalation reserve:** +0.5 h`; output — `{sandbox}/tasks/`) | task file with sections “Phase 0”, “Applicable rules”, “Acceptance criteria”; the task's Estimate line contains “min pipeline” |
 | 7 | `tech-lead` | analytical feature brief (add an --alphabet flag to tinytoken, Track: analysis) | “# Feasibility”, complexity estimate, WITHOUT creating decomposition files |
 | 8 | `qa` | “epic selftest, task implemented, no reviews were run” | `### !!! ESCALATION !!!` missing_input — the “only after three reviews” gate |
 | 9 | `developer` | task file from probe 6 | edits the fixture (secrets), report in the task file, status implemented |
 | 10 | `initializer` | empty directory `{sandbox}/empty/` as the “project root”; instruction: “return ONLY the first question block and stop — create no files, use no web” | “## Questions for the user” with stacks and a multi-select marker; no files created |
 | 11 | `manager` | no artifacts (“accept epic Y”) | `### !!! ESCALATION !!!` missing_input |
 | 12 | `analyst` | brief.md + reports of probes 3–4 (save their texts to `{sandbox}/expert/security.md`, `code.md` before the call) | report with [verified] and/or [hypothesis], “## Analysis complete”, REPORT.md in `{sandbox}/analysis/` (specify this output path), bridge; if it finds conveyor-ready findings — creates a draft-brief in `{sandbox}/briefs/` |
-| 13 | `summarizer` | fakeproj (epic sum, ACCEPTED confirmed by the coordinator; no git history — sandbox; project root = `{sandbox}/fakeproj/`) | “## Knowledge base updated”; `{sandbox}/fakeproj/.ai/docs/epics/sum-…/REPORT.md` exists; INDEX.md created with an epic entry |
+| 13 | `summarizer` | fakeproj (epic sum, ACCEPTED confirmed by the coordinator; no git history — sandbox; project root = `{sandbox}/fakeproj/`) | “## Knowledge base updated”; `{sandbox}/fakeproj/.ai/docs/epics/sum-…/REPORT.md` exists; INDEX.md created with an epic entry; the Spend-and-time part reports the absent ledger as an honest gap — no invented time values |
 
 ## Order (parallel waves)
 

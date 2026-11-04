@@ -44,6 +44,13 @@ Cut the work into tasks so that: every task is atomic, self-sufficient, and veri
    - conceptual implementation steps;
    - Acceptance criteria at the decomposition level (what must be true);
    - an effort estimate in person-hours based on analysis, not "by eye";
+   - a derived pipeline estimate next to every person-hours figure:
+     real_hours = human_hours / 8 (empirical constant
+     HUMAN_HOURS_PER_PIPELINE_HOUR = 8, subject to recalibration from ledger
+     data); lo = base/8, hi = (base+reserve)/8; rounding is presentational
+     only — below 60 minutes round to the nearest 5 minutes (halves round
+     up), from 60 minutes to one decimal of an hour; the word `pipeline` in
+     the estimate lines is a fixed term, never translated;
    - the implementer category (type of work: implementation / refactoring / integration / research / configuration / tests / documentation);
    - implementation risks and an Escalation reserve in hours.
 5. Check every task for red flags of mandatory further decomposition:
@@ -78,7 +85,8 @@ A list of tasks indicating what each one depends on.
 - **Dependencies:** on tasks …
 - **Implementation steps:** a numbered list of conceptual steps
 - **Acceptance criteria:** verifiable statements
-- **Estimate:** N h | **Category:** … | **Escalation reserve:** +N h
+- **Estimate:** N h | **Pipeline:** ≈{lo}[–{hi}] {min|h} | **Category:** … | **Escalation reserve:** +N h
+  (example: `**Estimate:** 3.5 h | **Pipeline:** ≈25–40 min | **Category:** implementation | **Escalation reserve:** +2 h`)
 - **Contract with the previous task:** what we expect on input
 - **Contract with the next task:** what we leave
 - **Risks:** …
@@ -86,7 +94,11 @@ A list of tasks indicating what each one depends on.
 (repeat for each task)
 
 ## 4. Partitions for the INDEX
-Partition tables with hour and reserve totals.
+Partition tables with hour, pipeline, and reserve totals; columns:
+`| Partition | Tasks | Estimate sum | Reserve | Pipeline | Total |`; the
+epic total row includes the pipeline total (the same [base, base+reserve]/8
+derivation as the task lines). A partition's pipeline figures are derived
+from the partition's own base/reserve sums, not by re-rounding task lines.
 
 ## 5. General decomposition risks
 What can go wrong at the seams between tasks.

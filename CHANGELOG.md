@@ -2,6 +2,30 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.7.0 — 2026-11-05
+
+Time-to-market metrics for epics: a coordinator timeline ledger, derived
+pipeline estimates, and time/token facts in the epic summary.
+
+### Added
+
+- **Timeline ledger**: the coordinator maintains a per-epic append-only event
+  log (stage open/close, pauses, epic start/finish) in the epic state file —
+  agent time per stage and task and active wall time become measurable;
+  question rounds, escalations, and silent session gaps are excluded by
+  convention.
+- **Derived pipeline estimates**: task headers, index partitions, and
+  decompositions gain a pipeline-time estimate next to the person-hours
+  estimate, derived as real_hours = human_hours / 8 (an empirical constant,
+  subject to recalibration from the collected ledger data).
+- **Epic time summary**: the final summary report gains a "Spend and time"
+  section with token facts, agent and wall time per task and epic, and an
+  actual-vs-predicted calibration ratio; the project metrics table gains two
+  columns (agent/wall time, calibration). Epics without a ledger degrade
+  gracefully: an honest gap is reported instead of blocking.
+- `validate_prompts.py`: five new mandatory markers covering the formula and
+  template contracts.
+
 ## v2.6.0 — 2026-11-04
 
 Post-release hygiene: review verdicts are persisted as files; lease erratum.

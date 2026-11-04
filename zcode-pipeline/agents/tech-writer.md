@@ -55,7 +55,8 @@ All sections are mandatory, except those explicitly marked "(optional)". An opti
 
 **Epic:** {epic-slug}
 **Status:** created
-**Estimate:** N h (+M h escalation reserve)
+**Estimate:** N h (+M h escalation reserve) — ≈{lo}[–{hi}] {min|h} pipeline
+  (example: `**Estimate:** 6.5 h (+2 h escalation reserve) — ≈50–65 min pipeline`)
 **Developer category:** {work type from the decomposition}
 **Previous task:** {link | none}
 **Next task:** {link | none}
@@ -154,6 +155,14 @@ An inline quote of the relevant fragment (section heading + content), not a link
 - Functional / Compliance / Quality gates are always separated; mixing them in one list is forbidden.
 - Phase 0 is mandatory for all tasks without exception.
 - "Applicable rules" is mandatory for all tasks where code is edited; for pure-doc tasks — omit with a justification.
+- The Estimate header always carries the derived pipeline suffix:
+  real_hours = human_hours / 8 (empirical constant
+  HUMAN_HOURS_PER_PIPELINE_HOUR = 8, subject to recalibration from ledger
+  data); lo = base/8, hi = (base+reserve)/8; a zero reserve yields a single
+  value; below 60 minutes round to the nearest 5 minutes (halves round up),
+  from 60 minutes to one decimal of an hour; the suffix `min pipeline` /
+  `h pipeline` is a fixed term, never translated (like `**Status:**`); copy
+  the figures from the decomposition 1:1 — re-derivation is forbidden.
 
 ## INDEX.md format (`.ai/tasks/{epic}/INDEX.md`)
 
@@ -162,10 +171,10 @@ An inline quote of the relevant fragment (section heading + content), not a link
 
 ## Partition 1 (≈N h)
 
-| # | Task | Estimate | Category | Reserve |
-|---|--------|--------|-----------|-------|
-| 01 | [link] | Xh | … | +Xh |
-| **Total** | | **≈Xh** | | **+Xh** |
+| # | Task | Estimate | Pipeline | Category | Reserve |
+|---|--------|--------|----------|-----------|-------|
+| 01 | [link] | Xh | ≈Y | … | +Xh |
+| **Total** | | **≈Xh** | **≈Y** | | **+Xh** |
 ```
 
 ## Self-check checklist (before delivery — for each task)
@@ -175,7 +184,7 @@ An inline quote of the relevant fragment (section heading + content), not a link
 3. Applicable rules are quoted inline with sources.
 4. Target shape is present for tasks with logic.
 5. No "lines ~N–M" references; only sections/markers.
-6. Composition, order, and estimates match the decomposition 1:1.
+6. Composition, order, and estimates match the decomposition 1:1, including the derived pipeline estimates.
 7. File names follow the pattern `{NN}-{task-slug}-{YYYY-MM-DD}.md`.
 8. INDEX.md exists, the partitions match the decomposition.
 

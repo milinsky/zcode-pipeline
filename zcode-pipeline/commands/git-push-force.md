@@ -57,9 +57,9 @@ rewritten without an explicit override.
    explicit confirmation every time with the full picture: what will be
    sent, what will be overwritten, which remote-only commits disappear.
 4. Execute: `git push --force-with-lease '{remote}' '{branch}'` (a refined
-   `--force-with-lease={ref}` is allowed when the user asked for a specific
-   ref). Nothing else is ever executed; a refusal is never retried with
-   more force.
+   `--force-with-lease='{ref}'` is allowed when the user asked for a
+   specific ref). Nothing else is ever executed; a refusal is never
+   retried with more force.
 5. Non-zero exit (the lease refused — the remote moved ahead): NEVER retry
    stronger; show the stderr verbatim, propose /git-fetch and a fresh
    review of the situation — a new explicit confirmation round only.

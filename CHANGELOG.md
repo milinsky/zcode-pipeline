@@ -2,6 +2,29 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.6.0 — 2026-11-04
+
+Post-release hygiene: review verdicts are persisted as files; lease erratum.
+
+### Added
+
+- **Review verdict files**: the three reviewer agents (Security, Goal, Code)
+  write their full verdict reports (verdict, findings, evidence) to the
+  conveyor's reviews directory as part of their stage output — one file per
+  reviewer per run, overwritten on re-review; the analysis track is
+  unchanged. `validate_prompts.py`: three new mandatory markers covering the
+  verdict-file contract.
+
+### Fixed
+
+- Refined lease form in `/git-push-force` is now quoted
+  (`--force-with-lease='{ref}'`) per the universal operand-quoting rule;
+  the operational Execute line is unchanged.
+- README_CN.md: three corrupted Chinese fragments repaired (reconstructed
+  from the English README counterparts).
+- CHANGELOG: missing entries for v2.2.0–v2.3.2 backfilled from the GitHub
+  release notes, each marked with a backfill note.
+
 ## v2.5.0 — 2026-11-04
 
 Safe git workflow slash commands (GUI-client replacement).

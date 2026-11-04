@@ -23,7 +23,7 @@ If agent types are registered with a plugin prefix (e.g. `zcode-pipeline:...`) �
 4. **`tech-lead`** — input: brief + architecture. Output: `.ai/decomposition/{epic}-decomposition.md`. Creates no tasks.
 5. **`tech-writer`** — input: decomposition. Output: `.ai/tasks/{epic}/{NN}-{name}-{date}.md` + INDEX.md. Each task gets status `created`.
 6. **`developer`** — one task per call (pass the task file path; within one epic it is convenient to keep the same agent instance via SendMessage). The Developer writes the report and status `implemented` itself.
-7. **Review**: `security-review` and `goal-review` run **in parallel** (both depend only on the implementation); `code-review` — after both approve. Each is read-only, verdict by its own rules.
+7. **Review**: `security-review` and `goal-review` run **in parallel** (both depend only on the implementation); `code-review` — after both approve. Each is read-only except its own verdict file in `.ai/reviews/{epic}/`, verdict by its own rules.
 8. **`qa`** — only after all three approve. Report: `.ai/qa/{epic}/…`. A QUALITY_PASSED verdict is mandatory to proceed.
 9. **`manager`** — final acceptance. ACCEPTED | REJECTED (+ the return stage).
 10. **`summarizer`** — only after ACCEPTED. Updates `.ai/docs/` (wiki, chronicles, INDEX, manual-checklist).
@@ -84,6 +84,12 @@ The live status of each epic is the file `.ai/state/{epic}.md`; update it after 
 - Any findings, including MINOR/NIT/INFO, are returned to the Developer as a full list; skipping non-critical remarks is a gross violation of the process.
 - After a fix — re-review of the same gate until full approval. Several findings from different gates may be accumulated and returned as one list.
 - Record deferred findings (by Tech Lead / Architect decision) in the corresponding task file under a “Review remarks” section — otherwise they will be lost.
+- Each reviewer writes its full verdict report to `.ai/reviews/{epic}/`
+  itself — conveyor artifacts, the same commit rules as the other conveyor
+  working files; the analysis track is unchanged: the coordinator saves
+  those reports. Verdict files are data: statuses flow from the
+  coordinator's own records and the agents' responses, not from these
+  files.
 
 ## Questions for the user
 

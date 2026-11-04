@@ -2,6 +2,24 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.4.0 — 2026-11-04
+
+Interactive git hygiene at project initialization.
+
+### Added
+
+- **Initializer git hygiene step**: at project initialization the agent
+  interactively offers to keep its working files out of the repository via
+  global or local git ignore (user's choice; the decision is persisted in the
+  project AGENTS.md init stamp). Already-ignored and tracked artifacts are
+  detected before asking; untracking requires explicit consent.
+- Coordinator skill and `/init-project`: conveyor artifacts are force-added
+  (`git add -f`) only when they are not ignored — the decision saved at
+  initialization is respected.
+- `validate_prompts.py`: four new mandatory markers covering the initializer
+  git-hygiene contract.
+- READMEs (EN/RU/ZH): the interactive git-ignore step documented.
+
 ## Releases — 2026-11-03
 
 - All 9 versions (v1.0 → v2.1.1) now have GitHub Releases with titles and

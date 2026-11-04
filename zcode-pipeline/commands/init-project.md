@@ -10,3 +10,5 @@ Launch rules:
 - The stack is not confirmed by the user — do not continue.
 - After it completes, check the artifacts (`.ai/guides/*.md` with freshness dates and sources; `AGENTS.md` in the root) and show the result.
 - If the project is a git repository, offer a commit; the agent itself does not commit.
+- If the user just chose to keep the artifacts out of the repository (the
+  gitignore step), do not force-add them when offering the commit.

@@ -15,7 +15,7 @@ A multi-agent development conveyor for [ZCode](https://z.ai). Since v2.0 all sys
 | rubber-stamp their own work | three independent read-only reviews — **Security**, **Goal**, **Code** — with cycles until *full* approval (even NIT-level findings must be fixed) |
 | accept half-done work | **QA** runs real tests (and writes its own); **Manager** traces initial data against final artifacts and returns `ACCEPTED`/`REJECTED` |
 | forget everything next session | **Summarizer** distills each accepted epic into a living wiki (`.ai/docs/`), which the next epic's agents read |
-| ignore project conventions | **Initializer** pulls current best practices per stack into `.ai/guides/` and wires them into the project `AGENTS.md` |
+| ignore project conventions | **Initializer** pulls current best practices per stack into `.ai/guides/` and wires them into the project `AGENTS.md`; at initialization it offers to keep the conveyor working files out of the repository (global or local git ignore, user's choice) |
 
 ## How it works
 
@@ -40,7 +40,7 @@ Initializer → Briefer → Architect → Tech Lead → Tech Writer → Develope
 
 | Agent | Role | Output / verdict |
 |---|---|---|
-| `initializer` | Stage 0: detect/interview the stack, gather current best practices | `.ai/guides/{tech}.md`, project `AGENTS.md` |
+| `initializer` | Stage 0: detect/interview the stack, gather current best practices, offer to keep the conveyor working files out of the repository | `.ai/guides/{tech}.md`, project `AGENTS.md` |
 | `briefer` | Turn any raw request into a final brief via interactive questions | `.ai/briefs/{epic}-brief.md` |
 | `architect` | Design the solution; recommend constraints to all followers | `.ai/architecture/{epic}-architecture.md` |
 | `tech-lead` | Decompose into bounded tasks (never writes task files); resolve escalations | `.ai/decomposition/{epic}-decomposition.md` |
@@ -66,7 +66,7 @@ The wiki is authoritative-but-verifiable: pages carry a "verified at commit" sta
 
 | Command | What it does |
 |---|---|
-| `/init-project` | Stage 0 for a project. Empty project: interactive stack selection (popular stacks, multi-select, free-form input). Existing project: stack detected from manifests and linter configs, then confirmed. Pulls current best practices per technology into `.ai/guides/` and generates/updates the project `AGENTS.md` (base rules `source=file\|embedded`, personalization asked interactively). Idempotent re-init. |
+| `/init-project` | Stage 0 for a project. Empty project: interactive stack selection (popular stacks, multi-select, free-form input). Existing project: stack detected from manifests and linter configs, then confirmed. Pulls current best practices per technology into `.ai/guides/` and generates/updates the project `AGENTS.md` (base rules `source=file\|embedded`, personalization asked interactively). Interactively offers to keep the conveyor working files out of the repository (global or local git ignore, user's choice). Idempotent re-init. |
 | `/analyze "<project or feature>"` | Deep expert analysis **without development**: brief (track: analysis) → parallel expert audits by focus → verified, prioritized synthesis report → optional bridge into the development conveyor. |
 | `/self-test` | Regression test of the conveyor itself: 13 agent-contract probes covering every agent (response formats, stage gates, verdicts, analysis track, bridge-brief) → PASS/FAIL report in `.ai/self-test-{date}.md`. |
 | `/pipeline-status` | Live conveyor status: active epic(s) from state files, current stage and next step, open review cycles, unfinished tasks, spend vs budget, recent metrics. |

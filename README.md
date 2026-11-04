@@ -15,15 +15,15 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 
 ## What you get
 
-- **13 specialized agents** — initializer, briefer, architect, tech lead, technical writer, developer, security / goal / code reviewers, QA, manager, summarizer, analyst.
-- **`/init-project` command** — detects the project stack, pulls current best practices from official sources into `.ai/guides/`, generates the project `AGENTS.md`.
+- **13 specialized agents** — initializer, briefer, architect, tech lead, technical writer, developer, security / goal / code reviewers, QA, manager, summarizer, analyst; at project initialization the initializer offers to keep its working files out of the repository (global or local git ignore, user's choice).
+- **`/init-project` command** — detects the project stack, pulls current best practices from official sources into `.ai/guides/`, generates the project `AGENTS.md`; interactively offers to keep the conveyor working files out of the repository (global or local git ignore, user's choice).
 - **`/analyze` command (analysis track)** — deep project or feature analysis without development: brief → parallel expert audits (architecture / security / code quality / feasibility) → verified, prioritized synthesis report with a bridge into the development conveyor.
 - **`pipeline` skill** — rules for the coordinating main agent: stage order, escalation routing, review cycles, task statuses, commit policy.
 - **Knowledge base (`.ai/docs/`)** — living per-component wiki + epic chronicles, updated after every accepted epic.
 
 ## Commands
 
-- `/init-project` — stack detection, best-practice guides (`.ai/guides/`), project `AGENTS.md`; once per project.
+- `/init-project` — stack detection, best-practice guides (`.ai/guides/`), project `AGENTS.md`; interactively offers to keep the conveyor working files out of the repository (global or local git ignore, user's choice); once per project.
 - `/analyze "<project or feature>"` — expert analysis without development: brief → parallel expert audits → verified synthesis report → optional bridge into the conveyor.
 - `"Run the pipeline: …"` — the full development conveyor (brief → architecture → tasks → code → triple review → QA → acceptance).
 - `/self-test` — regression test of the conveyor itself: 13 agent-contract probes on a sandbox fixture.
@@ -39,7 +39,7 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 ## Quick start
 
 ```
-/init-project                              # once per project: stack, guides, AGENTS.md
+/init-project                              # once per project: stack, guides, AGENTS.md, git-ignore offer
 "Run the pipeline: <your feature request>" # the coordinator skill takes over
 /analyze "<project or feature>"            # expert analysis, no code changes
 ```

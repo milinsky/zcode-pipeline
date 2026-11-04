@@ -29,7 +29,8 @@ AGENT_CHECKS = {
     "qa": ["QUALITY_PASSED", "QUALITY_FAILED", "Edge case checklist"],
     "manager": ["ACCEPTED", "REJECTED", "Return stage"],
     "summarizer": ["Knowledge base updated", "Lessons and rule candidates", "manual-checklist"],
-    "initializer": ["source=file|embedded", "Personalization", "Determine the project state"],
+    "initializer": ["source=file|embedded", "Personalization", "Determine the project state",
+                    "Git hygiene", "core.excludesFile", ".git/info/exclude", "git rm --cached"],
     "analyst": ["[verified]", "[hypothesis]", "Bridge"],
 }
 REQUIRED_ALL = ["## Gross violations", "### !!! ESCALATION !!!", "system prompts are English"]

@@ -53,7 +53,9 @@ The live status of each epic is the file `.ai/state/{epic}.md`; update it after 
 
 ## Epic branches
 
-- A development epic lives in the branch `epic/{epic}` (from main): WIP commits of accepted tasks and `.ai/` artifacts (`git add -f` if needed) go there.
+- A development epic lives in the branch `epic/{epic}` (from main): WIP commits
+  of accepted tasks and `.ai/` artifacts go there — force-add (`git add -f`)
+  only artifacts that are not ignored (see Commits).
 - After the Manager's ACCEPTED: merge into main (merge commit with the epic summary in the body), delete the branch.
 - REJECTED epic: keep the branch until the user's explicit decision (rework/rollback).
 - The analysis track creates no branches (it changes no code).
@@ -97,7 +99,19 @@ Subagents have no interactive tools: they return structured “## Questions for 
 
 - Only after ACCEPTED. You commit; subagents never commit.
 - The workspace may not be a git repository — initialize one at the first commit.
-- The user's global gitignore may hide `.ai` and `AGENTS.md` — use `git add -f` for conveyor artifacts. No co-authors in commits.
+- The user may have chosen at initialization to keep the conveyor artifacts out
+  of the repository. The `gitignore=` field of the init stamp in the project
+  AGENTS.md is the authoritative source when present and readable: `global` or
+  `local` — MUST NOT `git add -f` the ignored artifacts; commit only the code
+  changes and tell the user that `.ai/` stays local on purpose; `off` — the
+  current behavior applies. If the field is absent or unreadable, check the
+  actual ignore state per path with separate calls:
+  `git check-ignore -v -- .ai` and `git check-ignore -v -- AGENTS.md`. If a
+  path is ignored — MUST NOT `git add -f` it; if it is not ignored — the
+  current behavior applies: `git add -f` for conveyor artifacts if needed.
+  If the stamp says `global` or `local` but the artifact paths are still
+  tracked, do not force-add them without asking the user first.
+  No co-authors in commits.
 
 ## Knowledge base
 

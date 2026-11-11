@@ -2,6 +2,35 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.9.0 — 2026-11-12
+
+Two interactive design agents: design a specification or a UI concept in a
+guided dialogue, version accepted decisions, and only later — by explicit
+choice — feed the result into the conveyor.
+
+### Added
+
+- **`spec-designer` agent and `/spec-design` command**: interactive
+  technical-design dialogue (a hybrid of the Briefer and the Tech Lead)
+  without launching the conveyor; each design persists as a living design
+  document plus an append-only decision log, where every accepted decision
+  is recorded immediately upon acceptance (date, id, decision, rationale,
+  rejected alternatives); multi-session resume.
+- **`ui-designer` agent and `/ui-design` command**: a structured UI concept
+  document (UX flow, components, style tokens, rationale) for UI-bearing
+  work, persisted to the same designs home; launch strictly on the user's
+  explicit request; an honest expectation — a concept document, not
+  rendered graphics.
+- `/self-test`: extended from 13 to 15 agent-contract probes (both new
+  agents, no-write probes).
+
+### Changed
+
+- The Briefer now checks the designs directory for related designs and
+  references them as settled input context in new briefs.
+- `validate_prompts.py`: contract coverage extended to both new agents and
+  commands (15 agents / 19 commands).
+
 ## v2.8.0 — 2026-11-11
 
 Feedback hardening from the first production use: contract-mandated

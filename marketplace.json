@@ -4,8 +4,8 @@
     {
       "name": "zcode-pipeline",
       "source": "./zcode-pipeline",
-      "version": "2.8.0",
-      "description": "Multi-agent development conveyor for ZCode: initializer -> briefer -> architect -> tech lead -> tech writer -> developer -> reviews (security/goal/code) -> QA -> manager -> summarizer; analysis track (analyst + /analyze), fast-track profile (/fast), coordinator skill, /init-project, /self-test, /pipeline-status and 12 safe git workflow commands (/git-status, /git-commit, /git-pull, /git-push, /git-fetch, /git-rebase, /git-squash, /git-push-force, /git-resolve, /git-undo, /git-stash, /git-branch): plan first, explicit confirmation for remote and destructive actions, --force-with-lease only.",
+      "version": "2.9.0",
+      "description": "Multi-agent development conveyor for ZCode: initializer -> briefer -> architect -> tech lead -> tech writer -> developer -> reviews (security/goal/code) -> QA -> manager -> summarizer; interactive design sessions (spec-designer + /spec-design, ui-designer + /ui-design); analysis track (analyst + /analyze), fast-track profile (/fast), coordinator skill, /init-project, /self-test, /pipeline-status and 12 safe git workflow commands (/git-status, /git-commit, /git-pull, /git-push, /git-fetch, /git-rebase, /git-squash, /git-push-force, /git-resolve, /git-undo, /git-stash, /git-branch): plan first, explicit confirmation for remote and destructive actions, --force-with-lease only.",
       "displayName": "ZCode Pipeline",
       "category": "developer-tools",
       "icon": "https://raw.githubusercontent.com/milinsky/zcode-pipeline/main/assets/zcode-pipeline/icon.png"

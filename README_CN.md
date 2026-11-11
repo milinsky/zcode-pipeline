@@ -36,7 +36,7 @@
 - **升级机制（Escalation）**：被卡住的智能体返回结构化标记 `!!! ESCALATION !!!`；协调者将其路由给技术负责人顾问，并把约束性决议送回。每个智能体每个任务最多一次升级——瞎猜即违反流程。
 - **阶段门禁**写入每个智能体的提示词：没有简报 → 没有架构；没有分解 → 没有任务；评审未全部通过 → 没有 QA；没有 `ACCEPTED` → 没有提交。
 
-## 13 个智能体
+## 15 个智能体
 
 | 智能体 | 职责 | 产出 / 结论 |
 |---|---|---|
@@ -53,10 +53,12 @@
 | `manager` | 终审：初始数据 vs 最终产物，证据可追溯 | `ACCEPTED / REJECTED` + 退回阶段 |
 | `summarizer` | ACCEPTED 之后：把史诗蒸馏进知识库 | `.ai/docs/` wiki + 编年史 + `INDEX.md` |
 | `analyst` | 分析轨道：综合各专家审计并按代码验证 | `.ai/analysis/{epic}-{date}/REPORT.md` + 桥接 |
+| `spec-designer` | 流水线之外的交互式规格设计：引导式设计对话，已采纳的决策立即记录 | `.ai/designs/{slug}/DESIGN.md + DECISIONS.md` |
+| `ui-designer` | 面向界面相关工作的结构化 UI 概念文档，仅按明确请求启动 | `.ai/designs/{slug}/CONCEPT.md` |
 
 ## 产物与状态
 
-每个项目都会留下 `.ai/` 轨迹：`briefs/ · architecture/ · decomposition/ · tasks/{epic}/ (+INDEX.md) · reviews/ · qa/ · guides/ · docs/`（知识库：`wiki/{component}.md`、`epics/{epic}-{date}/REPORT.md`、`INDEX.md`、`manual-checklist.md`）。
+每个项目都会留下 `.ai/` 轨迹：`briefs/ · architecture/ · decomposition/ · tasks/{epic}/ (+INDEX.md) · reviews/ · qa/ · designs/ · guides/ · docs/`（知识库：`wiki/{component}.md`、`epics/{epic}-{date}/REPORT.md`、`INDEX.md`、`manual-checklist.md`）。
 
 任务生命周期：`created → in_progress → implemented → reviewed → tested → accepted | rejected`。
 
@@ -68,7 +70,9 @@ wiki 具有权威性但可验证：页面带有"已在某 commit 验证"戳记�
 |---|---|
 | `/init-project` | 项目的第 0 阶段。空项目：交互式选择技术栈（主流栈、多选、自由输入）。已有项目：从清单和 linter 配置识别技术栈并确认。按每项技术抓取当前最佳实践到 `.ai/guides/`，并生成/更新项目 `AGENTS.md`（基础规则 `source=file\|embedded`，个性化信息以交互方式询问）。交互式提议将流水线工作文件排除在仓库之外（全局或本地 git ignore，由用户选择）。幂等可重复初始化。 |
 | `/analyze "<项目或功能>"` | **不写代码**的深度专家分析：简报（track: analysis）→ 按焦点并行专家审计 → 经验证、按优先级排序的综合报告 → 可选桥接进入开发流水线。 |
-| `/self-test` | 流水线自身的回归测试：13 项智能体契约探针，覆盖全部智能体（响应格式、阶段门禁、结论、分析轨道、桥接简报）→ 生成 PASS/FAIL 报告。 |
+| `/spec-design "<主题>"` | **不写代码**的交互式规格设计：引导式设计对话；已采纳的决策立即记录；设计持久化到 `.ai/designs/{slug}/`（活的设计文档 + 只增决策日志）；可在后续会话中继续。 |
+| `/ui-design "<主题>"` | 面向界面相关工作的结构化 UI 概念文档（UX 流程、组件、样式令牌、设计理由），持久化到同一设计目录；仅在用户明确请求时启动；诚实的预期——概念文档，而非渲染图形。 |
+| `/self-test` | 流水线自身的回归测试：15 项智能体契约探针，覆盖全部智能体（响应格式、阶段门禁、结论、分析轨道、桥接简报）→ 生成 PASS/FAIL 报告。 |
 | `/pipeline-status` | 流水线实时状态：来自 state 文件的活跃史诗、当前阶段与下一步、未闭合循环、未完成任务、消耗 vs 预算、近期指标。 |
 | `/fast "<小改动>"` | fast-track 轨道：简报 → 执行者 → code 评审（触发风险因子——加密/输入/文件/网络/依赖/认证——时追加 security 评审）→ 提交。适用于小而可回退的修改（1–2 个文件、无新契约）。 |
 | `/git-status` | 只读的仓库快照：分支、已暂存/未跟踪/冲突文件、相对上游的领先/落后、最近提交——不做任何修改。 |
@@ -142,7 +146,7 @@ analyst — 综合：按实际代码复核专家断言，依证据裁决矛盾�
 **插件市场（主渠道）：**
 1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → 粘贴本仓库 URL。
 2. **Personal → ZCode Pipeline → Install** → 重启会话。
-3. 验证：13 个智能体、`/init-project` 命令、`pipeline` 技能。
+3. 验证：15 个智能体、`/init-project` 命令、`pipeline` 技能。
 
 
 ## 使用
@@ -162,7 +166,7 @@ analyst — 综合：按实际代码复核专家断言，依证据裁决矛盾�
 marketplace.json            # 市场目录（仓库根 = 市场）
 zcode-pipeline/             # 插件（目录名 == 清单名）
   .zcode-plugin/plugin.json
-  agents/                   # 13 个子智能体
+  agents/                   # 15 个子智能体
   commands/init-project.md
   skills/pipeline/SKILL.md  # 协调者规则
   assets/AGENTS-template.md # 带个性化占位符的全局规则模板

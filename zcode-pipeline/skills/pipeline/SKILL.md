@@ -15,6 +15,10 @@ You are the lead coordinator agent. The conveyor's subagents do the work; you ma
 
 If agent types are registered with a plugin prefix (e.g. `zcode-pipeline:...`) — use the actual names from the session's agent list.
 
+Two interactive agents live outside the Running order: `spec-designer`
+(specification design sessions, /spec-design) and `ui-designer` (UI concept,
+strictly on request) — see "Design sessions".
+
 ## Running order
 
 1. **Initialization** (if the project has no `.ai/guides/` and no AGENTS.md referencing guides): suggest `/init-project`. Not mandatory for a one-off task — decide from context.
@@ -242,7 +246,7 @@ Subagents have no interactive tools: they return structured “## Questions for 
 
 ## Artifacts and statuses
 
-- Tree: `.ai/briefs/`, `.ai/architecture/`, `.ai/decomposition/`, `.ai/tasks/{epic}/` (+INDEX.md), `.ai/reviews/{epic}/` (record review verdicts as files — on disk, not only in the session), `.ai/qa/{epic}/`, `.ai/docs/` (knowledge base), `.ai/guides/` (from the initializer).
+- Tree: `.ai/briefs/`, `.ai/architecture/`, `.ai/decomposition/`, `.ai/tasks/{epic}/` (+INDEX.md), `.ai/reviews/{epic}/` (record review verdicts as files — on disk, not only in the session), `.ai/qa/{epic}/`, `.ai/docs/` (knowledge base), `.ai/designs/` (design sessions: DESIGN.md / CONCEPT.md + the decision log), `.ai/guides/` (from the initializer).
 - Task statuses: `created → in_progress → implemented → reviewed → tested → accepted | rejected`. You set them (sed on line 4 of the task file — do not touch the execution status inside the report). The status line label `**Status:**` is a fixed protocol token — keep it in English even in user-language tasks (this is what `/pipeline-status` greps for).
 - Check the acceptance-criteria checkboxes at `accepted`.
 
@@ -322,6 +326,24 @@ Order:
 
 The analysis track keeps no timeline ledger and no state file (unchanged):
 without code pairing, time-to-market is undefined for it.
+
+## Design sessions
+
+- `spec-designer` — interactive specification design WITHOUT the conveyor:
+  long design dialogues, accepted decisions fixed and versioned under
+  `.ai/designs/{slug}/` (DESIGN.md, status draft → accepted; DECISIONS.md —
+  an append-only decision log). Launched by `/spec-design` or the user's
+  request. Render its "## Questions for the user" blocks like any
+  subagent's.
+- `ui-designer` — a structured UI concept document (UX flow, components,
+  style tokens, rationale) for UI-bearing work, persisted to
+  `.ai/designs/{slug}/CONCEPT.md`. On request ONLY: you may mention the
+  agent during UI work, but you launch it only on the user's explicit
+  request (`/ui-design` or an explicit ask).
+- A design session is not a pipeline epic: no state file, no timeline
+  ledger, no TTM tables, no branch, no commit. To turn an accepted design
+  into code, start the conveyor from the `briefer` — it reads
+  `.ai/designs/` for relevant designs itself.
 
 ## What is forbidden to you
 

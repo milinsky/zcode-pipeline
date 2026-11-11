@@ -19,10 +19,11 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 AGENTS = ["briefer", "architect", "tech-lead", "tech-writer", "developer",
           "security-review", "goal-review", "code-review", "qa", "manager",
-          "summarizer", "initializer", "analyst"]
+          "summarizer", "initializer", "analyst", "spec-designer", "ui-designer"]
 
 AGENT_CHECKS = {
-    "briefer": ["Question round", "Final brief", "Track:", "fast-track", "Final brief readiness criterion"],
+    "briefer": ["Question round", "Final brief", "Track:", "fast-track",
+                "Final brief readiness criterion", ".ai/designs/"],
     "architect": ["Design principles", "Analysis track", "Position in the pipeline"],
     "tech-lead": ["decompos", "Tech Lead's decision", "feasibility", "Analysis track",
                   "real_hours = human_hours / 8", "Task validation verdict",
@@ -42,6 +43,14 @@ AGENT_CHECKS = {
     "initializer": ["source=file|embedded", "Personalization", "Determine the project state",
                     "Git hygiene", "core.excludesFile", ".git/info/exclude", "git rm --cached"],
     "analyst": ["[verified]", "[hypothesis]", "Bridge"],
+    "spec-designer": [".ai/designs/{slug}/", "DESIGN.md", "DECISIONS.md",
+                      "IMMEDIATELY upon acceptance", "append-only",
+                      "[a-z0-9-]", "Never merge any branch",
+                      "## Questions for the user"],
+    "ui-designer": [".ai/designs/{slug}/", "CONCEPT.md", "[a-z0-9-]",
+                    "Never merge any branch", "## Questions for the user",
+                    "not rendered graphics", "must not depend on it",
+                    "explicit user request"],
 }
 REQUIRED_ALL = ["## Gross violations", "### !!! ESCALATION !!!", "system prompts are English"]
 
@@ -50,7 +59,7 @@ COMMANDS = ["init-project", "analyze", "self-test", "fast", "pipeline-status",
             "git-commit", "git-stash", "git-branch",
             "git-rebase", "git-squash", "git-undo",
             "git-pull", "git-resolve",
-            "git-push", "git-push-force"]
+            "git-push", "git-push-force", "spec-design", "ui-design"]
 
 COMMAND_CHECKS = {
     "git-status": ["This command is read-only"],
@@ -66,6 +75,8 @@ COMMAND_CHECKS = {
     "git-push": ["Explicit confirmation every time", "single commit to main delivery convention"],
     "git-push-force": ["Explicit confirmation every time", "--force-with-lease",
                        "raw `--force`", "main/master"],
+    "spec-design": ["## Questions for the user", "does not commit"],
+    "ui-design": ["## Questions for the user", "does not commit"],
 }
 
 GIT_COMMAND_SHARED = [

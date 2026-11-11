@@ -11,4 +11,4 @@ Run the conveyor's fast-track profile for the user's request:
 5. After approval: commit with the `fast-track` tag in the message; task status `fast-accepted`; check the checkboxes.
 6. Any Developer/Code-review escalation about architectural scale → move the task to the full conveyor (the brief is ready, next is the Architect).
 
-Call the experts by their actual registry names (a plugin prefix is possible). QA/Manager/Summarizer do not participate. The fast-track budget is 1M tokens: monitor and warn.
+Call the experts by their actual registry names (a plugin prefix is possible). QA/Manager/Summarizer do not participate. The fast-track budget is 10M tokens by default (the default lives in the pipeline skill): monitor and warn.

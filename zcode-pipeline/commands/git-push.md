@@ -30,7 +30,7 @@ explicit approval of this exact push.
 On a branch matching `epic/*` (checked with `git branch --show-current`),
 always show this reminder verbatim before the push plan:
 
-Epic branches are working branches: WIP commits may be pushed freely; the single commit to main delivery convention applies to the merge into main (the conveyor's step), not to the epic branch.
+Epic branches are working branches: WIP commits may be pushed freely; the single commit to main delivery convention applies to the merge into main (the user-approved final step), not to the epic branch.
 
 ## Flow
 

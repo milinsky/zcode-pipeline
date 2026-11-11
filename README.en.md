@@ -89,10 +89,10 @@ Natural language works too: "initialize the project", "analyze the project for�
 ## Reliability features
 
 - **Epic state file** (`.ai/state.md`): live status — stage, next step, open review cycles, token usage — updated after every step. The plugin's SessionStart hook reminds about unfinished work when a new session opens.
-- **Epic branches**: each development epic runs in an `epic/{name}` branch, merged into `main` only after the Manager's ACCEPTED — clean rollbacks and parallel epics.
+- **Epic branches**: each development epic runs in an `epic/{name}` branch, merged into `main` only after the Manager's ACCEPTED and the user's explicit merge choice — clean rollbacks and parallel epics.
 - **Parallelism where the DAG allows**: independent tasks run concurrently; Security and Goal reviews run in parallel, Code review after both.
 - **Prompt linter**: the bundle builder verifies mandatory sections of every agent prompt (escalation protocol, gross violations, verdict formats) — a broken prompt fails the build.
-- **Usage metrics and budgets**: per-stage token usage is logged in the state file and accumulated per epic into `.ai/metrics.md`; each epic gets a token budget (default 5M) — warn at 70%, stop-and-ask at 100%.
+- **Usage metrics and budgets**: per-stage token usage is logged in the state file and accumulated per epic into `.ai/metrics.md`; each epic gets a token budget (default 50M) — warn at 70%, stop-and-ask at 100%.
 - **Multi-epic**: per-epic state files (`.ai/state/{epic}.md`) plus a queue; one active epic, switching only at stage boundaries, each epic on its own branch.
 - **Analysis → development bridge**: the analyst saves a ready draft-brief (`.ai/briefs/{slug}-draft.md`) for findings that are ready — starting the conveyor after an analysis is a single step.
 

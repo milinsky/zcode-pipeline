@@ -2,6 +2,36 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.8.0 — 2026-11-11
+
+Feedback hardening from the first production use: contract-mandated
+time-to-market tables, raised budget defaults, a user-gated merge, and an
+optional task validation pass.
+
+### Added
+
+- **Time-to-market tables**: two contract-mandated coordinator outputs — an
+  estimate table immediately after the Technical Writer (per task,
+  partition, and epic totals copied 1:1 from the task index) and an actuals
+  table at COMPLETE (predicted vs actual agent time, active wall, pauses,
+  tokens from the ledger and the summarizer report; honest gaps when the
+  data is partial).
+- **Task validation gate**: an interactive offer between the Technical
+  Writer and the Developer to run a read-only Tech Lead validation pass
+  over the created tasks (errors, typos, inconsistencies against the
+  decomposition); content fixes return to the Technical Writer, micro-fixes
+  may be applied by the coordinator.
+
+### Changed
+
+- **Budget defaults** raised 10x: 50,000,000 tokens for a full epic and
+  10,000,000 for the fast-track; the semantics are unchanged (warn at 70%,
+  stop-and-ask at 100%, changed only on an explicit user instruction).
+- **Merging into main is user-gated**: no conveyor agent ever merges
+  autonomously; after COMPLETE the coordinator offers the merge with three
+  options (merge now with the exact command shown / keep the branch / the
+  user merges themselves).
+
 ## v2.7.0 — 2026-11-05
 
 Time-to-market metrics for epics: a coordinator timeline ledger, derived

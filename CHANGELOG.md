@@ -2,7 +2,7 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
-## v2.9.1 — 2026-11-17
+## v2.9.2 — 2026-11-17
 
 The pipeline produced code with explanatory comments (observed in production
 testing, including non-English ones) although the rule existed only in

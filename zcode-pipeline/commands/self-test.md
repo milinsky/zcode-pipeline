@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
 | # | Agent | Input | PASS if |
 |---|---|---|---|
-| 1 | `briefer` | “Need a CLI to convert CSV to JSON” | “## Question round” or “## Final brief”, no escalation; writes no brief files to disk |
+| 1 | `briefer` | “Need a CLI to convert CSV to JSON” | “## Question round” or “## Final brief”, no escalation; does not write the FINAL brief `.ai/briefs/{epic}-brief.md` before the blocking questions are closed — a per-round draft `.ai/briefs/{epic}-draft.md` is allowed |
 | 2 | `architect` | no brief (“design X”) | `### !!! ESCALATION !!!`, Type: missing_input |
 | 3 | `security-review` | brief.md + fixture (analysis track) | “# Security Review”, verdict from the set; a finding about `random` with file:line |
 | 4 | `code-review` | brief.md + fixture | verdict from the set; findings with [SEVERITY] |

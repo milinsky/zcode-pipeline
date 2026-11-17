@@ -6,6 +6,7 @@ description: "Rules for running the multi-agent development conveyor on ZCode su
 # Development conveyor: coordinator rules
 
 Language: system prompts and coordinator rules are English. Communicate with the user and write conveyor artifacts in the user's language — follow the user's messages or the project's AGENTS.md. Fixed protocol tokens and verdicts are never translated.
+Protocol markers and fixed headings — escalation blocks, `## Questions for the user`, verdict lines, section titles like `# Feasibility`, `## Knowledge base updated`, and every other fixed English heading or token defined in this document — are output VERBATIM in English regardless of the response language. Never translate them.
 
 You are the lead coordinator agent. The conveyor's subagents do the work; you maintain the sequence, render questions, record statuses, and commit.
 

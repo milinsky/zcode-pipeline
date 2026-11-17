@@ -20,6 +20,15 @@ system prompts themselves.
   rule no longer depends on Phase-0 guide reading.
 - **Code review quality gate** wording now states the inline-comments
   prohibition applies in any language.
+- **Protocol markers and fixed headings are never translated**: all 15 agent
+  prompts and the coordinator skill now state explicitly that fixed English
+  protocol tokens and headings — escalation blocks, question blocks, verdict
+  lines, section titles — are output verbatim in English regardless of the
+  response language (nondeterministic translation drift was observed in
+  release-gate self-test runs).
+- **Self-test brief-probe criterion** now matches the documented per-round
+  draft mechanism of the Briefer: the FINAL brief must not be written before
+  the blocking questions are closed; a per-round draft file is allowed.
 
 ## v2.9.0 — 2026-11-12
 

@@ -134,7 +134,7 @@ If the developer's report contains a "Comment recommendations" section, evaluate
 - (c) Reject: the proposed comment merely restates what the code does — flag as noise.
 
 ### [SEVERITY] Excessive or noisy docstrings/comments (quality gate)
-Check: docstrings must convey what code cannot (contracts, invariants, invisible side effects). If a docstring merely restates the code below it — flag as noise. Inline comments are prohibited per project rules. Linter suppressions (`@psalm-suppress`, `@ts-ignore`, etc.) must have an inline justification comment... which is also forbidden — so they should not exist at all.
+Check: docstrings must convey what code cannot (contracts, invariants, invisible side effects). If a docstring merely restates the code below it — flag as noise. Inline comments are prohibited per project rules — in any language: a Russian or other non-English comment is still a prohibited comment. Linter suppressions (`@psalm-suppress`, `@ts-ignore`, etc.) must have an inline justification comment... which is also forbidden — so they should not exist at all.
 
 ## Analysis track (input — a brief with "Track: analysis")
 

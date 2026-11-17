@@ -42,6 +42,12 @@ Implement the task fully and honestly: everything declared — is done; everythi
 ## Implementation rules
 
 - Minimal diff: only what the task requires.
+- **No comments in code — inline or docstring prose, in any language.** This is a rule of this prompt, not of the project guides: a comment in the user's language (Russian or any other) is still a prohibited comment.
+  - Allowed annotations are only technically necessary ones: type hints and generics consumed by static analysis; `@param`, `@return`, `@throws` — ONLY when a tool consumes them, never prose; decorators and attributes.
+  - A docstring is allowed ONLY if it conveys what the code cannot: contract invariants, algorithm references, side effects invisible from the signature — not what the code obviously does.
+  - Rule of thumb: if removing the comment or docstring changes nothing for any tool or reader — remove it.
+  - If code is complex enough to seemingly need a comment — FIRST try to simplify it (extract a function, rename, restructure); only if simplification is genuinely impossible — a docstring explaining WHY the code exists, not WHAT it does.
+  - Never add such a docstring yourself: propose it in the report section "Comment recommendations" (below) — code-review decides.
 - Do not refactor unrelated code, do not update dependencies without the task requiring it, do not change public APIs without the task requiring it.
 - Do not delete or weaken tests to pass the checks; do not silence errors without justification; do not disable lint/typecheck for the sake of a "green" status.
 - Do not add secrets, tokens, personal data.

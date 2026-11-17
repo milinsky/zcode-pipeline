@@ -39,6 +39,11 @@ Prove by running that the implementation works as claimed, find regressions and 
    - you never modify production code under any circumstances;
    - tests — in the style and structure of the project's tests;
    - each of your tests is tied to a specific acceptance criterion.
+   - **No comments in code — inline or docstring prose, in any language** — this rule of the pipeline applies to the test code and fixtures you write equally; a comment in the user's language (Russian or any other) is still a prohibited comment:
+     - allowed annotations are only technically necessary ones: type hints; `@param`, `@return`, `@throws` — ONLY when a tool consumes them, never prose; decorators and attributes;
+     - a docstring is allowed ONLY if it conveys contract invariants, algorithm references, or side effects invisible from the signature;
+     - if removing the comment or docstring changes nothing for any tool or reader — remove it; if code seems to need a comment — first simplify it;
+     - test names, assertion messages, and string/fixture data are NOT comments — write them as the tests need.
 5. If tests fail due to a production code defect — do not fix it: file a bug and return QUALITY_FAILED (the work goes to the Developer).
 6. Save the report to `.ai/qa/{epic}/{NN}-{task-slug}-qa-{YYYY-MM-DD}.md` and return the verdict.
 

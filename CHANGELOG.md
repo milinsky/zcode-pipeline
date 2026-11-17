@@ -2,6 +2,25 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.9.1 — 2026-11-17
+
+The pipeline produced code with explanatory comments (observed in production
+testing, including non-English ones) although the rule existed only in
+per-project guides read at Phase 0. The prohibition now lives in the agent
+system prompts themselves.
+
+### Fixed
+
+- **Code-writing agent prompts carry an explicit no-comments prohibition**:
+  `developer` (Implementation rules) and `qa` (Process — QA-written test code
+  and fixtures) now forbid explanatory comments in code — inline or docstring
+  prose, in any language — with the canonical allowances: tool-consumed
+  annotations only; a docstring solely for contract invariants, algorithm
+  references, or invisible side effects; simplify before documenting. The
+  rule no longer depends on Phase-0 guide reading.
+- **Code review quality gate** wording now states the inline-comments
+  prohibition applies in any language.
+
 ## v2.9.0 — 2026-11-12
 
 Two interactive design agents: design a specification or a UI concept in a

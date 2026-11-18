@@ -2,6 +2,45 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.11.0 — 2026-11-19
+
+Interrupted coordinator sessions used to need a manual "write a note to
+yourself" prompt from the owner. The conveyor now maintains its own handoff
+state, and every new session opens with a compact continuation summary
+built from it.
+
+### Added
+
+- **Coordinator-maintained handoff state**: a small state file holding
+  either the active work (epic, stage, next step, and a pointer to the
+  epic's own state) or an explicit "no active work" line with the last
+  completed item, plus a channel of dated significant events of any
+  declared type. Written automatically at stage boundaries, created
+  lazily on the first event, referencing per-epic state instead of
+  duplicating its metrics. A crash can leave the pointer at most one
+  stage stale; a new session reconciles it against the per-epic state.
+- **New `/handoff` command**: records an arbitrary significant event or
+  continuation point — a discussion, interrupted non-epic work, an owner
+  decision outside the conveyor — into the same state. With an argument
+  it writes immediately; without one it drafts the line and waits for
+  confirmation.
+- **Self-test probe 16**: the SessionStart hook contract is probed on
+  synthetic fixtures (active, idle, absent state) — a mechanical,
+  zero-token probe; the gate reference moves to 16/16.
+
+### Changed
+
+- **SessionStart hook rebuilt as a three-tier summary**: a valid handoff
+  state prints a compact continuation block — active work with its next
+  step, or "no active work" with the last completed item, plus the two
+  most recent events; a missing or unreadable state falls back to a
+  one-line listing of the existing state files. The old ten-line dump of
+  every state file is gone: it leaked full ledger contents into the
+  session context and made session starts noisier than the summary
+  needs (closes a deferred security observation).
+- **Prompt linter OK line**: 20 commands checked (the new /handoff
+  registered).
+
 ## v2.10.1 — 2026-11-18
 
 Production runs of v2.9.2 showed the no-comments prohibition did not hold on

@@ -29,8 +29,9 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 - `/spec-design "<topic>"` — interactive specification design without launching the conveyor: a guided design dialogue; accepted decisions are recorded immediately and versioned under `.ai/designs/{slug}/` (living design document + append-only decision log).
 - `/ui-design "<topic>"` — a structured UI concept document (UX flow, components, style tokens, rationale) for UI-bearing work; launched strictly on your explicit request and persisted into the same designs home.
 - `"Run the pipeline: …"` — the full development conveyor (brief → architecture → tasks → code → triple review → QA → acceptance).
-- `/self-test` — regression test of the conveyor itself: 15 agent-contract probes on a sandbox fixture.
+- `/self-test` — regression test of the conveyor itself: 16 agent-contract probes on a sandbox fixture.
 - `/pipeline-status` — live conveyor status: active epic(s), stage, open cycles, spend vs budget.
+- `/handoff "<event>"` — record a significant event or continuation point (a discussion, interrupted non-epic work, an owner decision outside the conveyor) into the conveyor coordination state; without an argument the command drafts the line and waits for confirmation.
 - `/fast "<small change>"` — fast-track profile: brief → developer → code review (plus security on risk triggers) → commit; for small reversible edits.
 - Safe git workflow — 12 `/git-*` commands: `/git-status` (read-only inspection), `/git-commit` (proposes a message, commits after your confirmation), `/git-pull` / `/git-fetch` (sync), `/git-push` / `/git-push-force` (publish, `--force-with-lease` only), `/git-rebase` / `/git-squash` / `/git-undo` (history), `/git-stash` / `/git-branch` (workspace), `/git-resolve` (conflict resolution) — plan first, explicit confirmation for remote and destructive actions.
 

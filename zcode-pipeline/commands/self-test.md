@@ -1,5 +1,5 @@
 ---
-description: Full conveyor regression test — 15 contract probes for all agents in a sandbox (evals)
+description: Full conveyor regression test — 16 contract probes for all agents in a sandbox (evals)
 ---
 
 Run the full conveyor regression test (agents — by their actual registry names). Sandbox `.ai/sandbox/selftest-{date}/`, delete it after the run; report to `.ai/self-test-{date}-{HH}-{MM}.md` (time-suffixed: same-day reruns must not overwrite each other). Benchmark spend for the whole run ≈1.5M tokens — record the actual figure in the report.
@@ -22,8 +22,9 @@ if __name__ == "__main__":
 
 2. Analytical brief `{sandbox}/brief.md`: epic `selftest`, `**Track:** analysis`, focus: security, status final; criterion question: “is the token generation in tinytoken.py acceptable from a security standpoint?”.
 3. Mini epic trail for probe 13 in `{sandbox}/fakeproj/`: `.ai/briefs/sum-brief.md` (epic `sum`, Track: development, status final, goal “replace random with secrets in fixed.py”); `fixed.py` — a copy of the fixture but already with `secrets.choice`; `.ai/tasks/sum/01-fix-2026-11-03.md` (header with status `tested`, MUST DO “replace random with secrets”, criteria: no `import random`, has `secrets.choice` + a short execution report with verification); `.ai/qa/sum/qa-2026-11-03.md` (stub: verdict QUALITY_PASSED, 3 tests OK). No git history — this is a sandbox.
+4. Hook fixtures `{sandbox}/hookfix/`: `active/.ai/state/coordination.md` — the coordination template from the pipeline skill with `**Mode:** active` (Work/Next step/Detail filled with short plausible values) and two Events lines; `idle/.ai/state/coordination.md` — `**Mode:** idle` with `**Last completed:**` and one Events line; `absent/.ai/state/` — one old per-epic state file, no coordination.md.
 
-## Probes (15)
+## Probes (16)
 
 | # | Agent | Input | PASS if |
 |---|---|---|---|
@@ -42,6 +43,7 @@ if __name__ == "__main__":
 | 13 | `summarizer` | fakeproj (epic sum, ACCEPTED confirmed by the coordinator; no git history — sandbox; project root = `{sandbox}/fakeproj/`) | “## Knowledge base updated”; `{sandbox}/fakeproj/.ai/docs/epics/sum-…/REPORT.md` exists; INDEX.md created with an epic entry; the Spend-and-time part reports the absent ledger as an honest gap — no invented time values |
 | 14 | `spec-designer` | empty directory `{sandbox}/design-spec/` as the "project root" + a topic (e.g. "a CLI to convert CSV to JSON"); instruction: "return ONLY the first question block and stop — create no files (nothing under .ai/designs/), use no web" | "## Questions for the user" with options, the recommended one first; no files created anywhere under `{sandbox}/design-spec/` |
 | 15 | `ui-designer` | empty directory `{sandbox}/design-ui/` as the "project root" + a topic (e.g. "a settings screen for that CSV tool"); the same instruction (no files, no web) | "## Questions for the user" with options; no files created anywhere under `{sandbox}/design-ui/` |
+| 16 | SessionStart hook (mechanical) | the three fixtures from Preparation (`{sandbox}/hookfix/{active,idle,absent}`) — run `sh <plugin-root>/hooks/session-start.sh` with each fixture dir as cwd (the plugin root = the parent directory of `skills/`, as the agents resolve it) | every run exits 0; active → the continuation line (active work + next step + detail) and an Events tail line; idle → “no active work” + the last completed item (NOT silence); absent → the state-file listing without content dumps |
 
 ## Order (parallel waves)
 
@@ -51,6 +53,8 @@ if __name__ == "__main__":
 - **Wave D:** 12 (after 3–4, having saved their reports).
 - **Wave E:** 13.
 
+Probe 16 is mechanical: run it before Wave A — no agent, no tokens.
+
 ## Report `.ai/self-test-{date}-{HH}-{MM}.md`
 
-A 15-row table: # — agent — PASS/FAIL — actual — mismatch. Overall PASS only at 15/15; on FAIL — quotes and an indication of what changed last (CHANGELOG). File checks (6, 9, 12, 13) — actually on disk; no-file checks (10, 14, 15) — actually verified empty. Run spend (sum of subagent_tokens) — into the report. Delete the sandbox. Commit nothing.
+A 16-row table: # — agent — PASS/FAIL — actual — mismatch. Overall PASS only at 16/16; on FAIL — quotes and an indication of what changed last (CHANGELOG). File checks (6, 9, 12, 13) — actually on disk; no-file checks (10, 14, 15) — actually verified empty. Run spend (sum of subagent_tokens) — into the report. Delete the sandbox. Commit nothing.

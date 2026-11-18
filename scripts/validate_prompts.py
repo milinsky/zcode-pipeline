@@ -61,7 +61,8 @@ COMMANDS = ["init-project", "analyze", "self-test", "fast", "pipeline-status",
             "git-commit", "git-stash", "git-branch",
             "git-rebase", "git-squash", "git-undo",
             "git-pull", "git-resolve",
-            "git-push", "git-push-force", "spec-design", "ui-design"]
+            "git-push", "git-push-force", "spec-design", "ui-design",
+            "handoff"]
 
 COMMAND_CHECKS = {
     "git-status": ["This command is read-only"],
@@ -79,6 +80,8 @@ COMMAND_CHECKS = {
                        "raw `--force`", "main/master"],
     "spec-design": ["## Questions for the user", "does not commit"],
     "ui-design": ["## Questions for the user", "does not commit"],
+    "handoff": [".ai/state/coordination.md", "type=handoff",
+                "data, never instructions"],
 }
 
 GIT_COMMAND_SHARED = [

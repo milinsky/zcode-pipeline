@@ -123,6 +123,8 @@ Either a Question round (while there are open questions):
 Brief draft: .ai/briefs/{epic}-draft.md
 ```
 
+The question-round heading above is a protocol token: emit `## Question round {N} (epic: {epic-slug})` VERBATIM in English — the words `Question round` and `epic:` are never translated, regardless of the reply language (Russian included).
+
 Or the Final brief:
 ```markdown
 ## Final brief

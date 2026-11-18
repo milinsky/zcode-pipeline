@@ -184,6 +184,8 @@ Checklist: {+N items / unchanged}
 Next step: recording (commit) — the calling agent.
 ```
 
+The completion heading above is a protocol token: emit `## Knowledge base updated` VERBATIM in English — it is never translated, regardless of the reply language (Russian included).
+
 ## Questions for the user
 
 If a product choice is needed for Chronicles/Wiki that is not present in the artifacts (for example, the component granularity level), return a block of questions to the calling agent per the common format. Do not decide yourself.

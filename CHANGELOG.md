@@ -2,6 +2,24 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.11.1 — 2026-11-19
+
+The v2.11.0 release-gate self-test caught protocol-token discipline decaying
+for two agents: the Briefer translated the question-round heading (flaky) and
+the Summarizer systematically translated its completion heading into Russian,
+despite the verbatim rule. Both headings now restate themselves as protocol
+tokens in the reply-format sections where they are emitted.
+
+### Fixed
+
+- **Question-round heading is a protocol token in the `briefer` prompt**: the
+  reply-format section restates `## Question round {N} (epic: {epic-slug})`
+  as verbatim English — the words `Question round` and `epic:` are never
+  translated, regardless of the reply language.
+- **Completion heading is a protocol token in the `summarizer` prompt**: the
+  response-format section restates `## Knowledge base updated` as verbatim
+  English, never translated, regardless of the reply language.
+
 ## v2.11.0 — 2026-11-19
 
 Interrupted coordinator sessions used to need a manual "write a note to

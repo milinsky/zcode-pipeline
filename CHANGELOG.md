@@ -2,7 +2,7 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
-## v2.10.0 — 2026-11-18
+## v2.10.1 — 2026-11-18
 
 Production runs of v2.9.2 showed the no-comments prohibition did not hold on
 its own: the pipeline shipped multi-line non-English comment blocks, including

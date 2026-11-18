@@ -2,7 +2,7 @@
 description: Full conveyor regression test — 15 contract probes for all agents in a sandbox (evals)
 ---
 
-Run the full conveyor regression test (agents — by their actual registry names). Sandbox `.ai/sandbox/selftest-{date}/`, delete it after the run; report to `.ai/self-test-{date}.md`. Benchmark spend for the whole run ≈1.5M tokens — record the actual figure in the report.
+Run the full conveyor regression test (agents — by their actual registry names). Sandbox `.ai/sandbox/selftest-{date}/`, delete it after the run; report to `.ai/self-test-{date}-{HH}-{MM}.md` (time-suffixed: same-day reruns must not overwrite each other). Benchmark spend for the whole run ≈1.5M tokens — record the actual figure in the report.
 
 ## Preparation
 
@@ -51,6 +51,6 @@ if __name__ == "__main__":
 - **Wave D:** 12 (after 3–4, having saved their reports).
 - **Wave E:** 13.
 
-## Report `.ai/self-test-{date}.md`
+## Report `.ai/self-test-{date}-{HH}-{MM}.md`
 
 A 15-row table: # — agent — PASS/FAIL — actual — mismatch. Overall PASS only at 15/15; on FAIL — quotes and an indication of what changed last (CHANGELOG). File checks (6, 9, 12, 13) — actually on disk; no-file checks (10, 14, 15) — actually verified empty. Run spend (sum of subagent_tokens) — into the report. Delete the sandbox. Commit nothing.

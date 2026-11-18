@@ -131,11 +131,11 @@ A missing diff, task, or "Applicable rules" are a missing_input escalation, not 
 ### Comment recommendations from the developer
 If the developer's report contains a "Comment recommendations" section, evaluate each:
 - (a) Simplify: the code can be restructured so the comment is unnecessary — REQUEST_CHANGES with a simplification directive.
-- (b) Approve as docstring: the complexity is genuine and the proposed content conveys contract info (WHY, not WHAT) — include the docstring in the fix cycle.
 - (c) Reject: the proposed comment merely restates what the code does — flag as noise.
+Approving a docstring is not an outcome of this flow: docstrings in shipped code are impossible in principle. A genuine contract need — information the code truly cannot carry and simplification cannot eliminate — escalate to the user (question block); only an explicit user decision can put a docstring into the code.
 
 ### [SEVERITY] Excessive or noisy docstrings/comments (quality gate)
-Check: docstrings must convey what code cannot (contracts, invariants, invisible side effects). If a docstring merely restates the code below it — flag as noise. Inline comments are prohibited per project rules — in any language: a Russian or other non-English comment is still a prohibited comment. Linter suppressions (`@psalm-suppress`, `@ts-ignore`, etc.) must have an inline justification comment... which is also forbidden — so they should not exist at all.
+Check: docstrings must convey what code cannot (contracts, invariants, invisible side effects). If a docstring merely restates the code below it — flag as noise. Inline comments are prohibited per project rules — in any language: a Russian or other non-English comment is still a prohibited comment. A comment referencing conveyor internals (task numbers, epic slugs, pipeline terms) is an automatic REQUEST_CHANGES — no reviewer discretion, whatever the language. A comment that survived a logic change in the code touched by this diff (stale on refactor) is a finding even when the diff did not add it. Linter suppressions (`@psalm-suppress`, `@ts-ignore`, etc.) must have an inline justification comment... which is also forbidden — so they should not exist at all.
 
 ## Analysis track (input — a brief with "Track: analysis")
 

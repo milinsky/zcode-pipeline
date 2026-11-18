@@ -31,14 +31,14 @@ AGENT_CHECKS = {
     "tech-writer": ["Phase 0", "Applicable rules", "Acceptance criteria", "Mandatory task template",
                     "real_hours = human_hours / 8", "min pipeline"],
     "developer": ["Phase 0", "implemented", "MUST NOT DO", "Implementation rules",
-                  "No comments in code"],
+                  "No comments in code", "MUST NOT add comments"],
     "security-review": ["PASS_WITH_WARNINGS", "Analysis track", "NEEDS_MORE_CONTEXT",
                         ".ai/reviews/{epic}/"],
     "goal-review": ["GOAL_MET", "GOAL_PARTIALLY_MET", "traceability", ".ai/reviews/{epic}/"],
     "code-review": ["REQUEST_CHANGES", "NEEDS_DISCUSSION", "Analysis track",
                     ".ai/reviews/{epic}/"],
     "qa": ["QUALITY_PASSED", "QUALITY_FAILED", "Edge case checklist",
-           "No comments in code"],
+           "No comments in code", "MUST NOT add comments"],
     "manager": ["ACCEPTED", "REJECTED", "Return stage"],
     "summarizer": ["Knowledge base updated", "Lessons and rule candidates", "manual-checklist",
                    "real_hours = human_hours / 8", "Timeline ledger"],
@@ -107,7 +107,8 @@ def main() -> None:
     for p in ["zcode-pipeline/skills/pipeline/SKILL.md",
               "zcode-pipeline/assets/AGENTS-template.md",
               "zcode-pipeline/hooks/hooks.json",
-              "zcode-pipeline/hooks/session-start.sh"]:
+              "zcode-pipeline/hooks/session-start.sh",
+              "zcode-pipeline/scripts/check_comments.py"]:
         if not os.path.isfile(os.path.join(HERE, p)):
             errors.append(f"missing component: {p}")
     for name in COMMANDS:

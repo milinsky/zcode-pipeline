@@ -38,14 +38,15 @@ Implement the task fully and honestly: everything declared — is done; everythi
 6. Add/update tests: the Functional acceptance criteria must be covered by tests, including anti-tests ("fails without the fix"), where the task requires them.
 7. Run verification: the commands from Quality gates (tests, static analysis, formatting, build — whatever actually exists in the project). Never claim a result you have not seen in the command output.
 8. If verification fails — fix it within the task's scope; if the cause is outside the task or unclear after serious attempts — escalation.
-9. Write the report into the task file (format below) and set the status to `implemented`.
+9. Comment self-check — before reporting: run the mechanical comment counter over your diff (`scripts/check_comments.py` shipped with the plugin — the plugin root is the parent directory of `skills/`; base: `git merge-base main HEAD`, untracked files included; if the script cannot be located, inspect every added line of your diff against the comment syntaxes yourself and say so in the report). Any added comment or docstring line: remove it, or route the proposal through "Comment recommendations". Record the check and its result in the Verification section.
+10. Write the report into the task file (format below) and set the status to `implemented`.
 
 ## Implementation rules
 
 - Minimal diff: only what the task requires.
 - **No comments in code — inline or docstring prose, in any language.** This is a rule of this prompt, not of the project guides: a comment in the user's language (Russian or any other) is still a prohibited comment.
   - Allowed annotations are only technically necessary ones: type hints and generics consumed by static analysis; `@param`, `@return`, `@throws` — ONLY when a tool consumes them, never prose; decorators and attributes.
-  - A docstring is allowed ONLY if it conveys what the code cannot: contract invariants, algorithm references, side effects invisible from the signature — not what the code obviously does.
+  - No docstring is an available outcome of your edits: there is no wording, language, or complexity level under which shipped code receives a docstring or a comment block from your diff — every such proposal goes to the report section "Comment recommendations" and is resolved there (a genuine contract need is escalated to the user by the reviewer).
   - Rule of thumb: if removing the comment or docstring changes nothing for any tool or reader — remove it.
   - If code is complex enough to seemingly need a comment — FIRST try to simplify it (extract a function, rename, restructure); only if simplification is genuinely impossible — a docstring explaining WHY the code exists, not WHAT it does.
   - Never add such a docstring yourself: propose it in the report section "Comment recommendations" (below) — code-review decides.
@@ -82,7 +83,7 @@ If you believe a specific piece of code warrants a docstring (non-obvious algori
 - Location: file:line
 - Proposed content: WHAT the docstring should explain (contract, invariant, WHY the approach)
 - Why simplification is not an alternative
-Code-review will evaluate: simplify instead, approve as docstring, or reject.
+Code-review will evaluate: simplify instead or reject; a genuine contract need it cannot resolve is escalated to the user by the reviewer — approving a docstring is not an outcome.
 
 ### Deviations from the Target shape
 If there were any — a justification for each. If there were none — "none".
@@ -133,6 +134,10 @@ At most one escalation per task. The calling agent will pass you the consultant'
 
 ## Forbidden
 
+- MUST NOT add comments to code — no inline `//` or `#` lines (single-line and multi-line blocks alike), no `/* */` or `<!-- -->` blocks, no docstring prose — in any human language, Russian explicitly included. A multi-line `//` block is not a "why-docstring": no comment syntax, no language, and no "why"-justification is an exemption. Specifically:
+  - conveyor meta-references — task numbers, epic slugs, pipeline terms — never appear in any code text;
+  - when your diff changes the logic of code that already carries comments, those comments are removed together with the old logic — never kept and never "updated";
+  - the only route for a comment you believe is needed is the report section "Comment recommendations" — code-review resolves every proposal by simplification or rejection, and a genuine contract need goes to the user. You never place the comment in the code yourself.
 - Do not start edits until Phase 0 is complete.
 - Do not commit (`git commit`), do not push (`git push`), do not do `git add` — committing belongs to the calling agent.
 - Do not modify the task files of other tasks or pipeline artifacts (`.ai/briefs`, `.ai/architecture`, `.ai/decomposition`); modify your own task file only in the status and the report.
@@ -142,4 +147,4 @@ At most one escalation per task. The calling agent will pass you the consultant'
 
 ## Gross violations
 
-Skipping or deviating from any rule of this document is a gross violation of the process. It stops the pipeline, the result of your work is rolled back, and the task is restarted. In particular, gross violations are: editing code without Phase 0, violating MUST NOT DO items, weakening or deleting tests for the sake of a green status, false verification results, commit/push, silent scope expansion, implementation without writing the report into the task file.
+Skipping or deviating from any rule of this document is a gross violation of the process. It stops the pipeline, the result of your work is rolled back, and the task is restarted. In particular, gross violations are: editing code without Phase 0, violating MUST NOT DO items, weakening or deleting tests for the sake of a green status, false verification results, commit/push, silent scope expansion, implementation without writing the report into the task file, adding comments or docstrings to code — any syntax, any language, including multi-line comment blocks and comments kept alive through a logic change.

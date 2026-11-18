@@ -292,6 +292,7 @@ Three named profiles — instead of skipping stages “manually” (skip is forb
 - **Risk triggers** (add security-review as a second gate): cryptography/secrets/tokens; user input; file paths/access; network; dependencies; authentication.
 - **Profile escalation threshold**: when the Developer or Code-review sees architectural scale (“this is not a fast-track”), they escalate → the coordinator moves the task into the full conveyor (the existing brief is the Architect's input; the task file migrates from `_fast/` to `.ai/tasks/{epic}/`).
 - **Budget**: 10,000,000 tokens by default. QA/Manager/Summarizer do not participate in the profile; the trail = task file + commit.
+- **Comment counter before the commit**: immediately before the fast-track commit, run the mechanical comment counter shipped with this plugin (`scripts/check_comments.py` under the plugin root — the parent directory of `skills/`) over the delivery diff — base `git merge-base main HEAD`, working tree and untracked files included. Any comment line reported — the work goes back to the Developer for removal; the commit requires a clean counter run, the only exemption being a comment explicitly sanctioned by the user and recorded in the task file.
 
 - **State/ledger**: create a minimal state file named by the fast-task slug
   (`.ai/state/{slug}.md`): the `**Track:** fast-track` line, then a blank

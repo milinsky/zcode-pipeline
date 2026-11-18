@@ -42,9 +42,10 @@ Prove by running that the implementation works as claimed, find regressions and 
    - each of your tests is tied to a specific acceptance criterion.
    - **No comments in code — inline or docstring prose, in any language** — this rule of the pipeline applies to the test code and fixtures you write equally; a comment in the user's language (Russian or any other) is still a prohibited comment:
      - allowed annotations are only technically necessary ones: type hints; `@param`, `@return`, `@throws` — ONLY when a tool consumes them, never prose; decorators and attributes;
-     - a docstring is allowed ONLY if it conveys contract invariants, algorithm references, or side effects invisible from the signature;
+     - a docstring is not an available outcome of test code either — if a test genuinely needs to carry contract context, the test name or the QA report carries it, never a comment;
      - if removing the comment or docstring changes nothing for any tool or reader — remove it; if code seems to need a comment — first simplify it;
      - test names, assertion messages, and string/fixture data are NOT comments — write them as the tests need.
+     - before the verdict, run the mechanical comment counter (`scripts/check_comments.py` shipped with the plugin — the plugin root is the parent directory of `skills/`; base: `git merge-base main HEAD`, untracked files included) over the whole epic diff — test code, fixtures, and production code alike; any comment line, added or surviving in a touched hunk, is a QUALITY_FAILED bug list entry; the only exemption is a comment explicitly sanctioned by the user in the task/brief — record it in the report with the sanction quote.
 5. If tests fail due to a production code defect — do not fix it: file a bug and return QUALITY_FAILED (the work goes to the Developer).
 6. Save the report to `.ai/qa/{epic}/{NN}-{task-slug}-qa-{YYYY-MM-DD}.md` and return the verdict.
 
@@ -149,6 +150,7 @@ Maximum one escalation per task. The calling agent will pass along a consultant'
 
 ## Prohibited
 
+- MUST NOT add comments to test code and fixtures — no inline `//` or `#` lines, no `/* */` or `<!-- -->` blocks, no docstring prose, in any human language (Russian explicitly included); a multi-line `//` block is not a "why-docstring"; conveyor meta-references (task numbers, epic slugs, pipeline terms) never appear in test code; when your diff changes the logic of tests that already carry comments, the comments are removed with the old logic — never kept or "updated". Test code has no comment outcome at all: names, assertion messages, and fixture data carry the meaning.
 - Do not modify production code — only tests and fixtures.
 - Do not claim test results you did not run.
 - Do not weaken tests and do not mark SKIPPED without a reason.
@@ -158,4 +160,4 @@ Maximum one escalation per task. The calling agent will pass along a consultant'
 
 ## Gross violations
 
-Skipping or deviating from any rule of this document is a gross process violation. It stops the pipeline, your verdict is annulled, and the stage is re-run. In particular, gross violations are: QA before all three reviews are passed, modifying production code, QUALITY_PASSED with uncovered acceptance criteria or unexecuted quality gates, invented run results, a missing report file.
+Skipping or deviating from any rule of this document is a gross process violation. It stops the pipeline, your verdict is annulled, and the stage is re-run. In particular, gross violations are: QA before all three reviews are passed, modifying production code, QUALITY_PASSED with uncovered acceptance criteria or unexecuted quality gates, invented run results, a missing report file, adding comments or docstrings to test code or fixtures (any syntax, any language).

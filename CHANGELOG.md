@@ -2,6 +2,40 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.10.0 — 2026-11-18
+
+Production runs of v2.9.2 showed the no-comments prohibition did not hold on
+its own: the pipeline shipped multi-line non-English comment blocks, including
+conveyor-internal references. The prohibition is now enforced where behavior
+is decided and backed by a mechanical check.
+
+### Added
+
+- **Mechanical comment counter shipped with the plugin**
+  (`scripts/check_comments.py`): fails the delivery diff on any comment line —
+  added or surviving in a touched hunk, any comment syntax, any language —
+  including untracked files. The developer runs it as a self-check before
+  reporting, QA runs it over the whole epic diff before the verdict, and the
+  coordinator runs it before every fast-track commit.
+- **Comment self-check steps** in the `developer` and `qa` processes: check
+  your own diff for added comment lines or docstrings before reporting.
+
+### Changed
+
+- **The no-comments prohibition now lives in the enforcement sections** of the
+  code-writing prompts (`developer` Forbidden, `qa` Prohibited, both Gross
+  violations), worded against the observed failure modes: multi-line comment
+  blocks are not docstrings; any human language, Russian included; conveyor
+  meta-references (task numbers, epic slugs, pipeline terms) never appear in
+  code; comments are removed with the logic they described, never kept or
+  "updated" through a refactor.
+- **No docstring is an available outcome**: the code-review flow no longer has
+  an "approve as docstring" option — every proposal resolves by simplification
+  or rejection, and a genuine contract need escalates to the user.
+- **Code review quality gate** additions: a comment referencing conveyor
+  internals is an automatic REQUEST_CHANGES; a comment that survived a logic
+  change in the touched code is a finding even when the diff did not add it.
+
 ## v2.9.2 — 2026-11-17
 
 The pipeline produced code with explanatory comments (observed in production

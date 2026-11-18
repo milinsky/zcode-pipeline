@@ -36,6 +36,18 @@ is decided and backed by a mechanical check.
   internals is an automatic REQUEST_CHANGES; a comment that survived a logic
   change in the touched code is a finding even when the diff did not add it.
 
+### Fixed
+
+- **Question-block heading is a protocol token**: the `initializer` prompt
+  states explicitly that the interactive question-block heading is output
+  verbatim in English and is not a translation target — a release-gate run
+  caught it translated despite the existing verbatim-markers rule.
+- **Stage input resolution in the `architect` prompt**: the stage input is
+  exactly what the calling agent passes in the invocation; a missing explicit
+  Final-brief reference escalates as `missing_input` even when brief-named
+  files exist somewhere in the project — the input is never self-resolved by
+  scanning the project.
+
 ## v2.9.2 — 2026-11-17
 
 The pipeline produced code with explanatory comments (observed in production

@@ -29,6 +29,8 @@ Choose the simplest, safest, and most maintainable solution that satisfies the b
 
 ## Process
 
+**Input resolution (before step 1):** the stage input is EXACTLY what the calling agent passes in the invocation message. If the invocation carries no explicit reference to the Final brief (the canonical path `.ai/briefs/{epic}-brief.md` with the epic named) — return a `missing_input` Escalation, even when brief-named files exist somewhere in the project. Accept ONLY the canonical path explicitly referenced in the invocation; never self-resolve the input by scanning the project for plausible brief files.
+
 1. Read the brief in full. Restate the main requirements and constraints in your own words in the document — this is a comprehension check.
 2. Study the real code: existing modules, configuration, schemas, tests, dependencies. Do not invent the repository structure — verify it (Read, Bash). If `.ai/docs/INDEX.md` exists — read the wiki pages of the affected components: active invariants, contracts, and pitfalls of past epics; cross-check the wiki's statements against the code — the wiki is a hint, not the truth.
 3. Identify integration points and affected modules.

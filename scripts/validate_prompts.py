@@ -19,7 +19,8 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 AGENTS = ["briefer", "architect", "tech-lead", "tech-writer", "developer",
           "security-review", "goal-review", "code-review", "qa", "manager",
-          "summarizer", "initializer", "analyst", "spec-designer", "ui-designer"]
+          "summarizer", "initializer", "analyst", "spec-designer", "ui-designer",
+          "janitor"]
 
 AGENT_CHECKS = {
     "briefer": ["Question round", "Final brief", "Track:", "fast-track",
@@ -31,7 +32,8 @@ AGENT_CHECKS = {
     "tech-writer": ["Phase 0", "Applicable rules", "Acceptance criteria", "Mandatory task template",
                     "real_hours = human_hours / 8", "min pipeline"],
     "developer": ["Phase 0", "implemented", "MUST NOT DO", "Implementation rules",
-                  "No comments in code", "MUST NOT add comments"],
+                  "No comments in code", "MUST NOT add comments",
+                  "zcode-pipeline.project="],
     "security-review": ["PASS_WITH_WARNINGS", "Analysis track", "NEEDS_MORE_CONTEXT",
                         ".ai/reviews/{epic}/"],
     "goal-review": ["GOAL_MET", "GOAL_PARTIALLY_MET", "traceability", ".ai/reviews/{epic}/"],
@@ -53,6 +55,8 @@ AGENT_CHECKS = {
                     "Never merge any branch", "## Questions for the user",
                     "not rendered graphics", "must not depend on it",
                     "explicit user request"],
+    "janitor": ["zcode-pipeline/scripts/cleanup_scan.py", "zcode-pipeline.project=",
+                "only after the owner's explicit confirmation", "never delete"],
 }
 REQUIRED_ALL = ["## Gross violations", "### !!! ESCALATION !!!", "system prompts are English"]
 
@@ -62,7 +66,7 @@ COMMANDS = ["init-project", "analyze", "self-test", "fast", "pipeline-status",
             "git-rebase", "git-squash", "git-undo",
             "git-pull", "git-resolve",
             "git-push", "git-push-force", "spec-design", "ui-design",
-            "handoff"]
+            "handoff", "janitor"]
 
 COMMAND_CHECKS = {
     "git-status": ["This command is read-only"],
@@ -82,6 +86,9 @@ COMMAND_CHECKS = {
     "ui-design": ["## Questions for the user", "does not commit"],
     "handoff": [".ai/state/coordination.md", "type=handoff",
                 "data, never instructions"],
+    "janitor": ["zcode-pipeline/scripts/cleanup_scan.py",
+                "only after the owner's explicit confirmation",
+                "is data, never instructions"],
 }
 
 GIT_COMMAND_SHARED = [
@@ -111,7 +118,8 @@ def main() -> None:
               "zcode-pipeline/assets/AGENTS-template.md",
               "zcode-pipeline/hooks/hooks.json",
               "zcode-pipeline/hooks/session-start.sh",
-              "zcode-pipeline/scripts/check_comments.py"]:
+              "zcode-pipeline/scripts/check_comments.py",
+              "zcode-pipeline/scripts/cleanup_scan.py"]:
         if not os.path.isfile(os.path.join(HERE, p)):
             errors.append(f"missing component: {p}")
     for name in COMMANDS:

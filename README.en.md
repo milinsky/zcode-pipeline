@@ -36,7 +36,7 @@ Initializer → Briefer → Architect → Tech Lead → Tech Writer → Develope
 - **Escalations**: any blocked agent emits a structured `!!! ESCALATION !!!` marker; the coordinator routes it to the Tech Lead consultant and returns the binding resolution. Max one escalation per task per agent — guessing is a process violation.
 - **Stage gating** is built into every agent's prompt: no brief → no architecture; no decomposition → no tasks; no approved reviews → no QA; no `ACCEPTED` → no commit.
 
-## The 15 agents
+## The 16 agents
 
 | Agent | Role | Output / verdict |
 |---|---|---|
@@ -55,6 +55,7 @@ Initializer → Briefer → Architect → Tech Lead → Tech Writer → Develope
 | `analyst` | Analysis track: synthesize expert audits, verify against code, prioritize | `.ai/analysis/{epic}-{date}/REPORT.md` + bridge |
 | `spec-designer` | Interactive specification design outside the conveyor: guided dialogue, accepted decisions recorded immediately | `.ai/designs/{slug}/DESIGN.md + DECISIONS.md` |
 | `ui-designer` | Structured UI concept document for UI-bearing work, strictly on request | `.ai/designs/{slug}/CONCEPT.md` |
+| `janitor` | Post-epic cleanup of disposable build artifacts, caches and project docker objects, stack-agnostic; every run gated by a dry-run plan and the owner's explicit confirmation | coordination events (`type=janitor`) |
 
 ## Artifacts and statuses
 
@@ -72,9 +73,10 @@ The wiki is authoritative-but-verifiable: pages carry a "verified at commit" sta
 | `/analyze "<project or feature>"` | Deep expert analysis **without development**: brief (track: analysis) → parallel expert audits by focus → verified, prioritized synthesis report → optional bridge into the development conveyor. |
 | `/spec-design "<topic>"` | Interactive specification design **without development**: a guided design dialogue; accepted decisions are recorded immediately; the design persists under `.ai/designs/{slug}/` (living design document + append-only decision log); resumable in a later session. |
 | `/ui-design "<topic>"` | A structured UI concept document (UX flow, components, style tokens, rationale) for UI-bearing work, persisted into the same designs home; launched strictly on the user's explicit request; an honest expectation — a concept document, not rendered graphics. |
-| `/self-test` | Regression test of the conveyor itself: 16 agent-contract probes covering every agent (response formats, stage gates, verdicts, analysis track, bridge-brief) → PASS/FAIL report in `.ai/self-test-{date}.md`. |
+| `/self-test` | Regression test of the conveyor itself: 17 agent-contract probes covering every agent (response formats, stage gates, verdicts, analysis track, bridge-brief) → PASS/FAIL report in `.ai/self-test-{date}.md`. |
 | `/pipeline-status` | Live conveyor status: active epic(s) from state files, current stage and next step, open review cycles, unfinished tasks, spend vs budget, recent metrics. |
 | `/handoff "<event>"` | Record a significant event or continuation point (a discussion, interrupted non-epic work, an owner decision outside the conveyor) into the conveyor coordination state; without an argument the command drafts the line and waits for confirmation. |
+| `/janitor` | On-demand cleanup of disposable build artifacts, caches and project docker objects behind a two-step confirmation gate (dry-run plan with rebuild cost first, execution only after your explicit confirmation). |
 | `/fast "<small change>"` | Fast-track profile: brief → developer → code review (security review added on risk triggers: crypto, user input, file paths, network, dependencies, auth) → commit. For small reversible edits (1–2 files, no new contracts). |
 | `/git-status` | Read-only repository snapshot: branch, staged/untracked/conflicted files, ahead/behind vs upstream, recent commits — never mutates anything. |
 | `/git-commit` | Plan the staging, propose a commit message (Conventional Commits or the repo's style), commit after your explicit confirmation; never force-adds ignored files. |
@@ -147,7 +149,7 @@ Bridge: "findings N and M are ready to become an epic — run the conveyor?"
 **From marketplace (primary):**
 1. ZCode → Plugin Marketplace → **Add → Add Plugin Marketplace** → paste this repository's URL.
 2. **Personal → ZCode Pipeline → Install** → restart the session.
-3. Verify: 15 agents, `/init-project`, `pipeline` skill.
+3. Verify: 16 agents, `/init-project`, `pipeline` skill.
 
 ## Usage
 
@@ -166,7 +168,7 @@ Then simply answer the interactive question rounds — everything else (stages, 
 marketplace.json            # marketplace catalog (repo root = marketplace)
 zcode-pipeline/             # the plugin (dir name == manifest name)
   .zcode-plugin/plugin.json
-  agents/                   # 15 subagents
+  agents/                   # 16 subagents
   commands/init-project.md
   skills/pipeline/SKILL.md  # coordinator rules
   assets/AGENTS-template.md # global-rules template with personalization placeholders

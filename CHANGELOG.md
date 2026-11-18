@@ -2,6 +2,40 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.12.0 — 2026-11-19
+
+After a conveyor run finishes, disposable artifacts keep piling up — test
+builds, caches, temp directories, docker containers and images. The owner
+had to ask for a manual cleanup every time. The conveyor now has a janitor.
+
+### Added
+
+- **New `janitor` agent**: post-epic artifact cleanup, stack-agnostic by
+  design — it detects the project stack from its manifests and configs and
+  derives probable disposable artifacts from the detected stack plus general
+  disposable-shape signs (name, size, freshness vs git), never from a fixed
+  stack-to-artifacts table. Every run is gated: a neutral post-epic offer
+  (or the on-demand command), then a dry-run plan with per-target rebuild
+  cost and evidence source, ambiguous candidates asked separately, and
+  execution only after the owner's explicit confirmation. Red lines are
+  absolute at both layers; git stays read-only; outcomes land in the
+  coordination events channel.
+- **New `/janitor` command**: the same gated flow on demand — with no
+  active epic, between epics, and after failed ones.
+- **Stack-agnostic cleanup payload script**: a deterministic scan/plan/apply
+  core shipped with the plugin (stack signatures and derivations live in
+  data, extensible without code changes; an unknown stack still yields
+  candidates via shape signs; apply re-validates every target).
+- **Optional accelerators**: a per-epic artifact manifest and a project
+  cleanup profile (created by the initializer or a one-question offer),
+  used when present — correctness never depends on them.
+- **Docker label contract**: images and containers created by the conveyor
+  carry the `zcode-pipeline.project=<slug>` label — the only hard marking
+  duty, because docker objects are invisible to a filesystem scan.
+- **Self-test probe 17**: the cleanup script contract on synthetic
+  fixtures (known stack, unknown stack, accelerators, red-line decoy) — a
+  mechanical, zero-token probe; the gate reference moves to 17/17.
+
 ## v2.11.1 — 2026-11-19
 
 The v2.11.0 release-gate self-test caught protocol-token discipline decaying

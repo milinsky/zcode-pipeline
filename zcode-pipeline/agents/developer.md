@@ -53,6 +53,8 @@ Implement the task fully and honestly: everything declared — is done; everythi
 - Do not refactor unrelated code, do not update dependencies without the task requiring it, do not change public APIs without the task requiring it.
 - Do not delete or weaken tests to pass the checks; do not silence errors without justification; do not disable lint/typecheck for the sake of a "green" status.
 - Do not add secrets, tokens, personal data.
+- Every docker image or container you create MUST carry the project label `zcode-pipeline.project=<slug>` (`docker build --label …` / `docker run --label …`; slug = the project root directory name, lowercase `[a-z0-9-]`) — an unlabeled object is not attributable and will not be cleaned.
+- Recording disposable FS artifacts in the epic artifact manifest (`.ai/state/{epic}-artifacts.md`) is recommended — see the pipeline skill for the one-line format.
 - If a requirement item allows interpretations — choose the least risky one and explicitly record the assumption in the report.
 
 ## Report format (add to the end of the task file)

@@ -1,6 +1,6 @@
 ---
 name: "initializer"
-description: "Stage 0 of the conveyor — project initialization. Run on the command 'initialize the project' («инициализируй проект») or /init-project: in an empty project it asks for the stack (multi-select + a custom option), in an existing one it determines the stack from manifests and linter configs and asks for confirmation. Then it collects best practices current as of today for each technology from official and curated sources and creates .ai/guides/{tech}.md (≤200 lines, with a freshness date and sources), and also creates/updates the project AGENTS.md: base rules with the source=file|embedded stamp (a verbatim copy of the live ~/.zcode/AGENTS.md; if it is absent — the built-in reference with interactive personalization: the salutation/role and the communication language are substituted from the user's answers) + the stack + must-read guides. It offers to keep its artifacts out of the repository via global or local git ignore (user's choice). Idempotent re-init. Does not touch project code, does not commit."
+description: "Stage 0 of the conveyor — project initialization. Run on the command 'initialize the project' («инициализируй проект») or /init-project: in an empty project it asks for the stack (multi-select + a custom option), in an existing one it determines the stack from manifests and linter configs and asks for confirmation. Then it collects best practices current as of today for each technology from official and curated sources and creates .ai/guides/{tech}.md (≤200 lines, with a freshness date and sources), and also creates/updates the project AGENTS.md: base rules with the source=file|embedded stamp (a verbatim copy of the live ~/.zcode/AGENTS.md; if it is absent — the built-in reference with interactive personalization: the salutation/role and the communication language are substituted from the user's answers) + the stack + must-read guides. It offers to keep its artifacts out of the repository via global or local git ignore (user's choice). Creates/updates the optional cleanup profile .ai/cleanup-profile.md. Idempotent re-init. Does not touch project code, does not commit."
 color: green
 model: "account:zai-individual-coding-plan/GLM-5.3"
 thoughtLevel: max
@@ -298,6 +298,10 @@ Merge rules:
 - Gitignore decision persist: the `gitignore=` field of the marker is written/updated ONLY as the result of an explicit answer to the three-option question of step 3, as a single marker line. Updating the field is NOT tied to replacing the base-rules section: even when the section is not replaced (the user edited it), still update the marker line — append it or replace only the `gitignore=` field, do not touch the rest of the line. A third-party AGENTS.md without the `<!-- init:` marker → the field is not persisted. Reading: parse the marker fields by name; a missing `gitignore=` = never asked; unknown fields are tolerated. The sha256 logic is unchanged: the hash covers the contents of the base-rules section, the marker line itself is not hashed.
 - Freshness: before updating, check each guide's "Current as of"; older than 90 days — priority goes to a full re-verification of the practices (not a cosmetic date update) and an explicit note in the final response ("updated as stale: …").
 
+#### Cleanup profile (optional accelerator of the post-epic janitor cleanup)
+
+If `.ai/cleanup-profile.md` does not exist — return a separate block "## Questions for the user" with ONE yes/no question (rendered in the user's language; NEVER merged with the stack question block): "create the optional cleanup profile `.ai/cleanup-profile.md`?" (explanation: speeds up janitor cleanups; patterns are hand-edited by the owner). yes → create the skeleton per the pipeline skill's "Post-epic cleanup (janitor)" section (header: slug + confirmed stack + today's date; pattern section headers; NO clean-patterns generated — candidate derivation belongs to the janitor script). no → do not create, do not re-ask in this run. If the profile exists (re-init) → update ONLY the header (Stack, Updated); the owner's patterns are untouchable.
+
 ### 7. Return the summary
 
 ## Response format to the calling agent
@@ -322,6 +326,7 @@ Base rules: {source=file, fresh | source=embedded (global file not found — cre
 Personalization: {substituted: {salutation}, language {language} | lines omitted per the user's choice | not performed (source=file)}
 Gitignore: {global — patterns in {excludesfile path} | local — patterns in .git/info/exclude | off — artifacts stay committable | already ignored via {global excludesfile | .git/info/exclude | project .gitignore} | not a git repository | drift: stamp={value}, patterns missing — restore {done | declined} | not asked (third-party AGENTS.md)}
 Tracked artifacts: {untracked: {list} | remain tracked — consent not given | n/a}
+Cleanup profile: {created | updated header | declined | absent—offered next init}
 Next stage: Briefer (for the first task) — the calling agent.
 ```
 

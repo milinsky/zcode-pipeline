@@ -1,5 +1,5 @@
 ---
-description: Full conveyor regression test — 16 contract probes for all agents in a sandbox (evals)
+description: Full conveyor regression test — 17 contract probes for all agents in a sandbox (evals)
 ---
 
 Run the full conveyor regression test (agents — by their actual registry names). Sandbox `.ai/sandbox/selftest-{date}/`, delete it after the run; report to `.ai/self-test-{date}-{HH}-{MM}.md` (time-suffixed: same-day reruns must not overwrite each other). Benchmark spend for the whole run ≈1.5M tokens — record the actual figure in the report.
@@ -23,8 +23,9 @@ if __name__ == "__main__":
 2. Analytical brief `{sandbox}/brief.md`: epic `selftest`, `**Track:** analysis`, focus: security, status final; criterion question: “is the token generation in tinytoken.py acceptable from a security standpoint?”.
 3. Mini epic trail for probe 13 in `{sandbox}/fakeproj/`: `.ai/briefs/sum-brief.md` (epic `sum`, Track: development, status final, goal “replace random with secrets in fixed.py”); `fixed.py` — a copy of the fixture but already with `secrets.choice`; `.ai/tasks/sum/01-fix-2026-11-03.md` (header with status `tested`, MUST DO “replace random with secrets”, criteria: no `import random`, has `secrets.choice` + a short execution report with verification); `.ai/qa/sum/qa-2026-11-03.md` (stub: verdict QUALITY_PASSED, 3 tests OK). No git history — this is a sandbox.
 4. Hook fixtures `{sandbox}/hookfix/`: `active/.ai/state/coordination.md` — the coordination template from the pipeline skill with `**Mode:** active` (Work/Next step/Detail filled with short plausible values) and two Events lines; `idle/.ai/state/coordination.md` — `**Mode:** idle` with `**Last completed:**` and one Events line; `absent/.ai/state/` — one old per-epic state file, no coordination.md.
+5. Janitor fixtures `{sandbox}/janitorfix/` — create fresh at run time: git-init each fixture dir first, then write its files (no commits; the tracked-file gate must answer): `known/` — a minimal `Cargo.toml` + `target/debug/keep.bin`; `unknown/` — no recognizable manifests + `build-cache/blob.bin` ≥1 MB; `accel/` — the known composition + a minimal manifest `.ai/state/fix-artifacts.md` (one canon line `- {ts} kind=dir ref=target why=cargo build size=1MB`) + a minimal profile `.ai/cleanup-profile.md` (header + `clean=glob=tmp/**` + `keep=dir=keepme/` + the matching dirs); `redline/` — a manifest line pointing at `.ai/tasks/decoy/`. The probe passes `--min-size-mb 1`.
 
-## Probes (16)
+## Probes (17)
 
 | # | Agent | Input | PASS if |
 |---|---|---|---|
@@ -44,6 +45,7 @@ if __name__ == "__main__":
 | 14 | `spec-designer` | empty directory `{sandbox}/design-spec/` as the "project root" + a topic (e.g. "a CLI to convert CSV to JSON"); instruction: "return ONLY the first question block and stop — create no files (nothing under .ai/designs/), use no web" | "## Questions for the user" with options, the recommended one first; no files created anywhere under `{sandbox}/design-spec/` |
 | 15 | `ui-designer` | empty directory `{sandbox}/design-ui/` as the "project root" + a topic (e.g. "a settings screen for that CSV tool"); the same instruction (no files, no web) | "## Questions for the user" with options; no files created anywhere under `{sandbox}/design-ui/` |
 | 16 | SessionStart hook (mechanical) | the three fixtures from Preparation (`{sandbox}/hookfix/{active,idle,absent}`) — run `sh <plugin-root>/hooks/session-start.sh` with each fixture dir as cwd (the plugin root = the parent directory of `skills/`, as the agents resolve it) | every run exits 0; active → the continuation line (active work + next step + detail) and an Events tail line; idle → “no active work” + the last completed item (NOT silence); absent → the state-file listing without content dumps |
+| 17 | cleanup_scan.py (mechanical) | the four fixtures from Preparation (`{sandbox}/janitorfix/{known,unknown,accel,redline}`) — run `python3 <plugin-root>/scripts/cleanup_scan.py --root <fixture> --min-size-mb 1` for each (the plugin root = the parent directory of `skills/`) | every run exits 0 and mutates nothing (tree before/after equal): known → `target/` in `clear` with evidence `stack-derived`; unknown → `build-cache/` in `ambiguous` with evidence `shape-sign` and empty `stacks_detected`; accel → manifest/profile candidates with evidence `manifest`/`profile` and `keep=` exclusion in `excluded_by_profile`; redline → the `.ai/tasks/decoy/` candidate in `refused` |
 
 ## Order (parallel waves)
 
@@ -54,7 +56,8 @@ if __name__ == "__main__":
 - **Wave E:** 13.
 
 Probe 16 is mechanical: run it before Wave A — no agent, no tokens.
+Probe 17 is mechanical too: run it before Wave A — no agent, no tokens.
 
 ## Report `.ai/self-test-{date}-{HH}-{MM}.md`
 
-A 16-row table: # — agent — PASS/FAIL — actual — mismatch. Overall PASS only at 16/16; on FAIL — quotes and an indication of what changed last (CHANGELOG). File checks (6, 9, 12, 13) — actually on disk; no-file checks (10, 14, 15) — actually verified empty. Run spend (sum of subagent_tokens) — into the report. Delete the sandbox. Commit nothing.
+A 17-row table: # — agent — PASS/FAIL — actual — mismatch. Overall PASS only at 17/17; on FAIL — quotes and an indication of what changed last (CHANGELOG). File checks (6, 9, 12, 13) — actually on disk; no-file checks (10, 14, 15) — actually verified empty. Run spend (sum of subagent_tokens) — into the report. Delete the sandbox. Commit nothing.

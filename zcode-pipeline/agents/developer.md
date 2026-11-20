@@ -140,6 +140,7 @@ At most one escalation per task. The calling agent will pass you the consultant'
   - conveyor meta-references — task numbers, epic slugs, pipeline terms — never appear in any code text;
   - when your diff changes the logic of code that already carries comments, those comments are removed together with the old logic — never kept and never "updated";
   - the only route for a comment you believe is needed is the report section "Comment recommendations" — code-review resolves every proposal by simplification or rejection, and a genuine contract need goes to the user. You never place the comment in the code yourself.
+  - exception: a license/legal attribution header mandated by the target project’s license (license text, copyright notice, SPDX-License-Identifier) is allowed at the top of a file — it is externally mandated content, not an explanatory comment; add it directly and note the fact in the report (which files, which license).
 - Do not start edits until Phase 0 is complete.
 - Do not commit (`git commit`), do not push (`git push`), do not do `git add` — committing belongs to the calling agent.
 - Do not modify the task files of other tasks or pipeline artifacts (`.ai/briefs`, `.ai/architecture`, `.ai/decomposition`); modify your own task file only in the status and the report.

@@ -48,6 +48,13 @@ BLOCK_PAIRS: dict[str, list[tuple[str, str]]] = {
     "json": [],
 }
 HUNK_HEADER = re.compile(r"^@@ -\d+(?:,\d+)? \+(\d+)(?:,\d+)? @@")
+LICENSE_HEADER_ZONE = 20
+LICENSE_LINE = re.compile(
+    r"SPDX-License-Identifier|Copyright\s*[(\xa9@]|All rights reserved"
+    r"|Mozilla Public License|Apache License|GNU (General Public|Affero|Lesser)"
+    r" Public License|\bMIT License\b|\bBSD [0-9]\b|This Source Code Form is subject"
+    r"|Licensed under|LICENSE for terms|Use of this source code is governed"
+    r"|permission notice|obtain one at")
 BINARY_LINE = re.compile(r"^Binary files .* and (.+) differ$")
 SURVIVING_NOTE = "note: surviving detection limited to -U3 context of touched hunks"
 FAIL_VERDICT = ("FAIL: {count} comment line(s) in the delivery diff — remove them "
@@ -411,6 +418,18 @@ def main() -> None:
         if family == "generic":
             generic_files.append(path)
         comment_numbers = scan_file(lines, family)
+        exempt_numbers = set()
+        zone = sorted(n for n in comment_numbers if n <= LICENSE_HEADER_ZONE)
+        run: list[int] = []
+        for n in zone:
+            if run and n == run[-1] + 1:
+                run.append(n)
+                continue
+            if run and any(LICENSE_LINE.search(lines[m - 1]) for m in run):
+                exempt_numbers.update(run)
+            run = [n]
+        if run and any(LICENSE_LINE.search(lines[m - 1]) for m in run):
+            exempt_numbers.update(run)
         reviewed += 1
         scanned_hunks += hunk_counts.get(path, 0)
         if is_untracked:
@@ -420,6 +439,9 @@ def main() -> None:
                 continue
             recorded = hunk_lines.get(number) if hunk_lines is not None else None
             if recorded is None and not is_untracked:
+                continue
+            if number in exempt_numbers:
+                notes.append(f"exempt license header line: {path}:{number}")
                 continue
             raw_line = lines[number - 1]
             kind = recorded[0] if recorded is not None else "added"

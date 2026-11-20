@@ -2,6 +2,21 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.12.1 — 2026-11-21
+
+The no-comments rule flagged license headers that target projects are
+legally required to carry (e.g. the MPL notice in every file).
+
+### Fixed
+
+- **License/legal attribution headers are a valid comment class**: a header
+  block at the top of a file — license text, copyright notice,
+  SPDX-License-Identifier — required by the project's license is accepted by
+  the code-review gate and exempt in the mechanical comment counter
+  (a contiguous commented run within the first 20 lines carrying a license
+  signature). Explanatory prose smuggled inside the block is still a
+  finding, and license-like text deeper in the file is still counted.
+
 ## v2.12.0 — 2026-11-19
 
 After a conveyor run finishes, disposable artifacts keep piling up — test

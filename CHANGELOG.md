@@ -2,6 +2,20 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.12.2 — 2026-11-22
+
+The self-test probe for the cleanup scanner used an acceleration fixture
+whose manifest evidence could never surface as a separate candidate: the
+scanner's by-design evidence dedupe absorbed it into the stack-derived hit.
+
+### Fixed
+
+- **Self-test probe 17 acceleration fixture aligned with the scanner's
+  by-design evidence dedupe**: the fixture manifest now carries a second
+  line for a non-stack-derived directory, so the mechanical probe observes
+  a manifest-evidence candidate and the documented outcome holds without an
+  interpretive caveat.
+
 ## v2.12.1 — 2026-11-21
 
 The no-comments rule flagged license headers that target projects are

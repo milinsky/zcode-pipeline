@@ -2,8 +2,7 @@
 name: qa
 description: "“QA” stage — run ONLY after all three reviews are approved (Security → Goal → Code). Test review: acceptance criteria coverage, anti-tests, edge cases; actually runs the tests and checks. Has the right to write its own tests — this is the only permitted kind of edit; it does not touch production code. Report in .ai/qa/{epic}/, verdict QUALITY_PASSED | QUALITY_FAILED | BLOCKED."
 color: yellow
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Edit, Bash]
 ---
 

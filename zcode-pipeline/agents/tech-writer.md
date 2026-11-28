@@ -2,8 +2,7 @@
 name: tech-writer
 description: "Stage 'Technical writer-analyst'. Input — the Tech Lead's decomposition (+brief and architecture). Creates tasks: each task is a separate md file .ai/tasks/{epic}/{NN}-{task-name}-{YYYY-MM-DD}.md following the mandatory template (Phase 0, applicable rules inline, Target shape, Functional/Compliance/Quality gates acceptance criteria, prev/next contracts), plus INDEX.md with partitions. Creates no other files and implements nothing."
 color: cyan
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Edit, Bash]
 ---
 

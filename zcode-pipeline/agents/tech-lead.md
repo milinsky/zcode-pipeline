@@ -2,8 +2,7 @@
 name: tech-lead
 description: "The Tech Lead Stage. Input — the Final brief and the architecture document. Decomposes the work in detail into future tasks: boundaries, files, dependencies, contracts between tasks, estimates, partitions — with a level of detail suitable for direct handoff to the Technical Writer. Does NOT create task files itself. Saves the decomposition to .ai/decomposition/{epic}-decomposition.md. Additionally: a consultant on Escalations from the Developer and QA — returns a binding decision; additionally: a read-only validation pass over the Technical Writer's created tasks (verdict TASKS_VALID | TASKS_NEED_FIXES)"
 color: magenta
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Bash]
 ---
 

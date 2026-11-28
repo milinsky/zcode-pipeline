@@ -2,6 +2,21 @@
 
 Format: bundle/plugin versions. Source of truth — this repository (`zcode-pipeline/{agents,commands,skills,assets}`). All entries in English.
 
+## v2.13.0 — 2026-11-29
+
+All sixteen plugin agents carried a hard-coded model and a hard-coded
+reasoning level in their frontmatter. The pins are gone: by default an agent
+now runs on the model of the current session.
+
+### Changed
+
+- **Agents no longer pin a model or a reasoning level**: each agent inherits
+  the model of the current session instead of a hard-coded one. To set the
+  model and the reasoning level for an individual agent, use
+  ZCode → Settings → Subagents.
+- **Prompt linter guards the inheritance**: the linter now fails when an
+  agent frontmatter pins a concrete model or sets a reasoning level.
+
 ## v2.12.2 — 2026-11-22
 
 The self-test probe for the cleanup scanner used an acceleration fixture

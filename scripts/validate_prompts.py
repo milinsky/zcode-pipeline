@@ -60,6 +60,8 @@ AGENT_CHECKS = {
 }
 REQUIRED_ALL = ["## Gross violations", "### !!! ESCALATION !!!", "system prompts are English"]
 
+AGENT_MODEL_INHERIT = "inherit"
+
 COMMANDS = ["init-project", "analyze", "self-test", "fast", "pipeline-status",
             "git-status", "git-fetch",
             "git-commit", "git-stash", "git-branch",
@@ -98,8 +100,21 @@ GIT_COMMAND_SHARED = [
 
 
 def read(path: str) -> str:
-    with open(path, encoding="utf-8") as fh:
+    with open(path, encoding="utf-8", newline="") as fh:
         return fh.read()
+
+
+KEY_WHITESPACE = (" \t\r\n\x0b\x0c\u00a0\ufeff\u180e\u1680\u2000\u2001\u2002\u2003"
+                  "\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f"
+                  "\u205f\u3000\u001c\u001d\u001e\u001f\u0085")
+
+
+def frontmatter(body: str) -> list[str] | None:
+    lines = body.split("\n")
+    if lines[0].strip(" \t\r") != "---":
+        return None
+    end = next((i for i, line in enumerate(lines[1:], 1) if line.strip(" \t\r") == "---"), None)
+    return None if end is None else lines[1:end]
 
 
 def main() -> None:
@@ -110,10 +125,22 @@ def main() -> None:
         for token in REQUIRED_ALL + AGENT_CHECKS.get(a, []):
             if token not in body:
                 errors.append(f"{a}: missing marker {token!r}")
-        # personal data leak check
+        head = frontmatter(body)
+        if head is None:
+            errors.append(f"{a}: frontmatter block is missing or not closed")
+        for line in head or []:
+            key, _, value = line.strip(KEY_WHITESPACE).partition(":")
+            key = "".join(ch for ch in key if ch not in KEY_WHITESPACE)
+            if key == "model" and value.strip() != AGENT_MODEL_INHERIT:
+                errors.append(f"{a}: model must be absent or 'inherit' (got {value.strip()!r})")
+            elif key == "thoughtLevel":
+                errors.append(f"{a}: thoughtLevel must be absent")
         if "Михаил" in body:
             errors.append(f"{a}: personal data leak ('Михаил')")
-    # skill and other components exist
+    agents_dir = os.path.join(HERE, "zcode-pipeline", "agents")
+    for name in sorted(os.listdir(agents_dir)):
+        if name.endswith(".md") and name[:-3] not in AGENTS:
+            errors.append(f"{name[:-3]}: agent file is not registered in AGENTS")
     for p in ["zcode-pipeline/skills/pipeline/SKILL.md",
               "zcode-pipeline/assets/AGENTS-template.md",
               "zcode-pipeline/hooks/hooks.json",

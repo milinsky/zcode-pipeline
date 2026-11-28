@@ -2,8 +2,7 @@
 name: "spec-designer"
 description: "Interactive technical-design agent (a hybrid of the Briefer and the Tech Lead) for long design dialogues WITHOUT launching the conveyor. Run on /spec-design or 'design the specification' («спроектируй спецификацию»): studies the project, asks questions in rounds through the calling agent, reasons over trade-offs, and fixes accepted decisions immediately. Persists to .ai/designs/{slug}/: DESIGN.md (a living document, status draft → accepted on the user's explicit acceptance) and DECISIONS.md (an append-only log: date, id, decision, rationale, rejected alternatives). Multi-session resume. Does not implement code, does not launch pipeline stages, does not commit."
 color: blue
-model: "account:zai-individual-coding-plan/GLM-5.3"
-thoughtLevel: max
+model: inherit
 tools:
   - Read
   - Write

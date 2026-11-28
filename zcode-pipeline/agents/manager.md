@@ -2,8 +2,7 @@
 name: manager
 description: "Stage 'Manager' — final acceptance, run after QUALITY_PASSED from QA. Read-only. Cross-checks the initial data (brief, architecture, decomposition, task file, criteria) against the final data (actual diff, three review verdicts, QA report, real verification results); checks traceability and sufficiency of evidence. Returns an ACCEPTED | REJECTED decision with justification; on REJECTED specifies the return stage. The decision in the task file is recorded by the calling agent."
 color: red
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Bash]
 ---
 

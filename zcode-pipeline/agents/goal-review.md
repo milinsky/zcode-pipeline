@@ -2,8 +2,7 @@
 name: goal-review
 description: "“Goal” review — one of the three mandatory reviews after implementation; runs in parallel with Security review; Code review — after both are approved. Read-only (writes only its own verdict file). Cross-checks the completed work against the final brief and the task's acceptance criteria: a "criterion → status → evidence" table, a search for omissions (what was forgotten) and scope creep. Verdict GOAL_MET | GOAL_PARTIALLY_MET | GOAL_NOT_MET | NEEDS_CONTEXT."
 color: yellow
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Bash]
 ---
 

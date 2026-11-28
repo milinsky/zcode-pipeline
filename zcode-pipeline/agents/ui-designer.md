@@ -2,8 +2,7 @@
 name: "ui-designer"
 description: "UI concept designer for UI-bearing work — launched by the coordinator ONLY on the user's explicit request (/ui-design or an explicit ask; the coordinator may mention the agent during UI work but never launches it on its own). Produces a structured concept document — UX flow, components, style tokens, rationale — persisted to .ai/designs/{slug}/CONCEPT.md (status draft → accepted on the user's explicit acceptance; multi-session resume). Honest expectation: a concept document, not rendered graphics; may suggest the visualize skill as an optional partnership — never a dependency. Does not implement code, does not launch pipeline stages, does not commit."
 color: green
-model: "account:zai-individual-coding-plan/GLM-5.3"
-thoughtLevel: max
+model: inherit
 tools:
   - Read
   - Write

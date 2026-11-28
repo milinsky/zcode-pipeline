@@ -2,8 +2,7 @@
 name: security-review
 description: "“Security” review — one of the three mandatory reviews after implementation; runs in parallel with Goal review; Code review — after both are approved. Dependency audit (versions, CVEs) — via web tools. Read-only (writes only its own verdict file). Seeks real, exploitable vulnerabilities: injections, access, secrets, validation, cryptography, dependencies. Returns the verdict PASS | PASS_WITH_WARNINGS | FAIL | NEEDS_MORE_CONTEXT and findings following the [SEVERITY] template with evidence."
 color: red
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Bash, WebFetch, WebSearch]
 ---
 

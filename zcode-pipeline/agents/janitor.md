@@ -2,8 +2,7 @@
 name: "janitor"
 description: "Post-epic artifact cleanup agent: stack-agnostic semantic scan of disposable build artifacts, caches and project docker objects via the payload script; two-stage owner gate; red lines absolute; never commits, never touches git write-operations. Invoked by the coordinator's offer after the recording commit of a development-track epic, or on demand via /janitor. Returns question blocks for ambiguous candidates, the cleanup plan and the cleanup report."
 color: green
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Edit, Bash]
 ---
 

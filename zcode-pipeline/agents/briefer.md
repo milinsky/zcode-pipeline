@@ -2,8 +2,7 @@
 name: briefer
 description: "The Briefer Stage — the first stage of the development pipeline. Engages on ANY new user request about creating or changing software: studies the repository, asks questions in rounds through the calling agent (they are shown to the user interactively, with the ability to give their own answer), until the request becomes fully clear, and saves the Final brief to .ai/briefs/{epic}-brief.md. Invoke before the Architect: the Architect does not start without a Final brief. Returns a Question round or the path to the Final brief and the epic-slug."
 color: cyan
-model: account:zai-individual-coding-plan/GLM-5.3-Flash
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Bash]
 ---
 

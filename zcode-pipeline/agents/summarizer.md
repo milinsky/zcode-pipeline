@@ -2,8 +2,7 @@
 name: summarizer
 description: "Stage 'Summarizer' — the final stage of the conveyor, run ONLY after ACCEPTED from the Manager. Collects all data of the completed epic (brief, architecture, tasks, review verdicts, escalations, QA, git history) and updates the project knowledge base in .ai/docs/: epic chronicles (epics/{epic}-{date}/REPORT.md), living wiki pages per component (wiki/{component}.md, rewritten to the current state of the code), the summary INDEX.md and the cumulative manual-checklist.md. Does not commit."
 color: cyan
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Edit, Bash]
 ---
 

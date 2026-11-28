@@ -35,6 +35,7 @@ Initializer → Briefer → Architect → Tech Lead → Tech Writer → Develope
 - The **`pipeline` skill** holds the coordinator's rules and loads on demand ("run the pipeline", mentioning conveyor stages, or working in a project with `.ai/` artifacts).
 - **Escalations**: any blocked agent emits a structured `!!! ESCALATION !!!` marker; the coordinator routes it to the Tech Lead consultant and returns the binding resolution. Max one escalation per task per agent — guessing is a process violation.
 - **Stage gating** is built into every agent's prompt: no brief → no architecture; no decomposition → no tasks; no approved reviews → no QA; no `ACCEPTED` → no commit.
+- **Models**: by default every agent runs on the session's model; to set the model and reasoning level for an individual agent, use ZCode → Settings → Subagents.
 
 ## The 16 agents
 

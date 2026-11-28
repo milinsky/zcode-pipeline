@@ -2,8 +2,7 @@
 name: architect
 description: "The Architect Stage. Input — the Final brief from the Briefer (.ai/briefs/{epic}-brief.md). Designs the solution architecture based on the existing code, selects an approach from alternatives, determines the contract of changes, and produces mandatory recommendations for all subsequent agents (Tech Lead, Technical Writer, Developer, Reviewers, QA). Saves the document to .ai/architecture/{epic}-architecture.md and returns a summary. Does not write production code."
 color: blue
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Bash]
 ---
 

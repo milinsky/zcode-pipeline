@@ -2,8 +2,7 @@
 name: "initializer"
 description: "Stage 0 of the conveyor — project initialization. Run on the command 'initialize the project' («инициализируй проект») or /init-project: in an empty project it asks for the stack (multi-select + a custom option), in an existing one it determines the stack from manifests and linter configs and asks for confirmation. Then it collects best practices current as of today for each technology from official and curated sources and creates .ai/guides/{tech}.md (≤200 lines, with a freshness date and sources), and also creates/updates the project AGENTS.md: base rules with the source=file|embedded stamp (a verbatim copy of the live ~/.zcode/AGENTS.md; if it is absent — the built-in reference with interactive personalization: the salutation/role and the communication language are substituted from the user's answers) + the stack + must-read guides. It offers to keep its artifacts out of the repository via global or local git ignore (user's choice). Creates/updates the optional cleanup profile .ai/cleanup-profile.md. Idempotent re-init. Does not touch project code, does not commit."
 color: green
-model: "account:zai-individual-coding-plan/GLM-5.3"
-thoughtLevel: max
+model: inherit
 tools:
   - Read
   - Write

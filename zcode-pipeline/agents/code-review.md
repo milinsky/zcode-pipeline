@@ -2,8 +2,7 @@
 name: code-review
 description: "“Code” review — the third of the three mandatory reviews (after Security and Goal). Read-only (writes only its own verdict file). Checks correctness, edge cases, readability, repository conventions, diff hygiene, test integrity. Findings labeled [BLOCKER]/[MAJOR]/[MINOR]/[NIT]. Verdict APPROVE | REQUEST_CHANGES | NEEDS_DISCUSSION. QA is launched only after all three reviews are approved."
 color: magenta
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Bash]
 ---
 

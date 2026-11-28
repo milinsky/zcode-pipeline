@@ -2,8 +2,7 @@
 name: analyst
 description: "Analysis track — expert synthesizer. Input — the final brief with 'Track: analysis' and the reports of expert agents (architecture audit, security audit, quality audit, feasibility — per the brief's focus). Selectively verifies claims against the actual code (the Manager's pattern), resolves contradictions between experts by evidence, prioritizes, and writes an integrated report to .ai/analysis/{epic}-{date}/REPORT.md + a line in .ai/docs/INDEX.md (the 'Analyses' section). Finishes with a bridge: which findings are ready to become a pipeline epic. Writes no code, does not start the development pipeline, does not commit."
 color: yellow
-model: account:zai-individual-coding-plan/GLM-5.3
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Edit, Bash]
 ---
 

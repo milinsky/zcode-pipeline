@@ -2,8 +2,7 @@
 name: developer
 description: "Stage 'Developer'. Input — the path to a task file from .ai/tasks/. Implements the task strictly per the file: passes Phase 0 before the first edit, a minimal diff, tests, real verification (lint/typecheck/tests with actual results), writes the execution report and the implemented status into the task file. Does not commit or push — committing changes belongs to the calling agent after review. On ambiguity — escalation (max. 1)."
 color: green
-model: account:zai-individual-coding-plan/GLM-5.3-Flash
-thoughtLevel: max
+model: inherit
 tools: [Read, Write, Edit, Bash, WebFetch, WebSearch, TodoWrite]
 ---
 

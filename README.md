@@ -16,6 +16,7 @@ LLM coding agents are fast — and unreliable in the same predictable ways: they
 ## What you get
 
 - **16 specialized agents** — initializer, briefer, architect, tech lead, technical writer, developer, security / goal / code reviewers, QA, manager, summarizer, analyst, the janitor for post-epic cleanup of disposable artifacts, plus two interactive design agents (spec-designer, ui-designer) for design dialogues without launching the conveyor; at project initialization the initializer offers to keep its working files out of the repository (global or local git ignore, user's choice).
+- **Models per agent** — by default every agent runs on the session's model; to set the model and reasoning level for an individual agent, use ZCode → Settings → Subagents.
 - **`/init-project` command** — detects the project stack, pulls current best practices from official sources into `.ai/guides/`, generates the project `AGENTS.md`; interactively offers to keep the conveyor working files out of the repository (global or local git ignore, user's choice).
 - **`/analyze` command (analysis track)** — deep project or feature analysis without development: brief → parallel expert audits (architecture / security / code quality / feasibility) → verified, prioritized synthesis report with a bridge into the development conveyor.
 - **`pipeline` skill** — rules for the coordinating main agent: stage order, escalation routing, review cycles, task statuses, commit policy.
